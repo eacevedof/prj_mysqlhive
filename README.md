@@ -16,4 +16,7 @@ git filter-branch --force --index-filter \
 --prune-empty --tag-name-filter cat -- --all
 
 git push origin --force --all
+
+## el fichero no debería estar editado
+git rm --cached ./backend/src/config/config.php
 ```
