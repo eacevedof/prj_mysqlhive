@@ -2,9 +2,9 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @name App\Controllers\EmployeesController 
- * @file EmployeesController.php 2.0.0
- * @date 30-11-2018 19:00 SPAIN
+ * @name App\Controllers\AgencyController 
+ * @file AgencyController.php 1.0.0
+ * @date 15-01-2019 15:01 SPAIN
  * @observations
  */
 namespace App\Controllers;
@@ -12,7 +12,7 @@ namespace App\Controllers;
 use App\Controllers\AppController;
 use App\Services\EmployeeService;
 
-class EmployeesController extends AppController
+class AgencyController extends AppController
 {
     
     public function __construct()
@@ -128,4 +128,4 @@ class EmployeesController extends AppController
         
     }
 
-}//EmployeesController
+}//AgencyController
