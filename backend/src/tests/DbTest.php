@@ -50,7 +50,7 @@ class DbTest extends TestCase
         $sSQL = "
         SELECT table_name 
         FROM information_schema.tables 
-        where table_schema='{$arConfig["database"]}'";
+        WHERE table_schema='{$arConfig["database"]}'";
         
         $arRows = $oDb->query($sSQL);
         $this->log($arRows,"test_connection");
