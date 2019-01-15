@@ -14,4 +14,8 @@ use App\Services\AppService;
 class AgencyService extends AppService
 {
 
+    public function generate_exp()
+    {
+        
+    }
 }//AgencyService
