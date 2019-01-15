@@ -2,9 +2,9 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @name App\Services\EmployeeService 
- * @file EmployeeService.php 1.0.0
- * @date 29-11-2018 19:00 SPAIN
+ * @name App\Services\AgencyService 
+ * @file AgencyService.php 1.0.0
+ * @date 15-01-2018 19:00 SPAIN
  * @observations
  */
 namespace App\Services;
@@ -15,7 +15,7 @@ use App\Models\TitleModel;
 use App\Models\EmployeeModel;
 use App\Models\SalaryModel;
 
-class EmployeeService extends AppService
+class AgencyService extends AppService
 {
     public function insert($arPost)
     {
@@ -122,4 +122,4 @@ class EmployeeService extends AppService
         //TODO
 
     }//delete
-}//EmployeeService
+}//AgencyService
