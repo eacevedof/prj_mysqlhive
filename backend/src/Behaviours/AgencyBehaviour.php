@@ -22,6 +22,11 @@ class AgencyBehaviour extends AppModel
         $this->oQServ = new CoreQueriesService();
     }
     
+    public function get_tables()
+    {
+        $arConfig = $this->get_config();
+    }
+   
     public function get_fields()
     {
         $arConfig = $this->get_config();

@@ -54,12 +54,14 @@ class AppModel
         return $this->oDb->query($sSQL);
     }
 
-    protected function get_config($sKey="db")
+    protected function get_config($sKey1="db",$sKey2=NULL)
     {
         //config db
         $arConfig = realpath(__DIR__."/../config/config.php");
         $arConfig = include($arConfig);
-        return $arConfig[$sKey];        
+        if(isset($arConfig[$sKey1][$sKey2])) return $arConfig[$sKey][$sKey2];
+        if(isset($arConfig[$sKey1])) return $arConfig[$sKey1];
+        return $arConfig;
     }
     
     //$arPost = $_POST

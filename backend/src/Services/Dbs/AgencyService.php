@@ -10,10 +10,27 @@
 namespace App\Services\Dbs;
 
 use App\Services\AppService;
+use App\Behaviours\AgencyBehaviour;
 
 class AgencyService extends AppService
 {
+    private $oBehav;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->oBehav = new AgencyBehaviour();
+    }
+       
+    private function get_tables()
+    {
+        
+    }
 
+    private function get_fields()
+    {
+        
+    }
+    
     public function generate_exp()
     {
         
