@@ -121,7 +121,8 @@ class AgencyService extends AppService
         
     private function add_values(&$arTags,$arFields)
     {
-        $arTags["allfields"] = implode(",",$arFields);
+        //pr(array_column($arFields,"field_name"));
+        $arTags["allfields"] = implode(",",array_column($arFields,"field_name"));
         
         $arFieldLine = [];
         $arLineInsert = [];
@@ -130,28 +131,28 @@ class AgencyService extends AppService
             $arLineDdl[] = "{$arField["field_name"]} ";
             $arLinePhp[] = "{$arField["field_name"]} => array(\"type\" ";
 
-            if(in_array($arLinePhp["field_type"],["varchar","text","char","tynyblob","blob","mediumblob","longblob","set","enum","tynytext","mediumtext","longtext"]))
+            if(in_array($arField["field_type"],["varchar","text","char","tynyblob","blob","mediumblob","longblob","set","enum","tynytext","mediumtext","longtext"]))
             {
                 $arLineInsert[] = "'Desconocido'";
                 $arLineDdl[] = "string";
                 $arLinePhp[] = " => \"string\" ";
             }
             
-            if(in_array($arLinePhp["field_type"],["int","samllint","tinyint","mediumint","bigint","bit"]))
+            if(in_array($arField["field_type"],["int","samllint","tinyint","mediumint","bigint","bit"]))
             {                    
                 $arLineInsert[] = "-1";
                 $arLineDdl[] = "int"; 
                 $arLinePhp[] = " => \"int\" ";            
             }            
             
-            if(in_array($arLinePhp["field_type"],["date","datetime","time","timestamp","year"]))
+            if(in_array($arField["field_type"],["date","datetime","time","timestamp","year"]))
             {
                 $arLineInsert[] = "'2099-01-01 00:00:00'";
                 $arLineDdl[] = "timestamp";
                 $arLinePhp[] = " => \"timestamp\" ";
             }
             
-            if(in_array($arLinePhp["field_type"],["decimal","float","double"]))
+            if(in_array($arField["field_type"],["decimal","float","double"]))
             {
                 $arLineInsert[] = "0";
                 $arLineDdl[] = "decimal({$arField["ntot"]},{$arField["ndec"]})";
@@ -196,6 +197,7 @@ class AgencyService extends AppService
                 $arTags = array_merge($this->arTags["all"],$this->arTags[$sTpl]);
                 $arTags["tablename"] = $sTable;
                 
+                //pr($arTags);die;
                 $this->add_values($arTags,$arFields);
                 
                 foreach($arTags as $sTag => $sValue)
