@@ -211,6 +211,13 @@ class AgencyService extends AppService
                     $sContent = str_replace("%$sTag%",$sValue,$sContent);
                 
                 $sPathFinal = $sPathDirTable.DS.$sTable."_".$sTpl;
+                
+                if(strstr($sTpl,"load_cfg.php"))
+                    $sPathFinal = $sPathDirTable.DS."emr_load_cfg_{$sTable}.php";
+                
+                if(strstr($sTpl,"_build.php"))
+                    $sPathFinal = $sPathDirTable.DS."emr_build_{$sTable}.php";
+   
                 //if(is_file($sPathFinal)) unlink($sPathFinal);
                 file_put_contents($sPathFinal,$sContent);
             }//arFilesTpl
