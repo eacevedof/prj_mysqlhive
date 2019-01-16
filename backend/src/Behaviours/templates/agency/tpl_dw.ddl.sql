@@ -4,7 +4,7 @@
 DROP table dw.%tablename%;
 
 CREATE TABLE dw.%tablename%(
-%fieldsinfo%
+%fieldsinfoddl%
 )
 CLUSTERED BY(%fieldnamepk%) INTO 5 BUCKETS
 STORED AS ORC

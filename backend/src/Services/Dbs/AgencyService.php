@@ -63,7 +63,7 @@ class AgencyService extends AppService
             ],
             "tpl_dw.ddl.sql" => [
                 //"tablename"=>""
-                "fieldsinfo"=>""
+                "fieldsinfoddl"=>""
                 //,"fieldnamepk"=>""
                 ,"fieldsvalue"=>""
             ],
@@ -84,7 +84,7 @@ class AgencyService extends AppService
             ],
             "tpl_staging_tables.ddl.sql" => [
                 //"tablename"=>""
-                "fieldsinfo"=>""              
+                "fieldsinfoddl"=>""              
             ]
         ];        
     }//load_tags
@@ -119,6 +119,72 @@ class AgencyService extends AppService
         return $arReturn;
     }
         
+    private function add_values($arFields)
+    {
+        $arReturn = ["allfields" => implode(",",$arFields)];
+        
+        $arFieldLine = [];
+        $arLineInsert = [];
+        foreach($arFields as $arField)
+        {
+            $arLineDdl[] = "{$arField["field_name"]} ";
+            $arLinePhp[] = "{$arField["field_name"]} => array(\"type\" ";
+
+            if(in_array($arLinePhp["field_type"],["varchar","text","char","tynyblob","blob","mediumblob","longblob","set","enum","tynytext","mediumtext","longtext"]))
+            {
+                $arLineInsert[] = "'Desconocido'";
+                $arLineDdl[] = "string";
+                $arLinePhp[] = " => \"string\" ";
+            }
+            
+            if(in_array($arLinePhp["field_type"],["int","samllint","tinyint","mediumint","bigint","bit"]))
+            {                    
+                $arLineInsert[] = "-1";
+                $arLineDdl[] = "int"; 
+                $arLinePhp[] = " => \"int\" ";            
+            }            
+            
+            if(in_array($arLinePhp["field_type"],["date","datetime","time","timestamp","year"]))
+            {
+                $arLineInsert[] = "'2099-01-01 00:00:00'";
+                $arLineDdl[] = "timestamp";
+                $arLinePhp[] = " => \"timestamp\" ";
+            }
+            
+            if(in_array($arLinePhp["field_type"],["decimal","float","double"]))
+            {
+                $arLineInsert[] = "0";
+                $arLineDdl[] = "decimal({$arField["ntot"]},{$arField["ndec"]})";
+                $arLinePhp[] = " => \"decimal({$arField["ntot"]},{$arField["ndec"]})\" ";
+            }
+            
+            if($arField["extra"]=="auto_increment") $arLinePhp[] = " \"pk\" => true ";
+            if(strstr($arField["field_name"],"_ts") && strstr($arField["field_name"],"modified_")) $arLinePhp[] = " \"update_date\" => true ";
+            $arLinePhp[] = ")";
+            
+            $arFieldLine["php"][] = implode("",$arLinePhp);
+            $arFieldLine["ddl"][] = implode("",$arLineDdl);
+        }//arFields
+        
+        $arReturn["fieldsvalue"] = implode(",",$arLineInsert);
+        $arReturn["fieldsinfo"] = implode(",",$arFieldLine["php"]);
+        $arReturn["fieldsinfoddl"] = implode(",",$arFieldLine["ddl"]);
+        
+        foreach($arFields as $arField)
+        {
+            if($arField["extra"]=="auto_increment") 
+                $arReturn["fieldnamepk"] = $arField["field_name"];            
+        }
+        
+        return $arReturn;
+    }
+    
+    private function fix_tags(&$arTags)
+    {
+        //$arFields = $this->add_values($arTags);
+        
+    }
+    
     public function generate_exp()
     {
         $arTables = $this->get_tables();
@@ -135,6 +201,7 @@ class AgencyService extends AppService
                 
                 $arTags = array_merge($this->arTags["all"],$this->arTags[$sTpl]);
                 $arTags["tablename"] = $sTable;
+                
                 foreach($arTags as $sTag => $sValue)
                     $sContent = str_replace("%$sTag%",$sValue,$sContent);
                 
