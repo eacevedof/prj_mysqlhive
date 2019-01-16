@@ -31,7 +31,7 @@ class AgencyService extends AppService
 
     private function get_fields_info($sTable)
     {
-        $arReturn = $this->oBehav->get_tables($sTable);
+        $arReturn = $this->oBehav->get_fields_info($sTable);
         return $arReturn;
     }
     

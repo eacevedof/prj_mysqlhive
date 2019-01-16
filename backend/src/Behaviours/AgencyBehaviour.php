@@ -42,7 +42,7 @@ class AgencyBehaviour extends AppModel
         $sDb = $this->get_config("db","database");
         $sSQL = $this->oQServ->get_fields($sDb,$sTable);
         $arRows = $this->query($sSQL);
-        //bug($arRows);
+        //bug($arRows);die;
         return $arRows;
     }
 
