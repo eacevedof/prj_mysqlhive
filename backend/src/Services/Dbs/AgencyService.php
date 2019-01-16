@@ -129,7 +129,7 @@ class AgencyService extends AppService
         foreach($arFields as $arField)
         {
             $arLineDdl[] = "{$arField["field_name"]} ";
-            $arLinePhp[] = "{$arField["field_name"]} => array(\"type\" ";
+            $arLinePhp[] = "\"{$arField["field_name"]}\" => array(\"type\" ";
 
             if(in_array($arField["field_type"],["varchar","text","char","tynyblob","blob","mediumblob","longblob","set","enum","tynytext","mediumtext","longtext"]))
             {
@@ -169,8 +169,8 @@ class AgencyService extends AppService
         
         $arTags["tabletype"] = "dimension_table";
         $arTags["fieldsvalue"] = implode(",",$arLineInsert);
-        $arTags["fieldsinfo"] = implode(",",$arFieldLine["php"]);
-        $arTags["fieldsinfoddl"] = implode(",",$arFieldLine["ddl"]);
+        $arTags["fieldsinfo"] = implode(",\n",$arFieldLine["php"]);
+        $arTags["fieldsinfoddl"] = implode(",\n",$arFieldLine["ddl"]);
         
         foreach($arFields as $arField)
         {

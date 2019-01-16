@@ -4,7 +4,7 @@
 DROP TABLE IF EXISTS staging_tables.%tablename%_incremental_temp;
 
 CREATE  TABLE IF NOT EXISTS staging_tables.%tablename%_incremental_temp (
-%fieldsinfo%
+%fieldsinfoddl%
 )
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '\001'
