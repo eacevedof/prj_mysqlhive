@@ -9,11 +9,13 @@
  */
 namespace App\Services;
 
+use App\Traits\AppConfigTrait;
 use App\Traits\AppErrorTrait;
 use App\Traits\AppLogTrait;
 
 class AppService 
 {
+    use AppConfigTrait;
     use AppErrorTrait;
     use AppLogTrait;
     

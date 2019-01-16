@@ -15,13 +15,30 @@ use App\Behaviours\AgencyBehaviour;
 class AgencyService extends AppService
 {
     private $oBehav;
+    private $sPathPublic;
+    private $sPathTemplateDS;
+    private $arFiles;
+    private $arTags;
     
     public function __construct() 
     {
         parent::__construct();
-        $this->oBehav = new AgencyBehaviour();
+        $this->load();
     }
-       
+    
+    private function load()
+    {
+        $this->oBehav = new AgencyBehaviour();
+        
+        $sDb = $this->get_config("db","database");
+        $sPath = PATH_SRC.DS."Behaviours".DS."templates".DS."$sDb";
+        $this->sPathTemplateDS = $sPath;
+        $this->arFiles = scandir($sPath);
+        unset($this->arFiles[0]);unset($this->arFiles[1]);
+        pr($this->arFiles);die;
+        $this->arTags = ["tpl_build.php"=>[]];
+    }
+        
     private function get_tables()
     {
         //$arReturn = [];

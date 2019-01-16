@@ -9,11 +9,13 @@
  */
 namespace App\Controllers;
 
+use App\Traits\AppConfigTrait;
 use App\Traits\AppErrorTrait;
 use App\Traits\AppLogTrait;
 
 class AppController  
 {
+    use AppConfigTrait;
     use AppErrorTrait;
     use AppLogTrait;
     

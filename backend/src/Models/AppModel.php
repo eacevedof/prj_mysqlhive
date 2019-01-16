@@ -12,11 +12,13 @@ namespace App\Models;
 use TheFramework\Components\Db\ComponentMysql;
 use TheFramework\Components\Db\ComponentCrud;
 
+use App\Traits\AppConfigTrait;
 use App\Traits\AppErrorTrait;
 use App\Traits\AppLogTrait;
 
 class AppModel 
 {
+    use AppConfigTrait;
     use AppErrorTrait;
     use AppLogTrait;
     
@@ -52,16 +54,6 @@ class AppModel
     {
         $sSQL = "SELECT LAST_INSERT_ID()";
         return $this->oDb->query($sSQL);
-    }
-
-    protected function get_config($sKey1="db",$sKey2=NULL)
-    {
-        //config db
-        $arConfig = realpath(__DIR__."/../config/config.php");
-        $arConfig = include($arConfig);
-        if(isset($arConfig[$sKey1][$sKey2])) return $arConfig[$sKey1][$sKey2];
-        if(isset($arConfig[$sKey1])) return $arConfig[$sKey1];
-        return $arConfig;
     }
     
     //$arPost = $_POST
