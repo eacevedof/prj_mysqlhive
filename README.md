@@ -1,4 +1,5 @@
 # prj_mysqlhive
+## Actualizado: 16/01/2019
 Generador de scripts de importación
 
 ```js
