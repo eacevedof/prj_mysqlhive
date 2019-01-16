@@ -128,6 +128,7 @@ class AgencyService extends AppService
         $arLineInsert = [];
         foreach($arFields as $arField)
         {
+            $arLineDdl = []; $arLinePhp = [];
             $arLineDdl[] = "{$arField["field_name"]} ";
             $arLinePhp[] = "\"{$arField["field_name"]}\" => array(\"type\" ";
 
@@ -159,13 +160,19 @@ class AgencyService extends AppService
                 $arLinePhp[] = " => \"decimal({$arField["ntot"]},{$arField["ndec"]})\" ";
             }
             
-            if($arField["extra"]=="auto_increment") $arLinePhp[] = " \"pk\" => true ";
-            if(strstr($arField["field_name"],"_ts") && strstr($arField["field_name"],"modified_")) $arLinePhp[] = " \"update_date\" => true ";
+            if($arField["extra"]=="auto_increment") $arLinePhp[] = ", \"pk\" => true ";
+            if(strstr($arField["field_name"],"_ts") && strstr($arField["field_name"],"modified_")) 
+            {
+                $arTags["fieldnamedate"] = $arField["field_name"];
+                $arLinePhp[] = ", \"update_date\" => true ";
+            }
+            
             $arLinePhp[] = ")";
             
             $arFieldLine["php"][] = implode("",$arLinePhp);
             $arFieldLine["ddl"][] = implode("",$arLineDdl);
         }//arFields
+        
         
         $arTags["tabletype"] = "dimension_table";
         $arTags["fieldsvalue"] = implode(",",$arLineInsert);
