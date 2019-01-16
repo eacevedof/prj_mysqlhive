@@ -119,9 +119,9 @@ class AgencyService extends AppService
         return $arReturn;
     }
         
-    private function add_values($arFields)
+    private function add_values(&$arTags,$arFields)
     {
-        $arReturn = ["allfields" => implode(",",$arFields)];
+        $arTags["allfields"] = implode(",",$arFields);
         
         $arFieldLine = [];
         $arLineInsert = [];
@@ -166,24 +166,18 @@ class AgencyService extends AppService
             $arFieldLine["ddl"][] = implode("",$arLineDdl);
         }//arFields
         
-        $arReturn["fieldsvalue"] = implode(",",$arLineInsert);
-        $arReturn["fieldsinfo"] = implode(",",$arFieldLine["php"]);
-        $arReturn["fieldsinfoddl"] = implode(",",$arFieldLine["ddl"]);
+        $arTags["tabletype"] = "dimension_table";
+        $arTags["fieldsvalue"] = implode(",",$arLineInsert);
+        $arTags["fieldsinfo"] = implode(",",$arFieldLine["php"]);
+        $arTags["fieldsinfoddl"] = implode(",",$arFieldLine["ddl"]);
         
         foreach($arFields as $arField)
         {
             if($arField["extra"]=="auto_increment") 
-                $arReturn["fieldnamepk"] = $arField["field_name"];            
+                $arTags["fieldnamepk"] = $arField["field_name"];            
         }
         
-        return $arReturn;
-    }
-    
-    private function fix_tags(&$arTags)
-    {
-        //$arFields = $this->add_values($arTags);
-        
-    }
+    }//add_values
     
     public function generate_exp()
     {
@@ -192,7 +186,7 @@ class AgencyService extends AppService
         {
             $sPathDirTable = $this->sPathTempDS.$sTable;
             $this->create_folder($sPathDirTable);
-            //$arFields = $this->get_fields_info($sTable);
+            $arFields = $this->get_fields_info($sTable);
             //bug($arFields);die;
             foreach($this->arFilesTpl as $sTpl)
             {
@@ -201,6 +195,8 @@ class AgencyService extends AppService
                 
                 $arTags = array_merge($this->arTags["all"],$this->arTags[$sTpl]);
                 $arTags["tablename"] = $sTable;
+                
+                $this->add_values($arTags,$arFields);
                 
                 foreach($arTags as $sTag => $sValue)
                     $sContent = str_replace("%$sTag%",$sValue,$sContent);
