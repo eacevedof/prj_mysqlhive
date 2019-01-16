@@ -30,9 +30,6 @@ class AgencyBehaviour extends AppModel
     public function get_tables()
     {
         $sDb = $this->get_config("db","database");
-//        $arDiTables = ["di_campaign_fees","di_campaigns_lines","di_campaigns_lines_fees"
-//            ,"di_campaings_payments","di_client_fees","di_fees","di_markets"
-//            ,"di_payments","di_providers","di_segments"];
         $sSQL = $this->oQServ->get_tables($sDb);
         //bug($sSQL);
         $arRows = $this->query($sSQL,0);
