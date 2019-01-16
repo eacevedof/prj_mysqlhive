@@ -76,7 +76,7 @@ class AgencyService extends AppService
             ],
             "tpl_replicate_conf.php" => [
                 "DATABASENAME" =>  strtoupper($sDb)
-                ,"servername" => ""
+                ,"servername" => $this->get_config("db","server")
                 //,"tablename"=>""
             ],
             "tpl_ssh_cfgbuild.ssh" => [
@@ -92,7 +92,17 @@ class AgencyService extends AppService
     private function create_folder($sPath)
     {
         //$sPath = $this->sPathTempDS.$sName;
-        if(is_dir($sPath)) rmdir($sPath);
+        if(is_dir($sPath))
+        {
+            $arFiles = scandir($sPath);
+            unset($arFiles[0]);unset($arFiles[1]);
+            foreach($arFiles as $sFile)
+            {
+                $sPathFile = $sPath.DS.$sFile;
+                unlink($sPathFile);
+            }
+            rmdir($sPath);
+        }
         return mkdir($sPath);
     }
         
@@ -124,9 +134,12 @@ class AgencyService extends AppService
                 $sContent = file_get_contents($sPathTpl);
                 
                 $arTags = array_merge($this->arTags["all"],$this->arTags[$sTpl]);
-                pr($arTags);
+                $arTags["tablename"] = $sTable;
+                foreach($arTags as $sTag => $sValue)
+                    $sContent = str_replace("%$sTag%",$sValue,$sContent);
                 
-                $sPathFinal = $sPathDirTable.DS.$sTpl."_".$sTable;
+                $sPathFinal = $sPathDirTable.DS.$sTable."_".$sTpl;
+                //if(is_file($sPathFinal)) unlink($sPathFinal);
                 file_put_contents($sPathFinal,$sContent);
             }//arFilesTpl
         }//arTables

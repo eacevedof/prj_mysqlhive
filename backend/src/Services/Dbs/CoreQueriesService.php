@@ -43,7 +43,7 @@ class CoreQueriesService extends AppService
         return $sSQL;
     }//get_fields
     
-    public function get_tables($sDb)
+    public function get_tables($sDb,$sTable=NULL)
     {
         $sSQL = "
         /*CoreQueriesService.get_tables*/
@@ -51,8 +51,10 @@ class CoreQueriesService extends AppService
         FROM information_schema.tables 
         WHERE 1
         AND table_schema='$sDb'
-        ORDER BY 1
         ";
+        if($sTable) $sSQL .= " AND table_name='$sTable'";
+        
+        $sSQL .= " ORDER BY 1";
         return $sSQL;        
     }//get_tables
     
