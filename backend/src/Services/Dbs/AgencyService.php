@@ -16,23 +16,31 @@ class AgencyService extends AppService
 {
     private $oBehav;
     
-    public function __construct() {
+    public function __construct() 
+    {
         parent::__construct();
         $this->oBehav = new AgencyBehaviour();
     }
        
     private function get_tables()
     {
-        
+        //$arReturn = [];
+        $arReturn = $this->oBehav->get_tables();
+        return $arReturn;
     }
 
-    private function get_fields()
+    private function get_fields_info($sTable)
     {
-        
+        $arReturn = $this->oBehav->get_tables($sTable);
+        return $arReturn;
     }
     
     public function generate_exp()
     {
-        
+        $arTables = $this->get_tables();
+        foreach($arTables as $sTable)
+        {
+            $arFields = $this->get_fields_info($sTable);
+        }
     }
 }//AgencyService

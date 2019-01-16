@@ -59,7 +59,7 @@ class AppModel
         //config db
         $arConfig = realpath(__DIR__."/../config/config.php");
         $arConfig = include($arConfig);
-        if(isset($arConfig[$sKey1][$sKey2])) return $arConfig[$sKey][$sKey2];
+        if(isset($arConfig[$sKey1][$sKey2])) return $arConfig[$sKey1][$sKey2];
         if(isset($arConfig[$sKey1])) return $arConfig[$sKey1];
         return $arConfig;
     }

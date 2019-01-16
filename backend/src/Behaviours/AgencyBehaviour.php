@@ -22,15 +22,28 @@ class AgencyBehaviour extends AppModel
         $this->oQServ = new CoreQueriesService();
     }
     
+    private function query($sSQL,$iCol=NULL,$iRow=NULL)
+    {
+        return $this->oDb->query($sSQL,$iCol,$iRow);
+    }
+    
     public function get_tables()
     {
-        $arConfig = $this->get_config();
+        $sDb = $this->get_config("db","database");
+        $sSQL = $this->oQServ->get_tables($sDb);
+        //bug($sSQL);
+        $arRows = $this->query($sSQL,0);
+        //bug($arRows);
+        return $arRows;
     }
    
-    public function get_fields()
+    public function get_fields_info($sTable)
     {
-        $arConfig = $this->get_config();
-        
+        $sDb = $this->get_config("db","database");
+        $sSQL = $this->oQServ->get_fields($sDb,$sTable);
+        $arRows = $this->query($sSQL);
+        //bug($arRows);
+        return $arRows;
     }
 
 }//AgencyBehaviour

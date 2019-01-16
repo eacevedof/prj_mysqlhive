@@ -40,7 +40,10 @@ class CoreQueriesService extends AppService
         /*CoreQueriesService.get_tables*/
         SELECT table_name 
         FROM information_schema.tables 
-        WHERE table_schema='$sDb'";
+        WHERE 1
+        AND table_schema='$sDb'
+        ORDER BY 1
+        ";
         return $sSQL;        
     }//get_tables
     
