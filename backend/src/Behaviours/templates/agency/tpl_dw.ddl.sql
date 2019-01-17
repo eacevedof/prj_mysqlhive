@@ -1,6 +1,8 @@
 -- -----------------------------------------------------------------------------------------
 --  dw.%tablename%
 -- -----------------------------------------------------------------------------------------
+-- SELECT * FROM dw.%tablename% ORDER BY %fieldnamepk% DESC LIMIT 1;
+
 DROP table dw.%tablename%;
 
 CREATE TABLE dw.%tablename%(
