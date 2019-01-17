@@ -139,7 +139,7 @@ class AgencyService extends AppService
                 $arLinePhp[] = " => \"string\" ";
             }
             
-            if(in_array($arField["field_type"],["int","samllint","tinyint","mediumint","bigint","bit"]))
+            if(in_array($arField["field_type"],["int","smallint","tinyint","mediumint","bigint","bit"]))
             {                    
                 $arLineInsert[] = "-1";
                 $arLineDdl[] = "int"; 
