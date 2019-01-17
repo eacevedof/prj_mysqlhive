@@ -230,5 +230,8 @@ class AgencyService extends AppService
                 file_put_contents($sPathFinal,$sContent);
             }//arFilesTpl
         }//arTables
-    }
+        
+        return $arTables;
+    }//generate_exp
+    
 }//AgencyService

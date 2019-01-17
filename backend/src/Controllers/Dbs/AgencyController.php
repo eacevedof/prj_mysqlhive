@@ -28,8 +28,8 @@ class AgencyController extends AppController
     {
         pr(__METHOD__);
         $oServ = new AgencyService();
-        $oServ->generate_exp();
-        
+        $arTables = $oServ->generate_exp();
+        pr($arTables,"Tablas tratadas");
         
     }//index
 
