@@ -2,8 +2,8 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @name App\Services\Dbs\AgencyService 
- * @file AgencyService.php 1.0.0
+ * @name App\Services\Dbs\DbsService 
+ * @file DbsService.php 1.0.0
  * @date 15-01-2018 19:00 SPAIN
  * @observations
  */
@@ -12,7 +12,7 @@ namespace App\Services\Dbs;
 use App\Services\AppService;
 use App\Behaviours\AgencyBehaviour;
 
-class AgencyService extends AppService
+class DbsService extends AppService
 {
     private $oBehav;
     private $sPathTplsDS;
@@ -27,7 +27,7 @@ class AgencyService extends AppService
         $this->load_tags();
     }
     
-    private function load()
+    protected function load()
     {
         $this->oBehav = new AgencyBehaviour();
         
@@ -39,7 +39,7 @@ class AgencyService extends AppService
         unset($this->arFilesTpl[0]);unset($this->arFilesTpl[1]);
     }
     
-    private function load_tags()
+    protected function load_tags()
     {
         $sDb = $this->get_config("db","database");
         $sContext = $this->get_config("db","context");
@@ -63,7 +63,7 @@ class AgencyService extends AppService
         ];        
     }//load_tags
         
-    private function create_folder($sPath)
+    protected function create_folder($sPath)
     {
         //$sPath = $this->sPathTempDS.$sName;
         if(is_dir($sPath))
@@ -80,20 +80,20 @@ class AgencyService extends AppService
         return mkdir($sPath);
     }
         
-    private function get_tables()
+    protected function get_tables()
     {
         //$arReturn = [];
         $arReturn = $this->oBehav->get_tables();
         return $arReturn;
     }
 
-    private function get_fields_info($sTable)
+    protected function get_fields_info($sTable)
     {
         $arReturn = $this->oBehav->get_fields_info($sTable);
         return $arReturn;
     }
         
-    private function add_values(&$arTags,$arFields)
+    protected function add_values(&$arTags,$arFields)
     {
         //pr(array_column($arFields,"field_name"));
         $arTags["allfields"] = implode(",",array_column($arFields,"field_name"));
@@ -161,51 +161,5 @@ class AgencyService extends AppService
         
     }//add_values
     
-    public function generate_exp()
-    {
-        $arDiTables = ["di_campaign_fees","di_campaigns_lines","di_campaigns_lines_fees"
-            ,"di_campaings_payments","di_client_fees","di_fees","di_markets"
-            ,"di_payments","di_providers","di_segments"];
-        
-        $arTables = $this->get_tables();
-        foreach($arTables as $i=>$sTable)
-            if(!in_array($sTable,$arDiTables))
-                unset($arTables[$i]);
-        
-        foreach($arTables as $sTable)
-        {
-            $sPathDirTable = $this->sPathTempDS.$sTable;
-            $this->create_folder($sPathDirTable);
-            $arFields = $this->get_fields_info($sTable);
-            //bug($arFields);die;
-            foreach($this->arFilesTpl as $sTpl)
-            {
-                $sPathTpl = $this->sPathTplsDS.$sTpl;
-                $sContent = file_get_contents($sPathTpl);
-                
-                $arTags = $this->arTags["all"];
-                $arTags["tablename"] = $sTable;
-                
-                //pr($arTags);die;
-                $this->add_values($arTags,$arFields);
-                
-                foreach($arTags as $sTag => $sValue)
-                    $sContent = str_replace("%$sTag%",$sValue,$sContent);
-                
-                $sPathFinal = $sPathDirTable.DS.$sTable."_".$sTpl;
-                
-                if(strstr($sTpl,"load_cfg.php"))
-                    $sPathFinal = $sPathDirTable.DS."emr_load_cfg_{$sTable}.php";
-                
-                if(strstr($sTpl,"_build.php"))
-                    $sPathFinal = $sPathDirTable.DS."emr_build_{$sTable}.php";
-   
-                //if(is_file($sPathFinal)) unlink($sPathFinal);
-                file_put_contents($sPathFinal,$sContent);
-            }//arFilesTpl
-        }//arTables
-        
-        return $arTables;
-    }//generate_exp
     
-}//AgencyService
+}//DbsService
