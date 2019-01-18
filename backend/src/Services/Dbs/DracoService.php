@@ -21,18 +21,16 @@ class DracoService extends DbsService
     
     public function generate_exp()
     {
-        /*
-Las nuevas dimensiones para este report son:
-di_clientes se alimenta de la tabla draco_clientes
-di_plataformas se alimenta de la tabla draco_grupos_enlaces
-
-También hay que usar estas tablas de soporte:
-draco_tarifas_operador_info
-draco_tarifas_operador_info
-draco_numeracion_ordenes
-
-Todas las tablas de origen están en la bbdd operacional draco.
-        */
+/*
++-----------------------------+------------------------------------------------+--------------------------------+-------+-------------------+
+|         operacional         |                    staging                     |             sta_1              | sta_2 |        dw         |
++-----------------------------+------------------------------------------------+--------------------------------+-------+-------------------+
+| draco_clientes              | staging_tables.di_clientes                     |                                |       | dw.di_clientes    |
+| draco_grupos_enlaces        | staging_tables.di_plataformas_incremental_temp |                                |       | dw.di_plataformas |
+| draco_tarifas_operador_info | staging_tables.di_tarifas_incremental_temp     |                                |       | dw.di_tarifas     |
+| draco_numeracion_ordenes    |                                                | sta_1.draco_numeracion_ordenes |       |                   |
++-----------------------------+------------------------------------------------+--------------------------------+-------+-------------------+
+*/        
         $arDiTables = [
             //"",
             //"draco_clientes",
