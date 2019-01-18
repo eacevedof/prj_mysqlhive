@@ -29,7 +29,6 @@ ORDER BY rep_id DESC
 
 
 SELECT * FROM staging_tables.%tablename%_incremental_temp LIMIT 1;
-SELECT * FROM dw.%tablename% LIMIT 1;
 SELECT * FROM sta_1.%tablename% LIMIT 1;
 SELECT * FROM sta_2.%tablename% LIMIT 1;
-
+SELECT * FROM dw.%tablename% LIMIT 1;
