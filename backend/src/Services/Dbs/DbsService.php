@@ -33,6 +33,12 @@ class DbsService extends AppService
         
         $sDb = $this->get_config("db","database");
         $sPath = PATH_SRC.DS."Behaviours".DS."templates".DS."$sDb";
+        if(!is_dir($sPath)) 
+        {
+            $this->add_error("DbsServie.load(): no existe ruta $sPath");
+            $this->show_errors();
+            return;
+        }
         $this->sPathTplsDS = $sPath.DS;
         $this->sPathTempDS = PATH_PUBLIC.DS."temp".DS;
         $this->arFilesTpl = scandir($sPath);

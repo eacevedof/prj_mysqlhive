@@ -1,0 +1,3 @@
+php /mnt/proyecto/proyecto_eacevedo/trunk/reporting/bi/crons/cron_replicado_tablas_mysql_to_hive/replicate_config_process/%databasename%/emr_load_cfg_%tablename%.php --cluster=hortonprod
+
+php /mnt/proyecto/proyecto_eacevedo/trunk/reporting/bi/crons/cron_replicado_tablas_mysql_to_hive/replicate_build_process/%databasename%/emr_build_%tablename%.php --cluster=hortonprod

@@ -21,9 +21,20 @@ class DracoService extends DbsService
     
     public function generate_exp()
     {
-        $arDiTables = ["di_campaign_fees","di_campaigns_lines","di_campaigns_lines_fees"
-            ,"di_campaings_payments","di_client_fees","di_fees","di_markets"
-            ,"di_payments","di_providers","di_segments"];
+        /*
+Las nuevas dimensiones para este report son:
+di_clientes se alimenta de la tabla draco_clientes
+di_plataformas se alimenta de la tabla draco_grupos_enlaces
+
+También hay que usar estas tablas de soporte:
+draco_tarifas_operador_info
+draco_tarifas_operador_info
+draco_numeracion_ordenes
+
+Todas las tablas de origen están en la bbdd operacional draco.
+        */
+        $arDiTables = ["draco_clientes","draco_grupos_enlaces","draco_tarifas_operador_info"
+            ,"draco_numeracion_ordenes"];
         
         $arTables = $this->get_tables();
         foreach($arTables as $i=>$sTable)

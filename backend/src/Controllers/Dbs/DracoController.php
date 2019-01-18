@@ -10,7 +10,7 @@
 namespace App\Controllers\Dbs;
 
 use App\Controllers\AppController;
-use App\Services\Dbs\AgencyService;
+use App\Services\Dbs\DracoService;
 
 class DracoController extends AppController
 {
@@ -27,7 +27,7 @@ class DracoController extends AppController
     public function index()
     {
         pr(__METHOD__);
-        $oServ = new AgencyService();
+        $oServ = new DracoService();
         $arTables = $oServ->generate_exp();
         pr($arTables,"Tablas tratadas");
     }//index
