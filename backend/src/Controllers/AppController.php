@@ -120,7 +120,7 @@ class AppController
         return (isset($_GET[$sKey])?$_GET[$sKey]:"");
     }
     
-    protected function is_get(){return count($_GET)>0;}
+    protected function is_get($sKey=NULL){if($sKey) return isset($_GET[$sKey]); return count($_GET)>0;}
     
     protected function request_log()
     {

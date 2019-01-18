@@ -12,6 +12,7 @@ Ordenado por fecha de contratación y limitado a 50
     ["url"=>"/agency/","controller"=>"App\Controllers\Dbs\AgencyController","method"=>"index"],
     ["url"=>"/draco","controller"=>"App\Controllers\Dbs\DracoController","method"=>"index"],
     ["url"=>"/draco/","controller"=>"App\Controllers\Dbs\DracoController","method"=>"index"],
+    ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
 
 
 //resto de rutas    
