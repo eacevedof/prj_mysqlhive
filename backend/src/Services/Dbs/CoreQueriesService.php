@@ -18,7 +18,7 @@ class CoreQueriesService extends AppService
     {
         $sSQL = "
         /*CoreQueriesService.get_fields*/
-        SELECT DISTINCT LOWER(column_name) AS field_name
+        SELECT DISTINCT table_name,LOWER(column_name) AS field_name
         ,LOWER(DATA_TYPE) AS field_type
         ,IF(pkfields.field_name IS NULL,0,1) is_pk
         ,character_maximum_length AS field_length
