@@ -56,15 +56,15 @@ class DbsService extends AppService
                 ,"contextname"      =>  $sContext
                 ,"DATABASENAME"     =>  strtoupper($sDb)
                 ,"servername"       =>  $this->get_config("db","server")                
-                ,"tablename"        =>  ""
-                ,"allfields"        =>  ""
-                ,"fieldnamepk"      =>  ""
-                ,"fieldsinfo"       =>  ""
-                ,"fieldsinfoddl"    =>  ""
-                ,"fieldsvalue"      =>  ""
-                ,"fieldnamedate"    =>  ""
-                ,"tabletype"        =>  ""
-                ,"fieldsinfoddl"    =>  ""
+                ,"tablename"        =>  "@@@tablename@@@"
+                ,"allfields"        =>  "@@@allfields@@@"
+                ,"fieldnamepk"      =>  "@@@fieldnamepk@@@"
+                ,"fieldsinfo"       =>  "@@@fieldsinfo@@@"
+                ,"fieldsinfoddl"    =>  "@@@fieldsinfoddl@@@"
+                ,"fieldsvalue"      =>  "@@@fieldsvalue@@@"
+                ,"fieldnamedate"    =>  "@@@fieldnamedate@@@"
+                ,"tabletype"        =>  "@@@tabletype@@@"
+                ,"fieldsinfoddl"    =>  "@@@fieldsinfoddl@@@"
             ]
         ];        
     }//load_tags

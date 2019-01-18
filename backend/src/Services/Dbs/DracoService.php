@@ -34,7 +34,7 @@ draco_numeracion_ordenes
 Todas las tablas de origen están en la bbdd operacional draco.
         */
         $arDiTables = ["draco_clientes","draco_grupos_enlaces","draco_tarifas_operador_info"
-            ,"draco_numeracion_ordenes"];
+            ,"draco_tarifas_operador","draco_numeracion_ordenes"];
         
         $arTables = $this->get_tables();
         foreach($arTables as $i=>$sTable)
