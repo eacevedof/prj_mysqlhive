@@ -14,13 +14,13 @@ use App\Behaviours\AgencyBehaviour;
 
 class DbsService extends AppService
 {
-    private $oBehav;
-    private $sPathTplsDS;
-    private $sPathTempDS;//ruta publica donde se guardarán los resultados
-    private $arFilesTpl;
-    private $arTags;
+    protected $oBehav;
+    protected $sPathTplsDS;
+    protected $sPathTempDS;//ruta publica donde se guardarán los resultados
+    protected $arFilesTpl;
+    protected $arTags;
     
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
         $this->load();
@@ -161,5 +161,49 @@ class DbsService extends AppService
         
     }//add_values
     
+    public function process_tables($arTables)
+    {
+        foreach($arTables as $sTable)
+        {
+            $sPathDirTable = $this->sPathTempDS.$sTable;
+            $this->create_folder($sPathDirTable);
+            $arFields = $this->get_fields_info($sTable);
+            //bug($arFields);die;
+            foreach($this->arFilesTpl as $sTpl)
+            {
+                $sPathTpl = $this->sPathTplsDS.$sTpl;
+                $sContent = file_get_contents($sPathTpl);
+                
+                $arTags = $this->arTags["all"];
+                $arTags["tablename"] = $sTable;
+                
+                //pr($arTags);die;
+                $this->add_values($arTags,$arFields);
+                
+                foreach($arTags as $sTag => $sValue)
+                    $sContent = str_replace("%$sTag%",$sValue,$sContent);
+                
+                $sPathFinal = $sPathDirTable.DS.$sTable."_".$sTpl;
+                
+                if(strstr($sTpl,"load_cfg.php"))
+                    $sPathFinal = $sPathDirTable.DS."emr_load_cfg_{$sTable}.php";
+                
+                if(strstr($sTpl,"_build.php"))
+                    $sPathFinal = $sPathDirTable.DS."emr_build_{$sTable}.php";
+   
+                //if(is_file($sPathFinal)) unlink($sPathFinal);
+                file_put_contents($sPathFinal,$sContent);
+            }//arFilesTpl
+        }//arTables
+        
+    }//process_tables
+    
+    public function unset_tables(&$arTables,$arUnset=[])
+    {
+        foreach($arTables as $i=>$sTable)
+            if(!in_array($sTable,$arUnset))
+                unset($arTables[$i]);
+            
+    }//unset_tables
     
 }//DbsService

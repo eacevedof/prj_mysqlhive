@@ -2,8 +2,8 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @name App\Controllers\Dbs\AgencyController 
- * @file AgencyController.php 1.0.0
+ * @name App\Controllers\Dbs\DracoController 
+ * @file DracoController.php 1.0.0
  * @date 15-01-2019 15:01 SPAIN
  * @observations
  */
@@ -12,7 +12,7 @@ namespace App\Controllers\Dbs;
 use App\Controllers\AppController;
 use App\Services\Dbs\AgencyService;
 
-class AgencyController extends AppController
+class DracoController extends AppController
 {
     
     public function __construct()
@@ -22,7 +22,7 @@ class AgencyController extends AppController
     }
     
     /**
-     * ruta:    <dominio>/agency
+     * ruta:    <dominio>/draco
      */
     public function index()
     {
@@ -32,4 +32,4 @@ class AgencyController extends AppController
         pr($arTables,"Tablas tratadas");
     }//index
     
-}//AgencyController
+}//DracoController
