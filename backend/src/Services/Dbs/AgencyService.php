@@ -26,8 +26,8 @@ class AgencyService extends DbsService
             ,"di_payments","di_providers","di_segments"];
         
         $arTables = $this->get_tables();
-        $this->process_tables($arTables,$arDiTables);
-        
+        $this->unset_tables($arTables,$arDiTables);
+        $this->process_tables($arTables);        
         return $arTables;
     }//generate_exp
     
