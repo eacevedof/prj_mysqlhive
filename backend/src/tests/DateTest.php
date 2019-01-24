@@ -27,6 +27,8 @@ class DateTest extends TestCase
         $oFechaH->modify("first day of this month"); 
         
         $oFechaMayo = new DateTime($FECHA_PREVIA);
+        $this->log($oFechaMayo,"oFecMayo");
+        $this->log($oFechaH,"oFecDec");
         $this->assertEquals(TRUE,($oFechaMayo < $oFechaH));   
     }
 
