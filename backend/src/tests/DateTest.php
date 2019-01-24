@@ -14,7 +14,7 @@ class DateTest extends TestCase
         $oLog->save($mxVar,$sTitle);
     }
     
-    public function test_compare()
+    public function tes_compare()
     {
         $FECHA_PREVIA = "2018-05-01";
         $FECHA_EJECUCION = "2018-12-31"; 
@@ -29,8 +29,31 @@ class DateTest extends TestCase
         $oFechaMayo = new DateTime($FECHA_PREVIA);
         $this->log($oFechaMayo,"oFecMayo");
         $this->log($oFechaH,"oFecDec");
-        $this->assertEquals(TRUE,($oFechaMayo < $oFechaH));   
+        $this->assertEquals(TRUE,($oFechaMayo < $oFechaH));
     }
 
+    public function test_loop()
+    {
+        $FECHA_PREVIA = "2018-01-05";
+        $FECHA_EJECUCION = "2019-12-31";
+        
+        $oFechaD = new DateTime($FECHA_PREVIA);
+        $oFechaD->modify("first day of previous month");
+
+        $oFechaH = new DateTime($FECHA_EJECUCION);
+        $oFechaH->modify("first day of this month");         
+        
+        $this->log($oFechaD,"oFechaD");
+        $this->log($oFechaH,"oFechaH");
+        
+        while($oFechaD < $oFechaH) {
+            $oInterval = new DateInterval("P1M");
+            //$oInterval = new DateInterval("P1d");
+            $oFechaD->add($oInterval);
+            $this->log($oFechaD,"oInterval - P1M");
+        }
+        
+        $this->assertEquals(TRUE,($oFechaD === $oFechaH));
+    }
     
 }//DateTest
