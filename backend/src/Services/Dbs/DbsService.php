@@ -55,8 +55,9 @@ class DbsService extends AppService
                 "databasename"      =>  $sDb
                 ,"contextname"      =>  $sContext
                 ,"DATABASENAME"     =>  strtoupper($sDb)
-                ,"servername"       =>  $this->get_config("db","server")                
+                ,"servername"       =>  $this->get_config("db","server")
                 ,"tablename"        =>  "@@@tablename@@@"
+                ,"tablenameprefix"  =>  "@@@tablenameprefix@@@"
                 ,"allfields"        =>  "@@@allfields@@@"
                 ,"fieldnamepk"      =>  "@@@fieldnamepk@@@"
                 ,"fieldsinfo"       =>  "@@@fieldsinfo@@@"
@@ -141,6 +142,7 @@ class DbsService extends AppService
             }
             
             if($arField["extra"]=="auto_increment") $arLinePhp[] = ", \"pk\" => true ";
+            
             if(strstr($arField["field_name"],"_ts") && strstr($arField["field_name"],"modified_")) 
             {
                 $arTags["fieldnamedate"] = $arField["field_name"];
@@ -167,6 +169,21 @@ class DbsService extends AppService
         
     }//add_values
     
+    private function get_table_prefix($sTable)
+    {
+        $sDb = $this->get_config("db","database");
+        $arExplode = explode("_",$sTable);
+        
+        $arNew = [];
+        foreach($arExplode as $i=>$sVal)
+        {
+            if($i===1) $arNew[] = $sDb;
+            $arNew[] = $sVal;
+        }
+        
+        return implode("_",$arNew);
+    }
+    
     public function process_tables($arTables)
     {
         foreach($arTables as $sTable)
@@ -182,6 +199,7 @@ class DbsService extends AppService
                 
                 $arTags = $this->arTags["all"];
                 $arTags["tablename"] = $sTable;
+                $arTags["tablenameprefix"] = $this->get_table_prefix($sTable);
                 
                 //pr($arTags);die;
                 $this->add_values($arTags,$arFields);
@@ -192,10 +210,10 @@ class DbsService extends AppService
                 $sPathFinal = $sPathDirTable.DS.$sTable."_".$sTpl;
                 
                 if(strstr($sTpl,"load_cfg.php"))
-                    $sPathFinal = $sPathDirTable.DS."emr_load_cfg_{$sTable}.php";
+                    $sPathFinal = $sPathDirTable.DS."load_cfg_{$sTable}.php";
                 
                 if(strstr($sTpl,"_build.php"))
-                    $sPathFinal = $sPathDirTable.DS."emr_build_{$sTable}.php";
+                    $sPathFinal = $sPathDirTable.DS."build_{$sTable}.php";
    
                 //if(is_file($sPathFinal)) unlink($sPathFinal);
                 file_put_contents($sPathFinal,$sContent);

@@ -1,16 +1,16 @@
 -- -----------------------------------------------------------------------------------------
---  dw.%tablename%
+--  dw.%tablenameprefix%
 -- -----------------------------------------------------------------------------------------
--- SELECT * FROM dw.%tablename% ORDER BY %fieldnamepk% DESC LIMIT 1;
+-- SELECT * FROM dw.%tablenameprefix% ORDER BY %fieldnamepk% DESC LIMIT 1;
 
-DROP table dw.%tablename%;
+DROP TABLE dw.%tablenameprefix%;
 
-CREATE TABLE dw.%tablename%(
+CREATE TABLE dw.%tablenameprefix%(
 %fieldsinfoddl%
 )
 CLUSTERED BY(%fieldnamepk%) INTO 5 BUCKETS
 STORED AS ORC
 TBLPROPERTIES("orc.compress"="SNAPPY",'transactional'='true');
 
-INSERT INTO TABLE dw.%tablename%  VALUES (%fieldsvalue%);
+INSERT INTO TABLE dw.%tablenameprefix%  VALUES (%fieldsvalue%);
 
