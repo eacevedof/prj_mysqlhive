@@ -210,10 +210,10 @@ class DbsService extends AppService
                 $sPathFinal = $sPathDirTable.DS.$sTable."_".$sTpl;
                 
                 if(strstr($sTpl,"load_cfg.php"))
-                    $sPathFinal = $sPathDirTable.DS."load_cfg_{$sTable}.php";
+                    $sPathFinal = $sPathDirTable.DS."load_cfg_{$arTags["tablenameprefix"]}.php";
                 
                 if(strstr($sTpl,"_build.php"))
-                    $sPathFinal = $sPathDirTable.DS."build_{$sTable}.php";
+                    $sPathFinal = $sPathDirTable.DS."build_{$arTags["tablenameprefix"]}.php";
    
                 //if(is_file($sPathFinal)) unlink($sPathFinal);
                 file_put_contents($sPathFinal,$sContent);
