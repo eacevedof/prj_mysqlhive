@@ -4,7 +4,7 @@
  * @link www.eduardoaf.com
  * @name App\Services\Dbs\AgencyService 
  * @file AgencyService.php 1.0.0
- * @date 15-01-2018 19:00 SPAIN
+ * @date 28-01-2019 19:00 SPAIN
  * @observations
  */
 namespace App\Services\Dbs;
@@ -22,9 +22,18 @@ class AgencyService extends DbsService
     public function generate_exp()
     {
         $arDiTables = [
-            "di_campaigns","di_campaigns_lines","di_campaigns_lines_fees","di_campaigns_payments"
-            ,"di_campaign_fees","di_clients","di_client_fees","di_fees","di_markets"
-            ,"di_payments","di_providers","di_segments"
+            "di_campaigns"
+            ,"di_campaigns_lines"
+            //,"di_campaigns_lines_fees"    //25/01/2019 - va en di_client_fees
+            ,"di_campaigns_payments"
+            //,"di_campaign_fees"           //25/01/2019 - va en di_client_fess
+            ,"di_clients"
+            ,"di_client_fees"
+            ,"di_fees"
+            //,"di_markets"                 //hay que incluir en di_campaings 
+            ,"di_payments"
+            ,"di_providers"
+            ,"di_segments"
         ];
         
         $arTables = $this->get_tables();
