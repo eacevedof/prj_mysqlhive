@@ -33,7 +33,7 @@ class AgencyService extends DbsService
             //,"di_markets"                 //hay que incluir en di_campaings 
             ,"di_payments"
             ,"di_providers"
-            ,"di_segments"
+            //,"di_segments"                //no hace falta, se trae en otro proceso
         ];
         
         $arTables = $this->get_tables();
