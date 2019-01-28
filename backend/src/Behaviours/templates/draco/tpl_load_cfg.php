@@ -23,7 +23,7 @@ class replicate_table extends replicadormgr{
             "table_type"    =>  "%tabletype%",
         );
 
-        $this->set_replication_config("%tablename%",$options);
+        $this->set_replication_config("%tablenameprefix%",$options);
     }
 
 }

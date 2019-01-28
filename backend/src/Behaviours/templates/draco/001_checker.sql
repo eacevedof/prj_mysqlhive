@@ -23,12 +23,15 @@ ORDER BY ordinal_position ASC
 SELECT * 
 FROM draco.`bi_replication_tables` 
 WHERE 1
-AND rep_table LIKE '%%tablename%%'  -- tabla en operacional
-OR rep_name LIKE '%%tablename%%'  -- tabla en hive
+AND rep_table LIKE '%%tablename%%'      -- tabla en operacional
+OR rep_name LIKE '%%tablenameprefix%%'  -- tabla en hive
 ORDER BY rep_id DESC
 
 set tez.queue.name=informes_trafico;
-SELECT * FROM staging_tables.%tablename%_incremental_temp LIMIT 1;
-SELECT * FROM sta_1.%tablename% LIMIT 1;
-SELECT * FROM sta_2.%tablename% LIMIT 1;
-SELECT * FROM dw.%tablename% LIMIT 1;
+SELECT * FROM staging_tables.%tablenameprefix%_incremental_temp LIMIT 1;
+set tez.queue.name=informes_trafico;
+SELECT * FROM sta_1.%tablenameprefix% LIMIT 1;
+set tez.queue.name=informes_trafico;
+SELECT * FROM sta_2.%tablenameprefix% LIMIT 1;
+set tez.queue.name=informes_trafico;
+SELECT * FROM dw.%tablenameprefix% LIMIT 1;

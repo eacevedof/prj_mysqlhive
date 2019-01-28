@@ -10,8 +10,7 @@ class replicate_table extends replicadormgr{
         $this->db_context_source = '%contextname%';
         $this->db_source         = '%databasename%';
         $this->table_source      = "%tablename%";
-        $this->table_dest        = "%tablename%";
-
+        $this->table_dest        = "%tablenameprefix%";
 
         parent::__construct();
     }
