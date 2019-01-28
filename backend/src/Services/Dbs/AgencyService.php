@@ -24,11 +24,11 @@ class AgencyService extends DbsService
         $arDiTables = [
             "di_campaigns"
             ,"di_campaigns_lines"
-            //,"di_campaigns_lines_fees"    //25/01/2019 - va en di_client_fees
+            //,"di_campaigns_lines_fees"    //25/01/2019 - va en di_campaign_fees
             ,"di_campaigns_payments"
-            //,"di_campaign_fees"           //25/01/2019 - va en di_client_fess
+            ,"di_campaign_fees"           
             ,"di_clients"
-            ,"di_client_fees"
+            //,"di_client_fees"             //25/01/2019 - va en di_campaign_fees
             ,"di_fees"
             //,"di_markets"                 //hay que incluir en di_campaings 
             ,"di_payments"
