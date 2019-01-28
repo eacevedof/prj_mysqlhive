@@ -42,4 +42,14 @@ class AgencyService extends DbsService
         return $arTables;
     }//generate_exp
     
+    public function move_php()
+    {
+        $arFolders = scandir($this->sPathTempDS);
+        unset($arFolders[0]);unset($arFolders[1]);
+        foreach($arFolders as $sFolder)
+        {
+            
+        }
+    }
+        
 }//AgencyService

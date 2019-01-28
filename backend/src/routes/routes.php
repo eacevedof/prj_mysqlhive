@@ -6,6 +6,7 @@ return [
     ["url"=>"/","controller"=>"App\Controllers\NotFoundController","method"=>"index"],
     ["url"=>"/agency","controller"=>"App\Controllers\Dbs\AgencyController","method"=>"index"],
     ["url"=>"/agency/","controller"=>"App\Controllers\Dbs\AgencyController","method"=>"index"],
+    ["url"=>"/agency/movebuildcfg","controller"=>"App\Controllers\Dbs\AgencyController","method"=>"movebuildcfg"],
     ["url"=>"/draco","controller"=>"App\Controllers\Dbs\DracoController","method"=>"index"],
     ["url"=>"/draco/","controller"=>"App\Controllers\Dbs\DracoController","method"=>"index"],
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],

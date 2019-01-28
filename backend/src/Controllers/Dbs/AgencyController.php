@@ -32,4 +32,12 @@ class AgencyController extends AppController
         pr($arTables,"Tablas tratadas");
     }//index
     
+    public function movebuildcfg()
+    {
+        pr(__METHOD__);
+        $oServ = new AgencyService();
+        $oServ->move_php();    
+        pr("Archivos movidos ");
+    }
+    
 }//AgencyController
