@@ -56,6 +56,7 @@ class DbsService extends AppService
                 ,"contextname"      =>  $sContext
                 ,"DATABASENAME"     =>  strtoupper($sDb)
                 ,"servername"       =>  $this->get_config("db","server")
+                ,"datetoday"        =>  date("Ymd")
                 ,"tablename"        =>  "@@@tablename@@@"
                 ,"tablenameprefix"  =>  "@@@tablenameprefix@@@"
                 ,"allfields"        =>  "@@@allfields@@@"
