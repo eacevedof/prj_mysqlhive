@@ -26,7 +26,7 @@ class AgencyService extends DbsService
             ,"di_campaigns_lines"
             //,"di_campaigns_lines_fees"    //25/01/2019 - va en di_campaign_fees
             ,"di_campaigns_payments"
-            ,"di_campaign_fees"           
+            ,"di_campaigns_fees"            //28/01/2019 cambia nombre de sing a plural
             ,"di_clients"
             //,"di_client_fees"             //25/01/2019 - va en di_campaign_fees
             ,"di_fees"
