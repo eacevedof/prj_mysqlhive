@@ -34,7 +34,8 @@ class DateTest extends TestCase
     
     public function test_compare2months()
     {
-        $FECHA_HOY = date("Y-m-d");
+        //$FECHA_HOY = date("Y-m-d");
+        $FECHA_HOY = date("2018-11-01");
         //http://php.net/manual/en/datetime.formats.relative.php
         $oFechaD = new DateTime($FECHA_HOY);
         $oFechaD->modify("first day of previous month");
