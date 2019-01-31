@@ -18,10 +18,10 @@ class ArrayTest extends TestCase
     {
         $arOrig = [
             "r1" => ["field1"=>"val-11","field2"=>"val-12","field3"=>"val-13"],
-            "r2" => ["field2"=>"val-21","field3"=>"val-22","field4"=>"val-23"],
-            "r3" => ["field2"=>"val-31","field3"=>"val-32","field4"=>"val-33"],
-            "r4" => ["field2"=>"val-41","field3"=>"val-42","field4"=>"val-43"],
-            "r5" => ["field2"=>"val-51","field3"=>"val-52","field4"=>"val-53"]
+            "r2" => ["field1"=>"val-21","field2"=>"val-22","field3"=>"val-23"],
+            "r3" => ["field1"=>"val-31","field2"=>"val-32","field3"=>"val-33"],
+            "r4" => ["field1"=>"val-41","field2"=>"val-42","field3"=>"val-43"],
+            "r5" => ["field1"=>"val-51","field2"=>"val-52","field3"=>"val-53"]
         ];
         $iCountO = count($arOrig);
         $this->log($arOrig,"arOrig $iCountO");
