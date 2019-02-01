@@ -32,7 +32,7 @@ class DateTest extends TestCase
         $this->assertEquals(TRUE,($oFechaMayo < $oFechaH));
     }
     
-    public function test_compare2months()
+    public function tes_compare2months()
     {
         //$FECHA_HOY = date("Y-m-d");
         $FECHA_HOY = date("2018-11-01");
@@ -76,4 +76,19 @@ class DateTest extends TestCase
         $this->assertEquals(TRUE,($oFechaD === $oFechaH));
     }
     
+    public function test_feb_plus_1month()
+    {
+        //https://stackoverflow.com/questions/3602405/php-datetimemodify-adding-and-subtracting-months
+        $FIN_ENERO = "2018-01-31";
+        $oFecha = new DateTime($FIN_ENERO);        
+        $iDay = $oFecha->format("j");
+        
+        $oFecha->modify("first day of +1 month");
+        $oFecha->modify("+".(min($iDay,$oFecha->format("t"))-1) . " days");
+        
+        print_r("day: $iDay (".gettype($iDay).") \n");
+        print_r($oFecha);
+        $this->log($oFecha,"FECHA FEB + 1 MONTH");
+        $this->assertEquals(TRUE,($oFecha->format("Y-m-d")=="2018-02-28"));
+    }    
 }//DateTest
