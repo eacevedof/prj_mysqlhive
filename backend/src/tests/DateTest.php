@@ -82,11 +82,19 @@ class DateTest extends TestCase
         $FIN_ENERO = "2018-01-31";
         $oFecha = new DateTime($FIN_ENERO);        
         $iDay = $oFecha->format("j");
+        print_r("day:\t\t$iDay (".gettype($iDay).") \n");
         
         $oFecha->modify("first day of +1 month");
-        $oFecha->modify("+".(min($iDay,$oFecha->format("t"))-1) . " days");
+        $format_t = $oFecha->format("t");
+        print_r("format_t:\t$format_t \n");
         
-        print_r("day: $iDay (".gettype($iDay).") \n");
+        $minday = min($iDay,$oFecha->format("t"));
+        print_r("minday:\t\t$minday \n");
+        
+        $mindayless1 = $minday-1;
+        print_r("mindayless1:\t$mindayless1 \n");
+        $oFecha->modify("+$mindayless1 days");
+        
         print_r($oFecha);
         $this->log($oFecha,"FECHA FEB + 1 MONTH");
         $this->assertEquals(TRUE,($oFecha->format("Y-m-d")=="2018-02-28"));
