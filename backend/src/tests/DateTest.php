@@ -76,7 +76,7 @@ class DateTest extends TestCase
         $this->assertEquals(TRUE,($oFechaD === $oFechaH));
     }
     
-    public function test_feb_plus_1month()
+    public function test_31jan_plus_1month()
     {
         //https://stackoverflow.com/questions/3602405/php-datetimemodify-adding-and-subtracting-months
         $FIN_ENERO = "2018-01-31";
