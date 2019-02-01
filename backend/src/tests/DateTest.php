@@ -82,17 +82,17 @@ class DateTest extends TestCase
         $FIN_ENERO = "2018-01-31";
         $oFecha = new DateTime($FIN_ENERO);        
         $iDay = $oFecha->format("j");
-        print_r("day:\t\t$iDay (".gettype($iDay).") \n");
+        print_r("day:\t\t$iDay (".gettype($iDay).") \n");       //31
         
         $oFecha->modify("first day of +1 month");
         $format_t = $oFecha->format("t");
-        print_r("format_t:\t$format_t \n");
+        print_r("format_t:\t$format_t \n");                     //28
         
-        $minday = min($iDay,$oFecha->format("t"));
+        $minday = min($iDay,$oFecha->format("t"));              //28
         print_r("minday:\t\t$minday \n");
         
         $mindayless1 = $minday-1;
-        print_r("mindayless1:\t$mindayless1 \n");
+        print_r("mindayless1:\t$mindayless1 \n");               //27
         $oFecha->modify("+$mindayless1 days");
         
         print_r($oFecha);
