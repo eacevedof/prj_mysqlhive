@@ -22,18 +22,19 @@ class AgencyService extends DbsService
     public function generate_exp()
     {
         $arDiTables = [
-            "di_campaigns"
-            ,"di_campaigns_lines"
+            //"di_campaigns"
+            //,"di_campaigns_lines"
             //,"di_campaigns_lines_fees"    //25/01/2019 - va en di_campaign_fees
-            ,"di_campaigns_payments"
-            ,"di_campaigns_fees"            //28/01/2019 cambia nombre de sing a plural
-            ,"di_clients"
+            //,"di_campaigns_payments"
+            //,"di_campaigns_fees"            //28/01/2019 cambia nombre de sing a plural
+            //,"di_clients"
             //,"di_client_fees"             //25/01/2019 - va en di_campaign_fees
-            ,"di_fees"
+            //,"di_fees"
             //,"di_markets"                 //hay que incluir en di_campaings 
-            ,"di_payments"
-            ,"di_providers"
+            //,"di_payments"
+            //,"di_providers"
             //,"di_segments"                //no hace falta, se trae en otro proceso
+            "di_forecasts"
         ];
         
         $arTables = $this->get_tables();
