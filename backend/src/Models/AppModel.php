@@ -86,9 +86,12 @@ class AppModel
     }
     
     //hace un insert automatico a partir de lo que viene en $_POST
-    public function insert($arPost)
+    public function insert($arPost,$isUi=1)
     {
-        $arData = $this->get_keyvals($arPost);
+        $arData = $arPost;
+        if($isUi)
+            $arData = $this->get_keyvals($arPost);
+        
         if($arData)
         {
             //helper generador de consulta. 

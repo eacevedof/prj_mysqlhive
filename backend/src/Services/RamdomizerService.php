@@ -139,7 +139,7 @@ class RamdomizerService extends AppService
         return $this->get_char($charset);
     }
     
-    public function get_char_AZ()
+    public function get_char_up_az()
     {
         $charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         return $this->get_char($charset);

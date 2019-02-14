@@ -42,8 +42,19 @@ class AgregacionService extends AppService
         $this->truncate_operations();
         for($i=0;$i<50;$i++)
         {
-            $arDat["op_d1"] = "d1".$this->oRnd->get_int(1,3);
+            $arDat["op_d1"] = "d1".$this->oRnd->get_item(["A","B","C"]);
+            $arDat["op_d2"] = "d2".$this->oRnd->get_item(["A","B","C"]);
+            $arDat["op_d3"] = "d3".$this->oRnd->get_item(["A","B","C"]);
+            $arDat["op_d4"] = "d4".$this->oRnd->get_item(["A","B","C"]);
+            $arDat["op_d5"] = "d5".$this->oRnd->get_item(["A","B","C"]);
             
+            $arDat["op_m1"] = "d5".$this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+            $arDat["op_m2"] = "d5".$this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+            $arDat["op_m3"] = "d5".$this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+            $arDat["op_m4"] = "d5".$this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+            $arDat["op_m5"] = "d5".$this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+            
+            $this->oModel->insert($arDat,0);
         }
     }
     
