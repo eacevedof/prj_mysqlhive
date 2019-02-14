@@ -1,19 +1,19 @@
 <?php
 //index.php 3.0.0
 define("DS",DIRECTORY_SEPARATOR);
-$sPath = realpath($_SERVER["DOCUMENT_ROOT"].DS."../src");
+define("DOCROOT",__DIR__);//con $_SERVER[DOCUMENT_ROOT] y PWD no va
+$sPath = realpath(DOCROOT.DS."../src");
 define("PATH_SRC",$sPath);
 define("PATH_SRC_CONFIG",PATH_SRC.DS."config");
-$sPath = realpath($_SERVER["DOCUMENT_ROOT"].DS."../public");
+$sPath = realpath(DOCROOT.DS."../public");
 define("PATH_PUBLIC",$sPath);
-$sPath = realpath($_SERVER["DOCUMENT_ROOT"].DS."../vendor");
+$sPath = realpath(DOCROOT.DS."../vendor");
 define("PATH_VENDOR",$sPath);
 $sPath = realpath(PATH_SRC.DS."logs");
 define("PATH_LOGS",$sPath);
 
 //echo(PATH_SRC);die;
-
-$arConfig = realpath(__DIR__."/../src/config/config.php");
+$arConfig = realpath(PATH_SRC_CONFIG.DS."config.php");
 include($arConfig);
 
 //DOCUMENT_ROOT:es la carpeta public
