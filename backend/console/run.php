@@ -58,6 +58,27 @@ if($isCLI)
         $classname = $ar_arg["class"];
         $classname = str_replace(".","\\",$classname);
         $o = new $classname();
+        
+        if(isset($ar_arg["method"]))
+        {
+            $method = $ar_arg["method"];
+            $oRflecMethod = new \ReflectionMethod($classname,$method);
+            
+            //print_r($oRflecMethod->getParameters());
+            $arMethArgs = [];
+            foreach($oRflecMethod->getParameters() as $oParam)
+            {
+                if(isset($ar_arg[$oParam->getName()]))
+                    $arMethArgs[] =  $ar_arg[$oParam->getName()];
+                else 
+                    $arMethArgs[] =  $oParam->getDefaultValue();
+            }
+            
+            //var_dump($oRflecMethod->getParameters());
+            //$o->{$method}();
+            $mxR = $oRflecMethod->invokeArgs($o,$arMethArgs);
+            print_r($mxR);
+        }
     }
 }
 else

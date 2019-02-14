@@ -13,6 +13,9 @@ php -S localhost:3000 -t backend/public
 ```js
 php run.php --class=a.b.c --method=some --params=a--a
 php run.php --class=App.Controllers.NotFoundController
+php run.php --class=App.Services.RamdomizerService
+php run.php --class=App.Services.RamdomizerService --method=get_date_ymd --cSep="//"
+
 ```
 
 #### Borrar historial
