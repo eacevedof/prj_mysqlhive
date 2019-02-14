@@ -38,9 +38,9 @@ class AppModel
         $this->oDb = $oDb;
     }
         
-    public function query($sSQL)
+    public function query($sSQL,$iCol=NULL,$iRow=NULL)
     {
-        $mxRet = $this->oDb->query($sSQL);
+        $mxRet = $this->oDb->query($sSQL,$iCol=NULL,$iRow=NULL);
         return $mxRet;
     }
     
@@ -192,4 +192,6 @@ class AppModel
     }
         
     public function set_table($sTable){$this->sTable = $sTable;}
+    public function add_pk($sFieldName){$this->arPks[] = $sFieldName;}
+    public function set_pk($sFieldName){$this->arPks = []; $this->arPks[] = $sFieldName;}
 }//AppModel

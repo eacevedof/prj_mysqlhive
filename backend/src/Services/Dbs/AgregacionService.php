@@ -33,7 +33,7 @@ class AgregacionService extends AppService
     
     public function add_operation()
     {
-        print_r("AgregacionService.add_operation($iNum)");
+        print_r("AgregacionService.add_operation");
         $this->oModel->set_table("tbl_operation");
         
         $arData["op_d1"] = "d1".$this->oRnd->get_item(["A","B","C"]);
@@ -58,10 +58,52 @@ class AgregacionService extends AppService
         }
     }
     
+    public function modif_operation()
+    {
+        print_r("AgregacionService.add_operation");
+        $this->oModel->set_table("tbl_operation");
+        $this->oModel->set_pk("id");
+        
+        $sSQL = "SELECT id FROM tbl_operation";
+        $arIds = $this->oModel->query($sSQL,0);
+        $arIds = array_column($arIds,"id");
+        //print_r($arIds);die;
+        
+        $arData["id"] = $this->oRnd->get_item($arIds);
+        $arData["op_m1"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+        $arData["op_m2"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+        $arData["op_m3"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+        $arData["op_m4"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000)); 
+        
+        $this->oModel->update($arData,0);
+    }
+    
     public function first_load()
     {
         $this->truncate_operations();
         $this->add_operations(50);
+    }
+    
+    public function check_modified($iMin=NULL)
+    {
+        if(!$iMin) $iMin=10;
+        $sSQL = "
+        SELECT id,op_cdate,op_mdate
+        FROM tbl_operation 
+        WHERE 1
+        AND 
+        (
+            op_cdate > (NOW() - INTERVAL $iMin MINUTE)
+            OR op_mdate > (NOW() - INTERVAL $iMin MINUTE)
+        )
+        ";
+        $arRows = $this->oModel->query($sSQL);
+        return $arRows;
+    }
+    
+    public function update()
+    {
+        $arIds = $this->get_keys("tbl_operation");
     }
     
     public function run()
