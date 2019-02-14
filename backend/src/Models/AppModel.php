@@ -92,6 +92,7 @@ class AppModel
         if($isUi)
             $arData = $this->get_keyvals($arPost);
         
+        //print_r($arData);die;
         if($arData)
         {
             //helper generador de consulta. 
@@ -101,6 +102,7 @@ class AppModel
             foreach($arData as $sFieldName=>$sValue)
                 $oCrud->add_insert_fv($sFieldName,$sValue);
             $oCrud->autoinsert();
+            //print_r($oCrud);die;
             $this->log($oCrud->get_sql());
             if($oCrud->is_error())
                 $this->add_error("An error occurred while trying to save");
@@ -126,9 +128,11 @@ class AppModel
         return $arPks;
     }    
     
-    public function update($arPost)
+    public function update($arPost,$isUi=1)
     {
-        $arData = $this->get_keyvals($arPost);
+        $arData = $arPost;
+        if($isUi)
+            $arData = $this->get_keyvals($arPost);
         
         $arNoPks = $this->get_no_pks($arData);
         $arPks = $this->get_pks($arData);
