@@ -113,7 +113,42 @@ class RamdomizerService extends AppService
     
     public function get_itemkey($arArray){return array_rand($arArray);}
     
-    public function get_itemval($arArray){return $arArray[array_rand($arArray)];
+    public function get_itemval($arArray){return $arArray[array_rand($arArray)];}
     
-    }    
+    public function get_char($sString)
+    {
+        //$sString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        $arChars = explode("",$sString);
+        $iChars = count($arChars);
+        $iChars--;
+        $iRnd = $this->get_int(0,$iChars);
+        return $arChars[$iRnd];        
+    }
+    
+    public function get_item($arItems)
+    {
+        $iItems = count($arItems);
+        $iItems--;
+        $iRnd = $this->get_int(0,$iItems);
+        return $arItems[$iRnd];        
+    }
+    
+    public function get_char_az()
+    {
+        $charset = "abcdefghijklmnopqrstuvwxyz";
+        return $this->get_char($charset);
+    }
+    
+    public function get_char_AZ()
+    {
+        $charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        return $this->get_char($charset);
+    }
+    
+    public function get_char_full()
+    {
+        $charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        return $this->get_char($charset);        
+    }
+    
 }//RamdomizerService

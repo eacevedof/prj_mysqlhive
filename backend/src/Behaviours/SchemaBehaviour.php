@@ -22,7 +22,7 @@ class SchemaBehaviour extends AppModel
         $this->oQServ = new CoreQueriesService();
     }
     
-    private function query($sSQL,$iCol=NULL,$iRow=NULL)
+    public function query($sSQL,$iCol=NULL,$iRow=NULL)
     {
         return $this->oDb->query($sSQL,$iCol,$iRow);
     }
