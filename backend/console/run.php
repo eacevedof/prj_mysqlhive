@@ -37,11 +37,11 @@ function arguments($argv) {
     $_ARG = array();
     foreach ($argv as $arg_i) 
     {
-        if (ereg('--([^=]+)=(.*)',$arg_i,$arKeyVal)) {
+        if (preg_match("/--([^=]+)=(.*)/",$arg_i,$arKeyVal)) {
             $_ARG[$arKeyVal[1]] = $arKeyVal[2];
         } 
-        elseif(ereg('-([a-zA-Z0-9])',$arg_i,$arKeyVal)) {
-            $_ARG[$arKeyVal[1]] = 'true';
+        elseif(preg_match("/-([a-zA-Z0-9])/",$arg_i,$arKeyVal)) {
+            $_ARG[$arKeyVal[1]] = "true";
         }
     }
     return $_ARG;
@@ -50,7 +50,15 @@ function arguments($argv) {
 $isCLI = (php_sapi_name() == "cli");
 if($isCLI)
 {
-    print_r($argv);
+    //print_r($argv);
+    $ar_arg = arguments($argv);
+    //print_r($ar_arg);
+    if(isset($ar_arg["class"]))
+    {
+        $classname = $ar_arg["class"];
+        $classname = str_replace(".","\\",$classname);
+        $o = new $classname();
+    }
 }
 else
     echo "";

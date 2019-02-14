@@ -10,6 +10,11 @@ php /c/programas/composer/composer.phar update
 php -S localhost:3000 -t backend/public
 ```
 
+```js
+php run.php --class=a.b.c --method=some --params=a--a
+php run.php --class=App.Controllers.NotFoundController
+```
+
 #### Borrar historial
 ```js
 git filter-branch --force --index-filter \
