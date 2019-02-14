@@ -16,6 +16,7 @@ php run.php --class=App.Controllers.NotFoundController
 php run.php --class=App.Services.RamdomizerService
 php run.php --class=App.Services.RamdomizerService --method=get_date_ymd --cSep="//"
 php run.php --class=App.Services.Dbs.AgregacionService --method=run
+php run.php --class=App.Services.Dbs.SchemaService --method=get_tables
 
 ```
 

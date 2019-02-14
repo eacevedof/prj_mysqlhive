@@ -20,14 +20,14 @@ class SchemaService
         $this->oBehav = new SchemaBehaviour();
     }
     
-    protected function get_tables()
+    public function get_tables()
     {
         //$arReturn = [];
         $arReturn = $this->oBehav->get_tables();
         return $arReturn;
     }
 
-    protected function get_fields_info($sTable)
+    public function get_fields_info($sTable)
     {
         $arReturn = $this->oBehav->get_fields_info($sTable);
         return $arReturn;
