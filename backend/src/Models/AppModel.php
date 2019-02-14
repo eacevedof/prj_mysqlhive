@@ -38,6 +38,18 @@ class AppModel
         $this->oDb = $oDb;
     }
         
+    public function query($sSQL)
+    {
+        $mxRet = $this->oDb->query($sSQL);
+        return $mxRet;
+    }
+    
+    public function execute($sSQL)
+    {
+        $mxRet = $this->oDb->exec($sSQL);
+        return $mxRet;
+    }    
+    
     public function get_max($sField)
     {
         if($sField)
@@ -172,4 +184,5 @@ class AppModel
         return (count($arPks)===count($this->arPks));
     }
         
+    public function set_table($sTable){$this->sTable = $sTable;}
 }//AppModel
