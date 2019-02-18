@@ -78,23 +78,33 @@ class AgregacionService extends AppService
         $this->oModel->update($arData,0);
     }
     
+    public function modif_operations($iNum=1)
+    {
+        for($i=0;$i<$iNum;$i++)
+        {
+            print_r("AgregacionService.modif_operations $i \n");
+            $this->modif_operation();
+        }
+    }
+    
+    
     public function first_load()
     {
         $this->truncate_operations();
         $this->add_operations(50);
     }
     
-    public function check_modified($iMin=NULL)
+    public function check_modified($iMins=NULL)
     {
-        if(!$iMin) $iMin=10;
+        if(!$iMins) $iMins=10;
         $sSQL = "
         SELECT id,op_cdate,op_mdate
         FROM tbl_operation 
         WHERE 1
         AND 
         (
-            op_cdate > (NOW() - INTERVAL $iMin MINUTE)
-            OR op_mdate > (NOW() - INTERVAL $iMin MINUTE)
+            op_cdate > (NOW() - INTERVAL $iMins MINUTE)
+            OR op_mdate > (NOW() - INTERVAL $iMins MINUTE)
         )
         ";
         $arRows = $this->oModel->query($sSQL);

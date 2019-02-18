@@ -39,3 +39,10 @@ git push origin --force --all
 ## el fichero no debería estar editado
 git rm --cached ./backend/src/config/config.php
 ```
+
+## Integrador
+```sql
+comprueba ultimos registros cambiados
+
+
+```
