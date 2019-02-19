@@ -33,4 +33,20 @@ class SchemaService
         return $arReturn;
     }
         
+    public function get_tables_info($sTables="")
+    {
+        $arTables = [];
+        if(!$sTables)
+            $arTables = $this->get_tables();
+        else 
+            $arTables = explode(",",$sTables);
+        
+        $arReturn = [];
+        foreach ($arTables as $sTable)
+            $arReturn[$sTable] = $this->get_fields_info($sTable);
+        
+        return $arReturn;
+    }
+    
+    
 }//SchemaService
