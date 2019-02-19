@@ -43,6 +43,18 @@ git rm --cached ./backend/src/config/config.php
 ## Integrador
 ```sql
 comprueba ultimos registros cambiados
+busca los registros en el historico
+    si existe
+        comprueba fechas
+            si cambios
+                comprobar si alguna metrica ha cambiado, si ha cambiado se actualiza la métrica y la fecha
+                si no ha cambiado ninguna metrica se actualizan las fechas
+            no cambios en fechas, nada
 
+    si no existe
+        se insertan nuevas métricas
+
+
+            
 
 ```
