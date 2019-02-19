@@ -21,6 +21,26 @@ class RtbService extends DbsService
     
     public function generate_exp()
     {
+/*
+SELECT COUNT(*) FROM rtb.insertion_orders;                      -- 3526
+SELECT COUNT(*) FROM rtb.bigdata_banners;                       -- 11328
+SELECT COUNT(*) FROM rtb.bigdata_placements; (cts)              -- 2868817
+SELECT COUNT(*) FROM rtb.super_black_list;   (cts)              -- 568
+SELECT COUNT(*) FROM rtb.line_items; (*)                        -- 38425
+SELECT COUNT(*) FROM rtb.insertion_orders_placement_type; (*)	-- 487032
+SELECT COUNT(*) FROM rtb.insertion_orders_placement_tactic; (*)	-- 4913177
+SELECT COUNT(*) FROM rtb.pmp_deals; (cts)                       -- 68
+SELECT COUNT(*) FROM rtb.pmp_deals_placements;                  -- 3364
+
+-- hechos
+SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201809;		-- 22279656
+SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201810;		-- 46419644
+SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201811;		-- 64153868
+SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201812;		-- 84725192
+SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201901;		-- 58529814
+SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201902;		-- 46519389
+SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201903;		-- 0
+ */        
         $arDiTables = [
             "insertion_orders",
             "bigdata_banners",
