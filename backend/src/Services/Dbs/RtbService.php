@@ -4,7 +4,7 @@
  * @link www.eduardoaf.com
  * @name App\Services\Dbs\RtbService 
  * @file RtbService.php 1.0.0
- * @date 28-01-2019 19:00 SPAIN
+ * @date 19-02-2019 11:02 SPAIN
  * @observations
  */
 namespace App\Services\Dbs;
@@ -22,19 +22,16 @@ class RtbService extends DbsService
     public function generate_exp()
     {
         $arDiTables = [
-            //"di_campaigns"
-            //,"di_campaigns_lines"
-            //,"di_campaigns_lines_fees"    //25/01/2019 - va en di_campaign_fees
-            //,"di_campaigns_payments"
-            //,"di_campaigns_fees"            //28/01/2019 cambia nombre de sing a plural
-            //,"di_clients"
-            //,"di_client_fees"             //25/01/2019 - va en di_campaign_fees
-            //,"di_fees"
-            //,"di_markets"                 //hay que incluir en di_campaings 
-            //,"di_payments"
-            //,"di_providers"
-            //,"di_segments"                //no hace falta, se trae en otro proceso
-            "di_forecasts"
+            "insertion_orders",
+            "bigdata_banners",
+            "bigdata_placements",
+            "super_black_list",
+            "line_items",
+            "insertion_orders_placement_type",
+            "insertion_orders_placement_tactic",
+            "pmp_deals",
+            "pmp_deals_placements",
+            //"bigdata_bids_hora_YM"  //hechos
         ];
         
         $arTables = $this->get_tables();
@@ -42,15 +39,5 @@ class RtbService extends DbsService
         $this->process_tables($arTables);        
         return $arTables;
     }//generate_exp
-    
-    public function move_php()
-    {
-        $arFolders = scandir($this->sPathTempDS);
-        unset($arFolders[0]);unset($arFolders[1]);
-        foreach($arFolders as $sFolder)
-        {
-            
-        }
-    }
         
 }//RtbService
