@@ -20,6 +20,10 @@ php run.php --class=App.Services.Dbs.SchemaService --method=get_tables
 ```
 
 ```js
+php run.php --class=App.Services.Dbs.SchemaService --method=get_tables_info --sTables=insertion_orders,bigdata_banners,bigdata_placements,super_black_list,line_items,insertion_orders_placement_type,insertion_orders_placement_tactic,pmp_deals,pmp_deals_placements
+```
+
+```js
 php run.php --class=App.Services.Dbs.AgregacionService --method=first_load 
 php run.php --class=App.Services.Dbs.AgregacionService --method=add_operation
 php run.php --class=App.Services.Dbs.AgregacionService --method=modf_operation

@@ -9,6 +9,8 @@ return [
     ["url"=>"/agency/movebuildcfg","controller"=>"App\Controllers\Dbs\AgencyController","method"=>"movebuildcfg"],
     ["url"=>"/draco","controller"=>"App\Controllers\Dbs\DracoController","method"=>"index"],
     ["url"=>"/draco/","controller"=>"App\Controllers\Dbs\DracoController","method"=>"index"],
+    ["url"=>"/rtb","controller"=>"App\Controllers\Dbs\RtbController","method"=>"index"],
+    ["url"=>"/rtb/","controller"=>"App\Controllers\Dbs\RtbController","method"=>"index"],
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
 
 //resto de rutas    
