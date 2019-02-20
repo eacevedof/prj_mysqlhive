@@ -1,6 +1,7 @@
 -- -----------------------------------------------------------------------------------------
 --  dw.%tablenameprefix%
 -- -----------------------------------------------------------------------------------------
+set tez.queue.name=%%queue%%;
 -- SELECT * FROM dw.%tablenameprefix% ORDER BY %fieldnamepk% DESC LIMIT 1;
 
 DROP TABLE dw.%tablenameprefix%;

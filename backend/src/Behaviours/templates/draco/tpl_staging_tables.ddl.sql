@@ -1,6 +1,7 @@
 -- -----------------------------------------------------------------------------------------
 -- staging_tables.%tablenameprefix%_incremental_temp
 -- -----------------------------------------------------------------------------------------
+set tez.queue.name=%%queue%%;
 -- SELECT * FROM staging_tables.%tablenameprefix%_incremental_temp ORDER BY %fieldnamepk% DESC LIMIT 1;
 
 DROP TABLE IF EXISTS staging_tables.%tablenameprefix%_incremental_temp;

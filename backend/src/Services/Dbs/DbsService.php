@@ -67,6 +67,7 @@ class DbsService extends AppService
                 ,"fieldnamedate"    =>  "@@@fieldnamedate@@@"
                 ,"tabletype"        =>  "@@@tabletype@@@"
                 ,"fieldsinfoddl"    =>  "@@@fieldsinfoddl@@@"
+                ,"queue"            => $this->get_config("db","queue")
             ]
         ];        
     }//load_tags

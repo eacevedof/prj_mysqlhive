@@ -27,11 +27,11 @@ AND rep_table LIKE '%%tablename%%'      -- tabla en operacional
 OR rep_name LIKE '%%tablenameprefix%%'  -- tabla en hive
 ORDER BY rep_id DESC
 
-set tez.queue.name=informes_trafico;
+set tez.queue.name=%%queue%%;
 SELECT * FROM staging_tables.%tablenameprefix%_incremental_temp LIMIT 1;
-set tez.queue.name=informes_trafico;
+set tez.queue.name=%%queue%%;
 SELECT * FROM sta_1.%tablenameprefix% LIMIT 1;
-set tez.queue.name=informes_trafico;
+set tez.queue.name=%%queue%%;
 SELECT * FROM sta_2.%tablenameprefix% LIMIT 1;
-set tez.queue.name=informes_trafico;
+set tez.queue.name=%%queue%%;
 SELECT * FROM dw.%tablenameprefix% LIMIT 1;
