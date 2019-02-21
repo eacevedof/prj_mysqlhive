@@ -54,6 +54,11 @@ SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201903;		-- 0
             //"bigdata_bids_hora_YM"  //hechos
         ];
         
+        $arDiTables = [
+            "bigdata_operators",
+            "bigdata_placements_categories"
+        ];
+        
         $arTables = $this->get_tables();
         $this->unset_tables($arTables,$arDiTables);
         $this->process_tables($arTables);        
