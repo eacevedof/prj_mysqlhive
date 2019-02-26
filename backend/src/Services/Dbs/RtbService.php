@@ -42,21 +42,22 @@ SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201902;		-- 46519389
 SELECT COUNT(*) FROM rtb.bigdata_bids_hora_201903;		-- 0
  */        
         $arDiTables = [
-            "insertion_orders",
-            "bigdata_banners",
-            "bigdata_placements",
-            "super_black_list",
-            "line_items",
-            "insertion_orders_placement_type",
-            "insertion_orders_placement_tactic",
-            "pmp_deals",
-            "pmp_deals_placements",
+            "insertion_orders_group",
+            //"bigdata_banners",
+            //"bigdata_placements",
+            //"super_black_list",
+            //"line_items",
+            //"insertion_orders_placement_type",
+            //"insertion_orders_placement_tactic",
+            //"pmp_deals",
+            //"pmp_deals_placements",
             //"bigdata_bids_hora_YM"  //hechos
         ];
         
         $arDiTables = [
-            "bigdata_operators",
-            "bigdata_placements_categories"
+            //"bigdata_operators",
+            //"bigdata_placements_categories",
+            "insertion_orders_group"
         ];
         
         $arTables = $this->get_tables();
