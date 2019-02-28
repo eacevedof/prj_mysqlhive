@@ -33,9 +33,15 @@ $sustitución = '${1}1,$3';
 echo preg_replace($patrón, $sustitución, $cadena);
 */       
         $rep = "and coalesce(cdr_numeroc_tarifa_id,0) not in (".implode(',',[1,2,3,4,5]).")";
-        $changed2 = preg_replace("/and stats.operador_saliente_id\s+not\s+in\s+\((.*[^\(\)])\)/i",$rep,$string);
+        $changed2 = preg_replace("@and stats.operador_saliente_id\s+not\s+in\s+\([^\(\)]*\)@i",$rep,$string);
         print_r("\n\n");
         print_r($changed2);
+/*
+Resultado
+where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and stats.operador_saliente_id not in ('481','482','522','562','567') esto es más texto in() fin de linea and otro_campo in (a,b,c)
+where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and coalesce(cdr_numeroc_tarifa_id,0) not in (1,2,3,4,5) esto es más texto in() fin de linea and otro_campo in (a,b,c)
+*/        
+        
         
         $this->assertEquals(TRUE,is_string($changed2));
     }

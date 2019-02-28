@@ -142,21 +142,37 @@ class AgregacionService extends AppService
 
     }
     
-    private function get_combinatoria($n,$k)
+    public function get_combinatoria($n,$k)
     {
         //r = (n!/k!)*(1/(n-k)!)
-        //$r = ()
+        $nf = gmp_fact($n);
+        $kf = gmp_fact($k);
+        $nmk = $n-$k;
+        $nmkf = gmp_fact($nmk);
+        $nfdvkf = ($nf/$kf);
+        $invnkf = ((float)1/(float)$nmkf);
+        $nkf = (float)$nfdvkf * (float)$invnkf;
+        
+        //echo "nf:$nf, kf:$kf, nmk:$nmk, nmkf:$nmkf, nkf:$nkf, nfdvkf:$nfdvkf, invnkf:$invnkf \n";
+        return $nkf;
     }
-
-
-
 
     public function get_posibilites()
     {
         $arElemnts = ["a","b","c","d"];
+        $iElem = count($arElemnts);
         
+        $arR = [];
+        for($i=0; $i<$iElem; $i++)
+        {
+            $arR[$i+1][] = "";
+            foreach($arElemnts as $e)
+            {
+                
+            }
+        }
+       
     }
-        
     
 }//AgregacionService
 
