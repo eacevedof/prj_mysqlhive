@@ -13,10 +13,11 @@ class StringTest extends TestCase
         $oLog->save($mxVar,$sTitle);
     }
     
-    public function test_str_ireplace()
+    public function test_preg_replace_not_in()
     {
         $string = "where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and stats.operador_saliente_id not in ('481','482','522','562','567')"
-                . " and otro_campo not in (a,b,c)";
+                //. " and otro_campo not in (a,b,c)";
+                . "";
         //$string = "where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? "
         //        . "and stats.operador_saliente_id not in ('481','482','522','562','567','589','590','619','636','642','645','647','648','656','660','665','699','709','714','717','743','751','774','782','801','814','836','837','838')";    
         
