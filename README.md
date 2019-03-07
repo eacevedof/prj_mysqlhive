@@ -59,6 +59,35 @@ busca los registros en el historico
         se insertan nuevas métricas
 
 
-            
+-- tabla de pruebas
+CREATE TABLE `tbl_operation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `op_d1` varchar(50) DEFAULT NULL,
+  `op_d2` varchar(50) DEFAULT NULL,
+  `op_d3` varchar(50) DEFAULT NULL,
+  `op_d4` varchar(50) DEFAULT NULL,
+  `op_d5` varchar(50) DEFAULT NULL,
+  `op_atr1` varchar(50) DEFAULT NULL,
+  `op_atr2` varchar(50) DEFAULT NULL,
+  `op_atr3` varchar(50) DEFAULT NULL,
+  `op_m1` int(11) DEFAULT NULL,
+  `op_m2` int(11) DEFAULT NULL,
+  `op_m3` int(11) DEFAULT NULL,
+  `op_m4` int(11) DEFAULT NULL,
+  `op_cdate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `op_mdate` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8          
 
+SELECT  op_d1,op_d2,op_d4,op_d5
+,SUM(op_m1) sm1,
+SUM(op_m2) sm2,
+SUM(op_m3) sm3,
+SUM(op_m4) sm4
+FROM tbl_operation 
+GROUP BY op_d1,op_d2,op_d4,op_d5
+ORDER BY op_d1,op_d2,op_d4,op_d5
+
+SELECT * 
+FROM tbl_operation
 ```
