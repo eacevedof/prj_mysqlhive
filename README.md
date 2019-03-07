@@ -88,6 +88,30 @@ FROM tbl_operation
 GROUP BY op_d1,op_d2,op_d4,op_d5
 ORDER BY op_d1,op_d2,op_d4,op_d5
 
-SELECT * 
+
+-- 3659
+SELECT SUM(op_m1) m1
 FROM tbl_operation
+WHERE op_d1 = 'd1A'
+GROUP BY op_d1
+ORDER BY op_d1,op_d2,op_d4,op_d5
+
+
+-- 1414 + 1176 + 1069
+SELECT op_d1,op_d2,SUM(op_m1) m1
+,MAX(op_d1) mxd1
+,MAX(op_d2) mxd2
+FROM tbl_operation
+WHERE op_d1 = 'd1A'
+GROUP BY op_d1,op_d2
+ORDER BY op_d1,op_d2,op_d4,op_d5
+
+
+SELECT op_d1,op_d2,SUM(op_m1) m1
+,MAX(op_d1) mxd1
+,MAX(op_d2) mxd2
+FROM tbl_operation
+WHERE 1=1
+GROUP BY op_d1,op_d2
+ORDER BY op_d1,op_d2,op_d4,op_d5
 ```
