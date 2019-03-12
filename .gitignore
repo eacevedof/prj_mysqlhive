@@ -1,4 +1,5 @@
 /backend/vendor/
+!/backend/vendor/theframework/
 /backend/src/tests/logs/
 /backend/src/logs/
 /backend/src/config/config.php
