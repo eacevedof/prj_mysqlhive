@@ -30,29 +30,32 @@ class AgregacionService extends AppService
     private function truncate_operations()
     {
         
-        $sSQL = "TRUNCATE TABLE tbl_operation";
+        $sSQL = "TRUNCATE TABLE operation";
         $this->oModel->execute($sSQL);
     }
     
     public function add_operation()
     {
         $this->pr("AgregacionService.add_operation");
-        $this->oModel->set_table("tbl_operation");
+        $this->oModel->set_table("operation");
         
-        $arData["op_d1"] = "d1".$this->oRnd->get_item(["A","B","C"]);
-        $arData["op_d2"] = "d2".$this->oRnd->get_item(["A","B","C"]);
-        $arData["op_d3"] = "d3".$this->oRnd->get_item(["A","B","C"]);
-        $arData["op_d4"] = "d4".$this->oRnd->get_item(["A","B","C"]);
-        $arData["op_d5"] = "d5".$this->oRnd->get_item(["A","B","C"]);
+        $arData["d1"] = "d1".$this->oRnd->get_item(["A","B","C"]);
+        $arData["d2"] = "d2".$this->oRnd->get_item(["A","B","C"]);
+        $arData["d3"] = "d3".$this->oRnd->get_item(["A","B","C"]);
+        $arData["d4"] = "d4".$this->oRnd->get_item(["A","B","C"]);
+        $arData["d5"] = "d5".$this->oRnd->get_item(["A","B","C"]);
         
-        $arData["op_atr1"] = "a1-".$this->oRnd->get_substring_len(10);
-        $arData["op_atr2"] = "a2-".$this->oRnd->get_substring_len(15);
-        $arData["op_atr3"] = "a3-".$this->oRnd->get_substring_len(20);
+        $arData["atr1"] = "a1-".$this->oRnd->get_substring_len(10);
+        $arData["atr2"] = "a2-".$this->oRnd->get_substring_len(15);
+        $arData["atr3"] = "a3-".$this->oRnd->get_substring_len(20);
+        $arData["atr4"] = "a4-".$this->oRnd->get_substring_len(20);
+        $arData["atr5"] = "a5-".$this->oRnd->get_substring_len(20);
 
-        $arData["op_m1"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
-        $arData["op_m2"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
-        $arData["op_m3"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
-        $arData["op_m4"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+        $arData["m1"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,10));
+        $arData["m2"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,20));
+        $arData["m3"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,30));
+        $arData["m4"] = $this->oRnd->get_int(1,$this->oRnd->get_int(50,60));
+        $arData["m5"] = $this->oRnd->get_int(1,$this->oRnd->get_int(70,100));
         
         $this->oModel->insert($arData,0);
     }
@@ -69,23 +72,23 @@ class AgregacionService extends AppService
     public function modif_operation()
     {
         $this->pr("AgregacionService.modif_operation");
-        $this->oModel->set_table("tbl_operation");
+        $this->oModel->set_table("operation");
         $this->oModel->set_pk("id");
         
-        $sSQL = "SELECT id FROM tbl_operation";
+        $sSQL = "SELECT id FROM operation";
         $arIds = $this->oModel->query($sSQL,0);
         $arIds = array_column($arIds,"id");
         //$this->pr($arIds);die;
         
         $arData["id"] = $this->oRnd->get_item($arIds);
         
-        $arData["op_atr1"] = "a1-".$this->oRnd->get_substring_len(10);
-        $arData["op_atr2"] = "a2-".$this->oRnd->get_substring_len(15);
-        $arData["op_atr3"] = "a3-".$this->oRnd->get_substring_len(20);
-        $arData["op_m1"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
-        $arData["op_m2"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
-        $arData["op_m3"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
-        $arData["op_m4"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000)); 
+        $arData["atr1"] = "a1-".$this->oRnd->get_substring_len(10);
+        $arData["atr2"] = "a2-".$this->oRnd->get_substring_len(15);
+        $arData["atr3"] = "a3-".$this->oRnd->get_substring_len(20);
+        $arData["m1"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+        $arData["m2"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+        $arData["m3"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000));
+        $arData["m4"] = $this->oRnd->get_int(1,$this->oRnd->get_int(0,1000)); 
         
         $this->oModel->update($arData,0);
     }
@@ -110,13 +113,13 @@ class AgregacionService extends AppService
     {
         if(!$iMins) $iMins=10;
         $sSQL = "
-        SELECT id,op_cdate,op_mdate
-        FROM tbl_operation 
+        SELECT id,cdate,mdate
+        FROM operation 
         WHERE 1
         AND 
         (
-            op_cdate > (NOW() - INTERVAL $iMins MINUTE)
-            OR op_mdate > (NOW() - INTERVAL $iMins MINUTE)
+            cdate > (NOW() - INTERVAL $iMins MINUTE)
+            OR mdate > (NOW() - INTERVAL $iMins MINUTE)
         )
         ";
         $arRows = $this->oModel->query($sSQL);
@@ -125,7 +128,7 @@ class AgregacionService extends AppService
     
     public function update()
     {
-        $arIds = $this->get_keys("tbl_operation");
+        $arIds = $this->get_keys("operation");
     }
     
     public function run()
