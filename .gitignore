@@ -1,5 +1,5 @@
 !/backend/vendor/
-/backend/vendor/**
+/backend/vendor/*
 !/backend/vendor/theframework/
 /backend/src/tests/logs/
 /backend/src/logs/
