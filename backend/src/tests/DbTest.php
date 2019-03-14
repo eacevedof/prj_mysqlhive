@@ -51,6 +51,15 @@ class DbTest extends TestCase
             $this->log($fieldvalues,"STRING $i");
         }
 
+/*
+ 
+ 
+load data local infile '/tmp/ficheros_tmp_descartables/mysql_altas_multiples_1552552174_y5Amej'
+replace into table b2c.tmp_formwebpin_sessions_altas_multiples_1552552174
+fields terminated by '@@@@'
+lines terminated by '####'
+*/
+        
         $sql="
         load data local infile '$file'
         replace into table $db_table_dest
