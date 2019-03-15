@@ -36,7 +36,7 @@ class ExcelTest extends TestCase
         $sSQL = "
         SELECT *
         FROM ft_campaigns_lines_stats_201902
-        LIMIT 8004
+        LIMIT 8005  -- con 5 se rompe
         ";
         
         $iSizeBef = memory_get_usage();
@@ -51,6 +51,9 @@ ok:
 membef: 2441400
 memaf: 13742424
 memfinal: 11301024
+
+ya no va:
+memfinal: 11302408
 */        
         
         $arCols = array_keys($arRows[0]);
