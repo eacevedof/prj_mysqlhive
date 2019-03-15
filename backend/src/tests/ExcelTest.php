@@ -28,14 +28,49 @@ class ExcelTest extends TestCase
     
     public function test_excel()
     {
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Hello World !');
-
-        $writer = new Xlsx($spreadsheet);
-        $writer->save('hello world.xlsx');
+        $sFile = __DIR__."/../config/config.php";
+        $arConfig = include($sFile);      
+        $arConfig = $arConfig["db"];
+        $oDb = new ComponentMysql($arConfig);
         
-    }
+        $sSQL = "
+        SELECT *
+        FROM ft_campaigns_lines_stats_201902
+        UNION ALL
+        SELECT *
+        FROM ft_campaigns_lines_stats_201903
+        LIMIT 10
+        ";
+        
+        $arRows = $oDb->query($sSQL);
+        $arCols = array_keys($arRows[0]);
+        $arCols = array_flip($arCols);
+        $sColumns = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        //print_r($arCols);die;
+        $oSpread = new Spreadsheet();
+        $oActiveSheet = $oSpread->getActiveSheet();
+        foreach($arRows as $i=>$arRow)
+        {
+            $iR = $i+1;
+            foreach($arRow as $f => $v)
+            {
+                $i = $arCols[$f];
+                $cell = $sColumns{$i}.$iR;
+                $oActiveSheet->setCellValue($cell,$v);
+            }
+        }
+        
+        $oXlsx = new Xlsx($oSpread);
+        $oXlsx->save(__DIR__."/logs/hello-world.xlsx");
+        $this->assertEquals(TRUE,is_array($arRows));
+/*
+.PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 16777216 bytes) 
+in C:\proyecto\prj_mysqlhive\backend\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Collection\Cells.php on line 421
+ * 
+Fatal error: Allowed memory size of 134217728 bytes exhausted (tried to allocate 16777216 bytes) in 
+C:\proyecto\prj_mysqlhive\backend\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Collection\Cells.php on line 421
+*/        
+    }//test_excel
 
     
 }//ExcelTest
