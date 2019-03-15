@@ -69,6 +69,9 @@ lines terminated by '####'
 da error:
 1) DbTest::test_bulk_insert
 PDO::exec(): LOAD DATA LOCAL INFILE forbidden
+
+PDOException: SQLSTATE[HY000]: General error: 1290 The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+
 */        
         $this->assertEquals(FALSE,$oDb->is_error());
         
