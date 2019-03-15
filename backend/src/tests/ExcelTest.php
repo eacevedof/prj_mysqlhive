@@ -53,9 +53,9 @@ memaf: 13742424
 memfinal: 11301024
 
 ya no va:
-memfinal: 11302408
+memfinal: 11302408 (12M)
 
-con PHPExcel este es lim: 147221968
+con PHPExcel este es lim: 147221968 (15M)
 */        
         
         $arCols = array_keys($arRows[0]);
