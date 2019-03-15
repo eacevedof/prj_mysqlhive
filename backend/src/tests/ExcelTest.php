@@ -30,7 +30,7 @@ class ExcelTest extends TestCase
     {
         $sFile = __DIR__."/../config/config.php";
         $arConfig = include($sFile);      
-        $arConfig = $arConfig["db"];
+        $arConfig = $arConfig["db"];//tc_dev
         $oDb = new ComponentMysql($arConfig);
         
         $sSQL = "
