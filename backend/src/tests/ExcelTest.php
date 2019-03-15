@@ -36,7 +36,7 @@ class ExcelTest extends TestCase
         $sSQL = "
         SELECT *
         FROM ft_campaigns_lines_stats_201902
-        LIMIT 8005  -- con 5 se rompe
+        LIMIT 8004  -- con 5 se rompe
         ";
         
         $iSizeBef = memory_get_usage();
