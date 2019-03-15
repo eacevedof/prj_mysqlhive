@@ -29,47 +29,50 @@ class DbTest extends TestCase
         $arConfig = include($sFile);      
         $arConfig = $arConfig["db"];
         $oDb = new ComponentMysql($arConfig);
-        
-        $file = __DIR__.DIRECTORY_SEPARATOR."logs";
+                
         $db_table_from = "tbl_operation";
         $db_table_dest = "tbl_operation_bulk";
         
-        $oLog = new ComponentFile(__DIR__.DIRECTORY_SEPARATOR."logs",$db_table_from);
+        $folderpath = __DIR__.DIRECTORY_SEPARATOR."logs";
+        $file = $folderpath.DIRECTORY_SEPARATOR.$db_table_from;        
+        
+        $oFile = new ComponentFile($folderpath,$db_table_from);
+        
+        $sFieldEnd = "@@@@";
+        $sLineEnd = "####";
         
         $sSQL = "
         SELECT * 
         FROM db_agregacion.tbl_operation 
-        WHERE 1=1'
+        WHERE 1
         ";
         
         $arRows = $oDb->query($sSQL);
-        foreach($arRows as $i=>$arRow)
-        {
-            $fieldvalues = preg_replace("[\n|\r|\n\r]","",implode("\001",$arRow));
-            $iSaved = $oLog->save($fieldvalues); 
-            $this->log($arRow,"ARROW $i");
-            $this->log($fieldvalues,"STRING $i");
-        }
-
-/*
- 
- 
-load data local infile '/tmp/ficheros_tmp_descartables/mysql_altas_multiples_1552552174_y5Amej'
-replace into table b2c.tmp_formwebpin_sessions_altas_multiples_1552552174
-fields terminated by '@@@@'
-lines terminated by '####'
-*/
+        $oFile->save_bulkfile($arRows,$sFieldEnd,$sLineEnd);
         
         $sql="
         load data local infile '$file'
         replace into table $db_table_dest
         CHARACTER SET utf8
-        fields terminated by '\001'
-        lines terminated by '\n'";        
+        fields terminated by '$sFieldEnd'
+        lines terminated by '$sLineEnd'";      
+        $this->log($sql);
         $oDb->exec($sql);
         
+/*
+load data local infile 'C:\proyecto\prj_mysqlhive\backend\src\tests\logs\tbl_operation'
+replace into table tbl_operation_bulk
+CHARACTER SET utf8
+fields terminated by '@@@@'
+lines terminated by '####'
+
+da error:
+1) DbTest::test_bulk_insert
+PDO::exec(): LOAD DATA LOCAL INFILE forbidden
+*/        
         $this->assertEquals(FALSE,$oDb->is_error());
-    }
+        
+    }//test_bulk_insert
     
     
     /**

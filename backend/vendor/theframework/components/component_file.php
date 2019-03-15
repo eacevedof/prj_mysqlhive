@@ -68,30 +68,19 @@ class ComponentFile
     
     public function set_filenameto($sValue){$this->sFileNameTo=$sValue;}
     public function set_folderto($sValue){$this->sPathFolderTo=$sValue;}
-    public function save_bulkfile($arData,$sFieldSep,$sLineSep)
+    public function save_bulkfile($arData,$sFieldSep="@@@@",$sLineSep="####")
     {
-        //debe 
-// Insertamos en fichero
-$line="";
-$fin_linea="####\n";
-$sep="";
-while (!$rs->EOF) {
-
-    $fields=$rs->fields;
-
-    $sep="";
-
-    //$session_id = $fields["session_id"];
-    $session_id = $fields[0];
-    if ($session_id==null || $session_id=="NULL") $session_id="\N";
-    $line.=$sep.$session_id;
-    $sep="@@@@";
-
-    $line.=$fin_linea;
-
-    $rs->MoveNext();
-}
-$rs->close();          
+        $arLines = [];
+        if(is_array($arData))
+        {
+            foreach ($arData as $arFields)
+                $arLines[] = implode($sFieldSep,$arFields).$sLineSep;
+        }
+        else;
+            //$this->add_error();
+        
+        $sContent = implode("\n",$arLines);
+        $this->save($sContent);
     }
     
 }//ComponentFile
