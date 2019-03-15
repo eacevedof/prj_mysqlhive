@@ -54,6 +54,8 @@ memfinal: 11301024
 
 ya no va:
 memfinal: 11302408
+
+con PHPExcel este es lim: 147221968
 */        
         
         $arCols = array_keys($arRows[0]);
