@@ -36,22 +36,41 @@ class ExcelTest extends TestCase
         $sSQL = "
         SELECT *
         FROM ft_campaigns_lines_stats_201902
-        UNION ALL
-        SELECT *
-        FROM ft_campaigns_lines_stats_201903
-        LIMIT 10
+        LIMIT 8004
         ";
         
+        $iSizeBef = memory_get_usage();
+        print_r("\nmembef: $iSizeBef\n");
         $arRows = $oDb->query($sSQL);
+        $iSizeAft = memory_get_usage();
+        print_r("memaf: $iSizeAft\n");
+        $iSize = abs($iSizeBef - $iSizeAft);
+        print_r("memfinal: $iSize\n");
+/*
+ok:
+membef: 2441400
+memaf: 13742424
+memfinal: 11301024
+*/        
+        
         $arCols = array_keys($arRows[0]);
         $arCols = array_flip($arCols);
         $sColumns = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         //print_r($arCols);die;
         $oSpread = new Spreadsheet();
         $oActiveSheet = $oSpread->getActiveSheet();
+        
+        foreach($arCols as $field=>$i)
+        {
+            //print_r("$field => $i");die;
+            $cLetter = $sColumns{$i}."1";            
+            //print_r($cLetter);die;
+            $oActiveSheet->setCellValue($cLetter,$field);
+        }
+        
         foreach($arRows as $i=>$arRow)
         {
-            $iR = $i+1;
+            $iR = $i+2;
             foreach($arRow as $f => $v)
             {
                 $i = $arCols[$f];
@@ -59,9 +78,12 @@ class ExcelTest extends TestCase
                 $oActiveSheet->setCellValue($cell,$v);
             }
         }
+
+        $file = __DIR__."/logs/hello-world.xlsx";
+        if(is_file($file)) unlink($file);
         
         $oXlsx = new Xlsx($oSpread);
-        $oXlsx->save(__DIR__."/logs/hello-world.xlsx");
+        $oXlsx->save($file);
         $this->assertEquals(TRUE,is_array($arRows));
 /*
 .PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 16777216 bytes) 
