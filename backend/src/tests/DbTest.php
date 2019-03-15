@@ -51,7 +51,7 @@ class DbTest extends TestCase
         $oFile->save_bulkfile($arRows,$sFieldEnd,$sLineEnd);
         
         $sql="
-        load data local infile '$file'
+        load data infile '$file'
         replace into table $db_table_dest
         CHARACTER SET utf8
         fields terminated by '$sFieldEnd'
