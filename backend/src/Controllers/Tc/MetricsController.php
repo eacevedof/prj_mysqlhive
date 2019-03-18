@@ -7,10 +7,10 @@
  * @date 15-01-2019 15:01 SPAIN
  * @observations
  */
-namespace App\Controllers;
+namespace App\Controllers\Tc;
 
 use App\Controllers\AppController;
-use App\Services\Tc\MetricService;
+use App\Services\Tc\MetricsService;
 
 class MetricsController extends AppController
 {
@@ -27,14 +27,9 @@ class MetricsController extends AppController
     public function index()
     {
         pr(__METHOD__);
+        $oServ = new MetricsService();
+        pr($oServ->run());
 
     }//index
-    
-    public function movebuildcfg()
-    {
-        pr(__METHOD__);
-        $oServ = new MetricService();
-        pr("Archivos movidos ");
-    }
     
 }//MetricsController

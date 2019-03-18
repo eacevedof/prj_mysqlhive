@@ -11,8 +11,8 @@ return [
     ["url"=>"/draco/","controller"=>"App\Controllers\Dbs\DracoController","method"=>"index"],
     ["url"=>"/rtb","controller"=>"App\Controllers\Dbs\RtbController","method"=>"index"],
     ["url"=>"/rtb/","controller"=>"App\Controllers\Dbs\RtbController","method"=>"index"],
-    ["url"=>"/metrics","controller"=>"App\Controllers\MetricsController","method"=>"index"],
-    ["url"=>"/metrics/","controller"=>"App\Controllers\MetricsController","method"=>"index"],    
+    ["url"=>"/metrics","controller"=>"App\Controllers\Tc\MetricsController","method"=>"index"],
+    ["url"=>"/metrics/","controller"=>"App\Controllers\Tc\MetricsController","method"=>"index"],    
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
 
 //resto de rutas    
