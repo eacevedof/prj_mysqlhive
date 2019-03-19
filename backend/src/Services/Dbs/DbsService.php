@@ -3,7 +3,7 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name App\Services\Dbs\DbsService 
- * @file DbsService.php 1.0.0
+ * @file DbsService.php 1.1.0
  * @date 15-01-2018 19:00 SPAIN
  * @observations
  */
@@ -35,9 +35,13 @@ class DbsService extends AppService
         $sPath = PATH_SRC.DS."Behaviours".DS."templates".DS."$sDb";
         if(!is_dir($sPath)) 
         {
-            $this->add_error("DbsServie.load(): no existe ruta $sPath");
-            $this->show_errors();
-            return;
+            $sPath = PATH_SRC.DS."Behaviours".DS."templates".DS."generic";
+            if(!is_dir($sPath))
+            {
+                $this->add_error("DbsServie.load(): no existe ruta $sPath");
+                $this->show_errors();
+                return;
+            }
         }
         $this->sPathTplsDS = $sPath.DS;
         $this->sPathTempDS = PATH_PUBLIC.DS."temp".DS;
