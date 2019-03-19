@@ -19,3 +19,4 @@ INSERT INTO TABLE dw.%tablenameprefix%  VALUES (%fieldsvalue%);
 CREATE VIEW dw.%tablenameprefix%_view AS
 SELECT * FROM dw.%tablenameprefix%;
  
+ALTER TABLE dw.%tablenameprefix% add columns (%fieldsinfoddl%);

@@ -16,3 +16,4 @@ TBLPROPERTIES ('orc.compress'='SNAPPY');
 
 
 
+ALTER TABLE staging_tables.%tablenameprefix%_incremental_temp add columns (%fieldsinfoddl%);
