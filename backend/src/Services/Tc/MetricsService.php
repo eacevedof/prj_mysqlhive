@@ -58,13 +58,28 @@ class MetricsService extends DbsService
     {
         $arFiles = $this->get_files_etl();
         $sPathFrom = $this->sFolderFrom.DIRECTORY_SEPARATOR;
+        $sPathTo = $this->sFolderTo.DIRECTORY_SEPARATOR;
         
         foreach($arFiles AS $sFile)
         {
-            $sPathFile = $sPathFrom.$sFile;
+            $sPathFileFrom = $sPathFrom.$sFile;
+            $sPathFileTo = $sPathTo.$sFile;
+            
+            $sContent = file_get_contents($sPathFileFrom);
+            $arLines = explode("\n",$sContent);
+            $this->change_lines($arLines);
+        }
+    }
+    
+    private function change_lines(&$arLines)
+    {
+        $arTmp = [];
+        foreach($arLines as $sLine)
+        {
             
         }
     }
+    
     
     public function run()
     {
