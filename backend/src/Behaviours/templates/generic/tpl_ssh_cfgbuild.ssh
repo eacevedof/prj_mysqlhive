@@ -5,3 +5,5 @@ php /mnt/proyecto/proyecto_eacevedo/trunk/reporting/bi/crons/cron_replicado_tabl
 php /mnt/proyecto/proyecto_eacevedo/trunk/reporting/bi/crons/cron_replicado_tablas_mysql_to_hive/replicate_build_process/%databasename%/build_%tablename%.php --cluster=hortonprod
 
 tail -f /var/log/php/%datetoday%_build_%tablename%.log
+
+php /mnt/webapps/cron/cron_replicado_tablas_mysql_to_hive/replicate_build_process/%databasename%/build_%tablename%.php --cluster=hortonprod
