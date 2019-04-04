@@ -8,6 +8,7 @@ use TheFramework\Components\ComponentCurl;
 
 class CurlTest extends TestCase
 {    
+    private $sApikey = "xxxxx";
     private $r;
     
     private function log($mxVar,$sTitle=NULL)
@@ -20,7 +21,7 @@ class CurlTest extends TestCase
     public function get_reports_advertiser()
     {
         $oCurl = new ComponentCurl("https://api.popcash.net/reports/advertiser");
-        $oCurl->add_getfield("apikey","xxxxx");
+        $oCurl->add_getfield("apikey", $this->sApikey);
         $oCurl->add_option(CURLOPT_RETURNTRANSFER, 1);//permite guardar el retorno en una variable
         $oCurl->add_option(CURLOPT_TIMEOUT, 15);
         $oCurl->add_option(CURLOPT_HTTPHEADER,[
@@ -47,8 +48,8 @@ class CurlTest extends TestCase
         $sToken = $arTokens[0]["token"];
         $this->log($sToken,"token");
         $oCurl = new ComponentCurl("https://api.popcash.net/reports/advertiser/download");
-        $oCurl->add_getfield("apikey","xxxxx");
-        $oCurl->add_postfield("token","XkdSZUJCRnV4MVI0b0x4bjZHUU1CQm8wVDJ3XnhITW9vcU5EbE5wWWQ4MExvRWFNMFlSMHJyVFdIOUNGZXJPT2JGSHRBVnI3Z0tSVld2dnN4WWJiTmZKZyEhYVE2YUg0TmVjISFFelliY255QVNLY1NBNTM5Q0JPQ1dvUjluSl5ncWxRblZXZ2g5aENXS09vYXNkWFB4MHVNR3M5czZPZGtQNE9odmR2WUJea3ZCZEo4aVVPMVlNWHJGa2pBa1M5RmE=");
+        $oCurl->add_getfield("apikey", $this->sApikey);
+        $oCurl->add_postfield("token",$sToken);
         $oCurl->add_option(CURLOPT_RETURNTRANSFER, 1);//permite guardar el retorno en una variable
         $oCurl->add_option(CURLOPT_TIMEOUT, 15);
         $oCurl->add_option(CURLOPT_HTTPHEADER,[
