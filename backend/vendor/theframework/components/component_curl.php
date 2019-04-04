@@ -3,7 +3,7 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheApplication\Components\ComponentCurl 
- * @file ComponentCurl.php 1.0.0
+ * @file ComponentCurl.php 1.0.1
  * @date 04-04-2019 10:10 SPAIN
  * @observations
  */
@@ -38,10 +38,9 @@ class ComponentCurl
         if($this->_is_in_options(CURLOPT_URL)) 
             $sUrl = $this->arOptions[CURLOPT_URL];
         
-        
         $sUrl .= "?";
         $arGet = [];
-        foreach($arGet as $k=>$v)
+        foreach($this->arGetFields as $k=>$v)
             $arGet[]="$k=$v";
         $sUrl .= implode("&",$arGet);
         return $sUrl;
@@ -66,14 +65,15 @@ class ComponentCurl
             curl_setopt($oCurl, CURLOPT_POST, 1);
             curl_setopt($oCurl, CURLOPT_POSTFIELDS, $this->arPostFields);
         }
-
+        
+        $this->arResult[CURLOPT_URL] = $sUrl;
         $this->arResult["curl_exec"] = curl_exec($oCurl);
         $this->arResult["curl_getinfo"][CURLINFO_HTTP_CODE] = curl_getinfo($oCurl,CURLINFO_HTTP_CODE);
         
         print_r($this->arResult);
         return $this->arResult;
-    }
-
+        
+    }//get_result
 
     public function set_rooturl($sUrl){$this->sRootUrl = $sUrl;}
 
