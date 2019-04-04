@@ -47,14 +47,19 @@ class CurlTest extends TestCase
         
         $sToken = $arTokens[0]["token"];
         $this->log($sToken,"token");
+        $json = json_encode(["token"=>$sToken]);
+        
         $oCurl = new ComponentCurl("https://api.popcash.net/reports/advertiser/download");
         $oCurl->add_getfield("apikey", $this->sApikey);
-        $oCurl->add_postfield("token",$sToken);
+        //$oCurl->add_postfield("token", $sToken);
+        $oCurl->add_option(CURLOPT_CUSTOMREQUEST, "POST");
+        $oCurl->add_option(CURLOPT_POSTFIELDS, $json);
         $oCurl->add_option(CURLOPT_RETURNTRANSFER, 1);//permite guardar el retorno en una variable
         $oCurl->add_option(CURLOPT_TIMEOUT, 15);
         $oCurl->add_option(CURLOPT_HTTPHEADER,[
             "accept: application/json"
-            ,"Content-Type: multipart/form-data"
+            ,"Content-Type: application/json"
+            //,'Content-Length: ' . strlen($json)                                                                       
         ]);
         $r = $oCurl->get_result();
         $this->log($r,"test_reports_advertiser_download");
@@ -62,3 +67,20 @@ class CurlTest extends TestCase
     }//test_reports_advertiser_download
     
 }//CurlTest
+
+/*
+$data = array("name" => "Hagrid", "age" => "36");                                                                    
+$data_string = json_encode($data);                                                                                   
+                                                                                                                     
+$ch = curl_init('http://api.local/rest/users');                                                                      
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+    'Content-Type: application/json',                                                                                
+    'Content-Length: ' . strlen($data_string))                                                                       
+);                                                                                                                   
+                                                                                                                     
+$result = curl_exec($ch);
+ * 
+ *  */

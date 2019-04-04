@@ -47,7 +47,7 @@ class ComponentCurl
     }
 
 
-    public function get_result()
+    public function get_result($asArray=0)
     {
         $oCurl = curl_init();
         $sUrl = $this->_get_opturl();
@@ -67,9 +67,14 @@ class ComponentCurl
         }
         
         $this->arResult[CURLOPT_URL] = $sUrl;
+        
         $this->arResult["curl_exec"] = curl_exec($oCurl);
+        if($asArray)
+            $this->arResult["curl_exec"] = json_decode($this->arResult["curl_exec"],1);
+        
         $this->arResult["curl_getinfo"][CURLINFO_HTTP_CODE] = curl_getinfo($oCurl,CURLINFO_HTTP_CODE);
         
+        print_r($this->arOptions);
         //print_r($this->arResult);
         return $this->arResult;
         
