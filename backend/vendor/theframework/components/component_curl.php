@@ -70,7 +70,7 @@ class ComponentCurl
         $this->arResult["curl_exec"] = curl_exec($oCurl);
         $this->arResult["curl_getinfo"][CURLINFO_HTTP_CODE] = curl_getinfo($oCurl,CURLINFO_HTTP_CODE);
         
-        print_r($this->arResult);
+        //print_r($this->arResult);
         return $this->arResult;
         
     }//get_result
