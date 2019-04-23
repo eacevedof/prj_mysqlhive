@@ -91,17 +91,19 @@ class MetricsService extends DbsService
         $arFound = $this->get_template_fields($arLines);
 
         $sTplField = $this->arMetric["tpl"];
-        foreach($arFound as $iPos)
+        foreach($arFound as $iPosfound)
         {
-            $sTplLineprev2 = $arLines[$iPos-2];
-            $sTplLineprev1 = $arLines[$iPos-1];
+            //se salta de dos en dos por la linea ||||||||||
+            $sTplLineprev = trim($arLines[$iPosfound-2]);
+            $sTplLinecurr = trim($arLines[$iPosfound]);
             
-            if(substr($sTplLineprev2, -1, 1) == "," && substr($sTplLineprev1, -1, 1) != ",")
-                $arTmp[$iPos-1] = $sTplLineprev1.",";
+            //remplazo la linea actual añadiendole una coma si hiciera falta
+            if(substr($sTplLineprev, -1, 1) == "," && substr($sTplLinecurr, -1, 1) != ",")
+                $arTmp[$iPosfound] = $sTplLinecurr.",";
             
-            $sTplLine = $arLines[$iPos];
+            $sTplLine = $arLines[$iPosfound];
             $sTplLine = str_replace($sTplField, $this->arMetric["field"], $sTplLine);
-            $arTmp[$iPos+1] = $sTplLine;
+            $arTmp[$iPosfound+1] = $sTplLine;
         }
         $arLines = $arTmp;
     }
