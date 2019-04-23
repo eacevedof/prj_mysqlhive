@@ -71,7 +71,7 @@ class MetricsService extends DbsService
         foreach($arLines as $sLine)
         {
             $arTmp[] = $sLine;
-            $arTmp[] = "|||";//marca de linea libre
+            $arTmp[] = "||||||||||";//marca de linea libre
         }
         $arLines = $arTmp;
     }
@@ -80,7 +80,7 @@ class MetricsService extends DbsService
     {
         $arTmp = [];
         foreach($arLines as $sLine)
-            if($sLine!="|||")
+            if($sLine!="||||||||||")
                 $arTmp[] = $sLine;
         $arLines = $arTmp;
     }
@@ -89,11 +89,16 @@ class MetricsService extends DbsService
     {
         $arTmp = $arLines;
         $arFound = $this->get_template_fields($arLines);
-        $arNew = [];
 
         $sTplField = $this->arMetric["tpl"];
         foreach($arFound as $iPos)
         {
+            $sTplLineprev2 = $arLines[$iPos-2];
+            $sTplLineprev1 = $arLines[$iPos-1];
+            
+            if(substr($sTplLineprev2, -1, 1) == "," && substr($sTplLineprev1, -1, 1) != ",")
+                $arTmp[$iPos-1] = $sTplLineprev1.",";
+            
             $sTplLine = $arLines[$iPos];
             $sTplLine = str_replace($sTplField, $this->arMetric["field"], $sTplLine);
             $arTmp[$iPos+1] = $sTplLine;
