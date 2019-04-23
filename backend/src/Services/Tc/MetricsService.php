@@ -23,13 +23,16 @@ class MetricsService extends DbsService
     {
         parent::__construct();
         $this->load_config();
+        //@TO-DO:
+        //generar campos para ddl create table
+        //generar los alter table
     }
     
     private function load_config()
     {
         
 
-        $sFolder = basename($this->sFolderFrom.DIRECTORY_SEPARATOR);
+        //$sFolder = basename($this->sFolderFrom.DIRECTORY_SEPARATOR);
         //print_r($sFolder);die;        
         $this->sFolderTo = realpath("C:\\proyecto\\prj_mysqlhive\\backend\\public\\temp\\");
         $this->sFolderTo = realpath("C:\\proyecto\\prj_tc_documentacion\\b2c\\nueva_metrica_total_clicks\\");
@@ -111,10 +114,13 @@ class MetricsService extends DbsService
     
     private function unlink_folder()
     {
+        $arExclude = ["README.md","alters.sql"];
         $sPathToDS = $this->sFolderTo.DIRECTORY_SEPARATOR;
         $arFiles = scandir($sPathToDS);
         unset($arFiles[0]);unset($arFiles[1]);
         foreach($arFiles as $sFile)
+            if(in_array($sFile, $arExclude))
+                continue;
             unlink($sPathToDS.$sFile);
     }
     
@@ -131,7 +137,7 @@ class MetricsService extends DbsService
         $sPathToDS = $this->sFolderTo.DIRECTORY_SEPARATOR;
         
         //borro todo del directorio temporal
-        //$this->unlink_folder();
+        $this->unlink_folder();
         foreach($arFiles AS $sFile)
         {
             //bug($sFile);
