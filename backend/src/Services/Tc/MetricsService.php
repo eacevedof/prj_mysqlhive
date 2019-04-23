@@ -3,7 +3,7 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name App\Services\Dbs\MetricsService 
- * @file MetricsService.php 1.0.0
+ * @file MetricsService.php 2.0.0
  * @date 28-01-2019 19:00 SPAIN
  * @observations
  */
@@ -18,8 +18,6 @@ class MetricsService extends DbsService
     private $sFieldAfter;
     private $arMetric;
     private $arMetricsTpl;
-    private $arTables;
-    
    
     public function __construct() 
     {
@@ -30,21 +28,24 @@ class MetricsService extends DbsService
     private function load_config()
     {
         
-        
-        $sFolder = dirname($this->sFolderFrom);
-        $this->sFolderTo = realpath("C:\proyecto\prj_mysqlhive\backend\public\temp\\".$sFolder);
+
+        $sFolder = basename($this->sFolderFrom.DIRECTORY_SEPARATOR);
+        //print_r($sFolder);die;        
+        $this->sFolderTo = realpath("C:\\proyecto\\prj_mysqlhive\\backend\\public\\temp\\");
         $this->sFieldAfter = "total_impresiones_valid_isp";
         
         $this->arMetricsTpl = [
             "null total_suscritos_bajas_ivr",
-            "total_suscritos_bajas_ivr int"
+            "total_suscritos_bajas_ivr int",
+            "total_suscritos_bajas_ivr,"
         ];
         
-        $this->arMetric = ["field"=>"total_altas_split", "type"=>"int", "tpl"=>"total_suscritos_bajas_ivr"];
+        $this->arMetric = ["field"=>"total_clicks", "type"=>"int", "tpl"=>"total_suscritos_bajas_ivr","fileprefix"=>"ft_portales_stats_"];
     }
         
     private function get_files_etl()
     {
+//print_r($this->sFolderFrom);die("xxx");        
         $arFiles = scandir($this->sFolderFrom);
         if($arFiles)
         {
@@ -61,6 +62,7 @@ class MetricsService extends DbsService
             foreach($this->arMetricsTpl as $sTpl)
                 if(strstr($sLine, $sTpl))
                     $arFound[] = $i;
+        return $arFound;
     }
     
     private function add_repl_lines(&$arLines)
@@ -99,14 +101,32 @@ class MetricsService extends DbsService
         $arLines = $arTmp;
     }
     
+    private function unlink_folder()
+    {
+        $sPathToDS = $this->sFolderTo.DIRECTORY_SEPARATOR;
+        $arFiles = scandir($sPathToDS);
+        unset($arFiles[0]);unset($arFiles[1]);
+        foreach($arFiles as $sFile)
+            unlink($sPathToDS.$sFile);
+    }
+    
     private function read_files()
     {
         $arFiles = $this->get_files_etl();
+
+        //elimino los ficheros que no cumplen el patron
+        foreach($arFiles as $i => $file)
+            if(!strstr($file, $this->arMetric["fileprefix"]))
+                unset($arFiles[$i]);
+        
         $sPathFromDS = $this->sFolderFrom.DIRECTORY_SEPARATOR;
         $sPathToDS = $this->sFolderTo.DIRECTORY_SEPARATOR;
         
+        //borro todo del directorio temporal
+        $this->unlink_folder();
         foreach($arFiles AS $sFile)
         {
+            //bug($sFile);
             $sPathFileFrom = $sPathFromDS.$sFile;
             $sPathFileTo = $sPathToDS.$sFile;
             
@@ -123,6 +143,11 @@ class MetricsService extends DbsService
     public function run()
     {
         $this->read_files();
+        $sPathToDS = $this->sFolderTo.DIRECTORY_SEPARATOR;
+        $ar = scandir($sPathToDS);
+        unset($ar[0]);unset($ar[1]);
+        $ar["count"] = count($ar);
+        return $ar;
     }
         
 }//MetricsService
