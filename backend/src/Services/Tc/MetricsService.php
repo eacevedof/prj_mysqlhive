@@ -32,6 +32,7 @@ class MetricsService extends DbsService
         $sFolder = basename($this->sFolderFrom.DIRECTORY_SEPARATOR);
         //print_r($sFolder);die;        
         $this->sFolderTo = realpath("C:\\proyecto\\prj_mysqlhive\\backend\\public\\temp\\");
+        $this->sFolderTo = realpath("C:\\proyecto\\prj_tc_documentacion\\b2c\\nueva_metrica_total_clicks\\");
         $this->sFieldAfter = "total_impresiones_valid_isp";
         
         $this->arMetricsTpl = [
@@ -99,7 +100,7 @@ class MetricsService extends DbsService
             
             //remplazo la linea actual añadiendole una coma si hiciera falta
             if(substr($sTplLineprev, -1, 1) == "," && substr($sTplLinecurr, -1, 1) != ",")
-                $arTmp[$iPosfound] = $sTplLinecurr.",";
+                $arTmp[$iPosfound] = rtrim($arLines[$iPosfound]).",";
             
             $sTplLine = $arLines[$iPosfound];
             $sTplLine = str_replace($sTplField, $this->arMetric["field"], $sTplLine);
@@ -130,7 +131,7 @@ class MetricsService extends DbsService
         $sPathToDS = $this->sFolderTo.DIRECTORY_SEPARATOR;
         
         //borro todo del directorio temporal
-        $this->unlink_folder();
+        //$this->unlink_folder();
         foreach($arFiles AS $sFile)
         {
             //bug($sFile);
