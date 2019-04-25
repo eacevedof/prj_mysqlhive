@@ -1,1 +1,3 @@
 - No aplica update_date => true para el campo fecha pivote: "awa_ts_modified"   => array("type"  => "timestamp",  "update_date"			=>	true),
+- no me sustituye @@@fieldnamepk@@@
+- debe admitir bigint y tinyint
