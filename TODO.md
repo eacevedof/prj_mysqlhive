@@ -3,3 +3,4 @@
 - debe admitir bigint y tinyint
 - configurar decimales a 28,8
 - se queda con el porcentaje en la plantilla generada: set tez.queue.name=%kylin_reconstrucciones%;
+- incluir ruta de producción en el .sh
