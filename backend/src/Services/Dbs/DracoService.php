@@ -35,9 +35,10 @@ class DracoService extends DbsService
             //"",
             //"draco_clientes",
             //"draco_grupos_enlaces",
-            "draco_tarifas_operador",            
-            "draco_tarifas_operador_info",
-            "draco_numeracion_ordenes",
+            //"draco_tarifas_operador",            
+            //"draco_tarifas_operador_info",
+            //"draco_numeracion_ordenes",
+            "tmp_view_api_web_analytics_bi_201904"
         ];
         
         $arTables = $this->get_tables();
