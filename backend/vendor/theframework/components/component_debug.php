@@ -82,7 +82,7 @@ class ComponentDebug
         $sHtmlTrHd = "";
         if(!empty($arArray))
         {    
-            $sHtmlTrHd .="<tr><th>Nº</th>\n";
+            $sHtmlTrHd .="<tr><th>Nยบ</th>\n";
 
             $arRow = $arArray[0];
             foreach($arRow as $sTitle=>$sValue)
