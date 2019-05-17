@@ -22,8 +22,9 @@ class AgencyService extends DbsService
     public function generate_exp()
     {
         $arDiTables = [
+            "view_financial_201905"
             //"di_campaigns",
-            "di_campaigns_lines",
+            //"di_campaigns_lines",
             //"di_campaigns_lines_fees",    //25/01/2019 - va en di_campaign_fees
             //"di_campaigns_payments",
             //"di_campaigns_fees",            //28/01/2019 cambia nombre de sing a plural

@@ -23,7 +23,14 @@ class B2CService extends DbsService
     {
 
         $arDiTables = [
-            "calumma_designs"
+            "ft_fraud_daily_201905",
+            "landings",
+            "di_merchants",
+            "ft_fraud_kpis",
+            "di_landing_channels",
+            "di_subpublishers",
+            "di_apps",
+            "di_blacklisted_apps",
         ];
         
         $arTables = $this->get_tables();
