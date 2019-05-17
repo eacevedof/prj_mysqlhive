@@ -1,7 +1,8 @@
 - No aplica update_date => true para el campo fecha pivote: "awa_ts_modified"   => array("type"  => "timestamp",  "update_date"			=>	true),
 - no me sustituye @@@fieldnamepk@@@
-- debe admitir bigint y tinyint
+- debe admitir bigint y tinyint,smallint
 - configurar decimales a 28,8
 - se queda con el porcentaje en la plantilla generada: set tez.queue.name=%kylin_reconstrucciones%;
 - incluir ruta de producción en el .sh
 - incluir parámetro ft para ficheros
+- campos _dg (hora)
