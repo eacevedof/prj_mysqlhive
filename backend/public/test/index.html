@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/funnel.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+        
+    </head>
+    <body>
+<div id="container"></div>   
+<script>
+//console.log(point)
+Highcharts.chart('container', {
+    chart: {
+        type: 'funnel'
+    },
+    title: {
+        text: 'Acquisition funnel reporting'
+    },
+    plotOptions: {
+        series: {
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>',
+                softConnector: true
+            },
+            center: ['40%', '50%'],
+            neckWidth: '10%',
+            neckHeight: '10%',
+            width: '50%'
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    series: [{
+        name: 'Total',
+        data: [
+["Prints 23.108.309 ", 23108309],
+["No Internal BLock % 93.78 (-1.437.945)", 1437945],
+["No Internal BLock 21.670.364 ", 21670364],
+["Detection OK % 93.41 (-1.428.251)", 1428251],
+["Detection OK 20.242.113 ", 20242113],
+["Prelanding % 95.30 (-951.169)", 951169],
+["Prelanding 19.290.944 ", 19290944],
+["No Operator BLock % 94.06 (-1.145.300)", 1145300],
+["No Operator BLock 18.145.644 ", 18145644],
+["CPO No Voluntary Abandon % 6.23 (-17.014.985)", 17014985],
+["CPO No Voluntary Abandon 1.130.659 ", 1130659],
+["CTA % 62.47 (-424.329)", 424329],
+["CTA 706.330 ", 706330],
+["New Subs % 19.37 (-569.533)", 569533],
+["New Subs 136.797 ", 1367970]
+        ]
+    }],
+
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 300
+            },
+            chartOptions: {
+                plotOptions: {
+                    series: {
+                        dataLabels: {
+                            inside: true
+                        },
+                        center: ['50%', '50%'],
+                        width: '80%'
+                    }
+                }
+            }
+        }]
+    }
+});    
+</script>
+    </body>
+</html>
