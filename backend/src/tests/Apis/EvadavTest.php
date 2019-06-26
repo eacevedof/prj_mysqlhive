@@ -32,9 +32,6 @@ class EvadavTest extends TestCase
     const STAT_BY_OS = "advertiser/stats/os";
     const STAT_BY_BROWSER = "advertiser/stats/browser";
     const STAT_BY_SOURCE = "advertiser/stats/source";
-
-    private $sApikey = "126fd24c0f1a0deae564-1554216243-370c9d9c03f79f321d2976041";
-    private $r;
     
     private function log($mxVar,$sTitle=NULL)
     {
@@ -56,9 +53,9 @@ class EvadavTest extends TestCase
 
         //POST
         $endpoint="https://evadav.com/api/v1/".self::STAT_BY_COUNTRY;
-        $apiKey = "aw8FcZbnVLcvLI6hfm4kHaIlHedp4W3Z";
+        $apikey = "aw8FcZbnVLcvLI6hfm4kHaIlHedp4W3Z";
         $headers = [
-            'X-Api-Key: '.$apiKey
+            'X-Api-Key: '.$apikey
         ];
 
         $ch = curl_init();
@@ -85,7 +82,7 @@ class EvadavTest extends TestCase
         $server_output = curl_exec($ch);
         print_r($server_output);
         
-        $this->log($r,"test_stats");
+        $this->log(,"test_stats");
         $this->assertEquals(TRUE,is_array($server_output));
     }//test_stats
     
