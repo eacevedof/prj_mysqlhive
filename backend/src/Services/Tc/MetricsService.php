@@ -26,16 +26,18 @@ class MetricsService extends DbsService
         //@TO-DO:
         //generar campos para ddl create table
         //generar los alter table
+        
     }
     
     private function load_config()
     {
-        
+        $this->sFolderFrom = realpath("C:\\proyecto\\ttg-svnrepo\\trunk\\reporting\\bi\\crons\\cron_replicado_tablas_mysql_to_hive\\workflows\\customs\\ft_portales_stats");
+        $this->sFolderFrom = realpath("C:\\proyecto\\prj_mysqlhive\\backend\\public\\temp\\from");
 
         //$sFolder = basename($this->sFolderFrom.DIRECTORY_SEPARATOR);
         //print_r($sFolder);die;        
-        $this->sFolderTo = realpath("C:\\proyecto\\prj_mysqlhive\\backend\\public\\temp\\");
-        $this->sFolderTo = realpath("C:\\proyecto\\prj_tc_documentacion\\b2c\\nueva_metrica_total_clicks\\");
+        $this->sFolderTo = realpath("C:\\proyecto\\prj_mysqlhive\\backend\\public\\temp\\to");
+        //$this->sFolderTo = realpath("C:\\proyecto\\prj_tc_documentacion\\b2c\\nueva_metrica_total_clicks\\");
         $this->sFieldAfter = "total_impresiones_valid_isp";
         
         $this->arMetricsTpl = [

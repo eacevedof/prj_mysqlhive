@@ -21,16 +21,9 @@ class B2CService extends DbsService
     
     public function generate_exp()
     {
-
         $arDiTables = [
-            "ft_fraud_daily_201905",
-            "landings",
-            "di_merchants",
-            "ft_fraud_kpis",
-            "di_landing_channels",
-            "di_subpublishers",
-            "di_apps",
-            "di_blacklisted_apps",
+            "di_banner_ids",
+            "di_placement_ids"
         ];
         
         $arTables = $this->get_tables();

@@ -8,7 +8,7 @@ use TheFramework\Components\ComponentCurl;
 
 class CurlTest extends TestCase
 {    
-    private $sApikey = "xxxxx";
+    private $sApikey = "126fd24c0f1a0deae564-1554216243-370c9d9c03f79f321d2976041";
     private $r;
     
     private function log($mxVar,$sTitle=NULL)
@@ -46,6 +46,7 @@ class CurlTest extends TestCase
         $this->log($arTokens,"test_reports_advertiser_download arTokens");
         
         $sToken = $arTokens[0]["token"];
+        $sToken = "XkdSZUJCRnV4MVI0b0x4bjZHUU1CUHlVN0ZBdk1NQlpvcU5EbE5wWWQ4MyEhN3FDMTFLdUlYMVVNTm1aRGpyZEFiRkh0QVZyN2dLUjlEOG1GSUJVRlh2SmchIWFRNmFINE5lYyEhRXpZYmNueUFTS2NTQTUzOUNCT0NXb1I5bkpeZ3FsUW5WV2doOWhDV0tPb2FzZFhQeDB1TUdzOXM2T2RrUDRPaHZkdllCXmt2QmRKOGlVTzFZTVhyRmtqQWtTOUZh";
         $this->log($sToken,"token");
         $json = json_encode(["token"=>$sToken]);
         

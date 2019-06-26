@@ -7,3 +7,5 @@
 - incluir parámetro ft para ficheros
 - campos _dg (hora)
 - etl para dimensiones en ft: case when (cc_website_id  IN ('null','NULL','')
+- 'auto.purge'='true'
+- drop view 
