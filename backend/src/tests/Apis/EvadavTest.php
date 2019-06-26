@@ -38,35 +38,37 @@ class EvadavTest extends TestCase
         $oLog = new ComponentLog("logs",__DIR__);
         $oLog->save($mxVar,$sTitle);
     }
-    
+
+    private function pr($key,$value){echo "$key:\n".var_export($value,1)."\n\n";}
 
     public function test_stats()
     {
 
         //All Avaliable filters
         $filters = [
-            'period' => "17.02.2019-05.03.2019",
-            'country' => ['RU','US'], // Uppercase iso code
-            'os' => [self::OS_LINUX, self::OS_ANDROID],
-            'browser' => self::BROWSER_OPERA,
+            'period' => "01.06.2019-26.06.2019",
+            //'country' => ['RU','US'], // Uppercase iso code
+            //'os' => [self::OS_LINUX, self::OS_ANDROID],
+            //'browser' => self::BROWSER_OPERA,
         ];
 
         //POST
-        $endpoint="https://evadav.com/api/v1/".self::STAT_BY_COUNTRY;
-        $apikey = "aw8FcZbnVLcvLI6hfm4kHaIlHedp4W3Z";
+        $endpoint="https://evadav.com/api/v1/".self::STAT_BY_CAMPAIGN;
+        $this->pr("endpoint",$endpoint);
+        $apikey = "7jNlvr45Yp7dPis4ndcZOZiaKfvb3vjZ";
         $headers = [
             'X-Api-Key: '.$apikey
         ];
 
         $ch = curl_init();
-
+        $this->pr("filters",http_build_query($filters));
         curl_setopt($ch, CURLOPT_URL,$endpoint);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($filters));
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $server_output = curl_exec($ch);
-        print_r($server_output);
+        $this->pr("server_output",$server_output);
         curl_close ($ch);
 
         //GET
@@ -82,7 +84,7 @@ class EvadavTest extends TestCase
         $server_output = curl_exec($ch);
         print_r($server_output);
         
-        $this->log(,"test_stats");
+        $this->log($server_output,"test_stats");
         $this->assertEquals(TRUE,is_array($server_output));
     }//test_stats
     
