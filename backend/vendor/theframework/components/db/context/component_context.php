@@ -19,14 +19,23 @@ class ComponentContext
    
     public function __construct($sPathfile="")
     {
+        $this->arContexts = [];
         if(!$sPathfile) $sPathfile = __DIR__.DIRECTORY_SEPARATOR."contexts.json";
         $this->load_contextjs($sPathfile);
     }
     
     private function load_contextjs($sPathfile)
     {
-        $sJson = file_get_contents($sPathfile);
-        $this->arContexts = json_decode($sJson,1);
+        if($sPathfile)
+            if(is_file($sPathfile))
+            {
+                $sJson = file_get_contents($sPathfile);
+                $this->arContexts = json_decode($sJson,1);
+            }
+            else
+                $this->add_error("load_contextjs: file $sPathfile not found");
+        else
+            $this->add_error("load_contextjs: no pathfile passed");
     }
     
     public function get_config()
@@ -36,5 +45,6 @@ class ComponentContext
 
     public function get_errors(){return isset($this->arErrors)?$this->arErrors:[];}     
     public function is_error(){return $this->isError;}
+    private function add_error($sMessage){$this->isError = true; $this->arErrors[] = $sMessage;}
     
 }//ComponentContext

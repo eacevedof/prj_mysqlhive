@@ -22,7 +22,16 @@ class ContextsTest extends TestCase
         $this->assertEquals(TRUE,is_array($arConfig));
     }
 
-
+    public function test_get_context_using_file()
+    {
+        $sPathfile = __DIR__.DIRECTORY_SEPARATOR."ctx.json";
+        print_r($sPathfile);
+        $oComp = new ComponentContext($sPathfile);
+        $arConfig = $oComp->get_config();
+        print_r($arConfig);
+        print_r($oComp->get_errors());
+        $this->assertEquals(TRUE,is_array($arConfig));
+    }
 
     
 }//ContextsTest
