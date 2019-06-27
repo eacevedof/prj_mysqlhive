@@ -461,3 +461,151 @@ test_stats:
     }
 }
 
+-- [20190626-170802]
+test_stats:
+{
+    "success": true,
+    "data": {
+        "166826": {
+            "campaignId": 166826,
+            "campaign": "chatlovetmopl_evadav - PL_TMO_PSH_CPC_WHITE",
+            "impressions": 3196589,
+            "clicks": 15638,
+            "ctr": 0.48920896618239,
+            "cpc": 0.04041578206931833,
+            "cost": 632.022,
+            "conversions": 112,
+            "cpl": 5.643053571428572,
+            "conversionCost": 0,
+            "conversionsProfit": -632.022,
+            "roi": -100
+        },
+        "169344": {
+            "campaignId": 169344,
+            "campaign": "instalovetrv_evadato - TR - Vodafone",
+            "impressions": 5117994,
+            "clicks": 31414,
+            "ctr": 0.6137951705297037,
+            "cpc": 0.02,
+            "cost": 628.28,
+            "conversions": 282,
+            "cpl": 2.2279432624113475,
+            "conversionCost": 0,
+            "conversionsProfit": -628.28,
+            "roi": -100
+        },
+        "166792": {
+            "campaignId": 166792,
+            "campaign": "instalovetr_evadato - Love - TR - Turkcell",
+            "impressions": 2946677,
+            "clicks": 19870,
+            "ctr": 0.6743189022753427,
+            "cpc": 0.02,
+            "cost": 397.40000000000003,
+            "conversions": 221,
+            "cpl": 1.7981900452488688,
+            "conversionCost": 0,
+            "conversionsProfit": -397.40000000000003,
+            "roi": -99.99999999999999
+        },
+        "166824": {
+            "campaignId": 166824,
+            "campaign": "chatup_evadav - KE Push Chatup",
+            "impressions": 943426,
+            "clicks": 11602,
+            "ctr": 1.2297731883581755,
+            "cpc": 0.030000000000000006,
+            "cost": 348.06000000000006,
+            "conversions": 254,
+            "cpl": 1.3703149606299214,
+            "conversionCost": 0,
+            "conversionsProfit": -348.06000000000006,
+            "roi": -100
+        },
+        "171107": {
+            "campaignId": 171107,
+            "campaign": "ecualici_evadav - CI Ecualizador Orange",
+            "impressions": 507162,
+            "clicks": 7024,
+            "ctr": 1.3849618070754512,
+            "cpc": 0.021463126423690207,
+            "cost": 150.757,
+            "conversions": 840,
+            "cpl": 0.17947261904761905,
+            "conversionCost": 0,
+            "conversionsProfit": -150.757,
+            "roi": -100
+        },
+        "171076": {
+            "campaignId": 171076,
+            "campaign": "argeldownloa_evadav - DZ Descarga genérica ooredo",
+            "impressions": 577989,
+            "clicks": 5294,
+            "ctr": 0.9159343862945488,
+            "cpc": 0.005,
+            "cost": 26.470000000000002,
+            "conversions": 355,
+            "cpl": 0.07456338028169014,
+            "conversionCost": 0,
+            "conversionsProfit": -26.470000000000002,
+            "roi": -100.00000000000001
+        },
+        "169448": {
+            "campaignId": 169448,
+            "campaign": "streamingyoi_evadav - ES Streaming Yoigo",
+            "impressions": 179138,
+            "clicks": 474,
+            "ctr": 0.2646004756109815,
+            "cpc": 0.05348101265822784,
+            "cost": 25.349999999999998,
+            "conversions": 0,
+            "cpl": 0,
+            "conversionCost": 0,
+            "conversionsProfit": -25.349999999999998,
+            "roi": -100.00000000000001
+        },
+        "166839": {
+            "campaignId": 166839,
+            "campaign": "chatupsintn_evadav - TN_ORA_PSH_CPC",
+            "impressions": 223874,
+            "clicks": 749,
+            "ctr": 0.3345631917953849,
+            "cpc": 0.016999999999999998,
+            "cost": 12.732999999999999,
+            "conversions": 0,
+            "cpl": 0,
+            "conversionCost": 0,
+            "conversionsProfit": -12.732999999999999,
+            "roi": -100
+        },
+        "170182": {
+            "campaignId": 170182,
+            "campaign": "downsmspl_evadav - PL_SMS_TMO_PSH",
+            "impressions": 119660,
+            "clicks": 483,
+            "ctr": 0.40364365702824667,
+            "cpc": 0.025606625258799174,
+            "cost": 12.368,
+            "conversions": 0,
+            "cpl": 0,
+            "conversionCost": 0,
+            "conversionsProfit": -12.368,
+            "roi": -100
+        },
+        "167371": {
+            "campaignId": 167371,
+            "campaign": "ramadanartn_evadav - TN_ORA_PSH_CPC",
+            "impressions": 4523,
+            "clicks": 9,
+            "ctr": 0.1989829759009507,
+            "cpc": 0.009,
+            "cost": 0.08099999999999999,
+            "conversions": 0,
+            "cpl": 0,
+            "conversionCost": 0,
+            "conversionsProfit": -0.08099999999999999,
+            "roi": -100.00000000000001
+        }
+    }
+}
+

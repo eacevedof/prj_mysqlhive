@@ -55,7 +55,7 @@ class EvadavTest extends TestCase
         //POST
         $endpoint="https://evadav.com/api/v1/".self::STAT_BY_CAMPAIGN;
         $this->pr("endpoint",$endpoint);
-        $apikey = "7jNlvr45Yp7dPis4ndcZOZiaKfvb3vjZ0c";
+        $apikey = "7jNlvr45Yp7dPis4ndcZOZiaKfvb3vjZ";
         $headers = [
             'X-Api-Key: '.$apikey
         ];
