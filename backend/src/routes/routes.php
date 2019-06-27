@@ -16,6 +16,8 @@ return [
     ["url"=>"/metrics","controller"=>"App\Controllers\Tc\MetricsController","method"=>"index"],
     ["url"=>"/metrics/","controller"=>"App\Controllers\Tc\MetricsController","method"=>"index"],    
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
+    ["url"=>"/apify","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
+    ["url"=>"/apify/{id}","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
 
 //resto de rutas    
     ["url"=>"/404","controller"=>"App\Controllers\NotFoundController","method"=>"error_404"]

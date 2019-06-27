@@ -32,6 +32,23 @@ class ContextsTest extends TestCase
         print_r($oComp->get_errors());
         $this->assertEquals(TRUE,is_array($arConfig));
     }
+    
+    public function test_get_by_id()
+    {
+        $oComp = new ComponentContext();
+        $arConfig = $oComp->get_config();
+        print_r($oComp->get_by_id("agencyreader"));
+        $this->assertEquals(TRUE,is_array($arConfig));
+    }
+    
+    public function test_get_config_by()
+    {
+        $oComp = new ComponentContext();
+        $arConfig = $oComp->get_config();
+        print_r($oComp->get_config_by("id","draco"));
+        $this->assertEquals(TRUE,is_array($arConfig));
+    }
+    
 
     
 }//ContextsTest
