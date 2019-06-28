@@ -10,7 +10,7 @@
 namespace App\Controllers\Apify;
 
 use App\Controllers\AppController;
-use App\Services\Apify\FieldsService;
+use App\Services\Apify\WriterService;
 
 class WriterController extends AppController
 {

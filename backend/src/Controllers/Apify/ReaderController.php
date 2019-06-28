@@ -10,7 +10,7 @@
 namespace App\Controllers\Apify;
 
 use App\Controllers\AppController;
-use App\Services\Apify\FieldsService;
+use App\Services\Apify\ReaderService;
 
 class ReaderController extends AppController
 {
@@ -28,6 +28,7 @@ class ReaderController extends AppController
     {
         $idContext = $this->get_get("id_context");
         $sDb = $this->get_get("database");
+        $oServ = new ReaderService($idContext,$sDb);
 
     }//index
 
