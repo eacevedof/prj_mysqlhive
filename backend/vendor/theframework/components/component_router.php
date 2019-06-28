@@ -24,8 +24,8 @@ class ComponentRouter
         $this->arPieces = ["urlsep_exploded"=>[],"get_params"=>[]];
         $this->load_routes();
         $this->load_pieces();
-        print_r($this->sRequestUri);
-        print_r($this->arPieces);
+        //print_r($this->sRequestUri);
+        //print_r($this->arPieces);
     }
     
     private function load_routes()
@@ -50,18 +50,17 @@ class ComponentRouter
     private function search()
     {
         $isFound = FALSE;
-        
         foreach($this->arRoutes as $i=>$arRoute)
         {
             $sUrl = $arRoute["url"];
-            $arUrlsep = $this->get_urlsep_params($sUrl);
-            $isFound = $this->compare_pieces($this->arPieces["urlsep_exploded"], $arUrlsep);
+            $arRouteSep = $this->get_urlsep_params($sUrl);
+            $isFound = $this->compare_pieces($this->arPieces["urlsep_exploded"], $arRouteSep);
             if($isFound)
                 break;
         }
         
         if($isFound)
-            $this->add_to_get($this->arPieces["urlsep_exploded"],$this->arRoutes[$i]);
+            $this->add_to_get($this->arPieces["urlsep_exploded"],$arRouteSep);
 
         return $this->arRoutes[$i];
     }
@@ -73,6 +72,7 @@ class ComponentRouter
     
     private function compare_pieces($arRequest,$arRoute)
     {
+        //bug($arRequest);pr($arRoute);
         if(count($arRequest)!=count($arRoute))
             return FALSE;
         
