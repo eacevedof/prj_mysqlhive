@@ -16,7 +16,7 @@ class ContextService extends AppService
 {
     private $oContext;
     
-    public function __construct($sPathcontext) 
+    public function __construct($sPathcontext="") 
     {
         $this->oContext = new ComponentContext($sPathcontext);
     }

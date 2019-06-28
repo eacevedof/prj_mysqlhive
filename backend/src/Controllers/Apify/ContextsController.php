@@ -26,7 +26,7 @@ class ContextsController extends AppController
      */
     public function index()
     {
-        $oServ = new ContextService("");
+        $oServ = new ContextService();
         $arData = $oServ->get_noconfig();
 
         if($this->is_get("id"))

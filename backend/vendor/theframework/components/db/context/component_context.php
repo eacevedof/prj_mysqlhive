@@ -25,6 +25,11 @@ class ComponentContext
         $this->idSelected = $idSelected;
         $this->arContexts = [];
         if(!$sPathfile) $sPathfile = __DIR__.DIRECTORY_SEPARATOR."contexts.json";
+        if(!is_file($sPathfile))
+        {
+            $this->add_error("No context file found: $sPathfile");
+            return -1;
+        }
         $this->load_contextjs($sPathfile);
         $this->load_context_noconf();
         $this->load_selected();
