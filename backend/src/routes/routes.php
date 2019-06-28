@@ -16,10 +16,11 @@ return [
     ["url"=>"/metrics","controller"=>"App\Controllers\Tc\MetricsController","method"=>"index"],
     ["url"=>"/metrics/","controller"=>"App\Controllers\Tc\MetricsController","method"=>"index"],    
     ["url"=>"/logs","controller"=>"App\Controllers\LogsController","method"=>"index"],
-    ["url"=>"/apify","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
-    ["url"=>"/apify/{id}","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
-    ["url"=>"/dbs","controller"=>"App\Controllers\Apify\DbsController","method"=>"index"],
-    ["url"=>"/dbs/{id}","controller"=>"App\Controllers\Apify\DbsController","method"=>"index"],
+    ["url"=>"/apify/contexts","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
+    ["url"=>"/apify/contexts/{id}","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
+    ["url"=>"/apify/dbs/{id_context}","controller"=>"App\Controllers\Apify\DbsController","method"=>"index"],//schemas
+    ["url"=>"/apify/dbs/{id_context}/{database}/","controller"=>"App\Controllers\Apify\DbsController","method"=>"get_tables"],
+    ["url"=>"/apify/dbs/{id_context}/{database}/{tablename}","controller"=>"App\Controllers\Apify\DbsController","method"=>"get_tables"],
 
 //resto de rutas    
     ["url"=>"/404","controller"=>"App\Controllers\NotFoundController","method"=>"error_404"]

@@ -20,8 +20,9 @@ class ComponentContext
     private $idSelected;
     private $arSelected;
     
-    public function __construct($sPathfile="",$id="")
+    public function __construct($sPathfile="",$idSelected="")
     {
+        $this->idSelected = $idSelected;
         $this->arContexts = [];
         if(!$sPathfile) $sPathfile = __DIR__.DIRECTORY_SEPARATOR."contexts.json";
         $this->load_contextjs($sPathfile);

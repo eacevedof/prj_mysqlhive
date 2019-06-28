@@ -27,6 +27,12 @@ class SchemaBehaviour extends AppModel
         return $this->oDb->query($sSQL,$iCol,$iRow);
     }
     
+    public function get_schemas()
+    {
+        $sSQL = "SHOW DATABASES";
+        return $this->query($sSQL);
+    }
+    
     public function get_tables($sDb="")
     {
         if(!$sDb)

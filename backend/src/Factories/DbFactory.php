@@ -19,7 +19,6 @@ class DbFactory
     {
         $oCtx = new ComponentContext();
         $arConfig = $oCtx->get_config_by("id",$id);
-        bug($arConfig);die;
         //$arConfig = $this->get_config("db");
         $oDb = new ComponentMysql();
         $oDb->add_conn("server",$arConfig["server"]);

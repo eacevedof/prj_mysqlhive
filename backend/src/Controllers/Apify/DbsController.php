@@ -10,7 +10,7 @@
 namespace App\Controllers\Apify;
 
 use App\Controllers\AppController;
-use App\Services\Apify\ContextService;
+use App\Services\Apify\DbsService;
 
 class DbsController extends AppController
 {
@@ -22,13 +22,28 @@ class DbsController extends AppController
     }
     
     /**
-     * ruta:    <dominio>/dbs/{id}
+     * ruta:    <dominio>/apify/contexts/{id}
+     * Muestra los schemas
      */
     public function index()
     {
-  
+        $idContext = $this->get_get("id_context");
+        $oDbs = new DbsService($idContext);
+        $arData = $oDbs->get_schemas();
         $this->response_json($arData);
-
     }//index
+    
+    /**
+     * ruta:    <dominio>/apify/dbs/{id_context}
+     */    
+    public function get_tables()
+    {
+        $idContext = $this->get_get("id_context");
+        $sDb = $this->get_get("database");
+        $sTablename = $this->get_get("tablename");
+        $this->response_json($arData);
+    }//index
+        
+    
     
 }//DbsController
