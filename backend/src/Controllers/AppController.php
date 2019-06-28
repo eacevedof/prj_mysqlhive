@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name App\Controllers\AppController 
- * @file AppController.php v1.0.0
- * @date 29-11-2018 19:00 SPAIN
+ * @file AppController.php v1.1.0
+ * @date 28-06-2019 10:41 SPAIN
  * @observations
  */
 namespace App\Controllers;
@@ -128,4 +128,11 @@ class AppController
         $this->logd($this->get_get(),"$sReqUri GET");
         $this->logd($this->get_post(),"$sReqUri POST");
     }
+    
+    protected function response_json($arData)
+    {
+        header("Content-type: application/json");
+        echo json_encode($arData);        
+    }
+    
 }//AppController
