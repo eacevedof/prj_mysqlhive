@@ -22,13 +22,17 @@ class ContextsController extends AppController
     }
     
     /**
-     * ruta:    <dominio>/agency
+     * ruta:    <dominio>/apify/{id}
      */
     public function index()
     {
-        pr(__METHOD__);
         $oServ = new ContextService("");
-        pr($oServ->get_noconfig());
+        $arData = $oServ->get_noconfig();
+
+        if($this->is_get("id"))
+            $arData = $oServ->get_noconfig_by_id($this->get_get("id"));
+
+        $this->response_json($arData);
 
     }//index
     
