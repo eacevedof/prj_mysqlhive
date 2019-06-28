@@ -18,45 +18,23 @@ class DbsService extends AppService
 {
     private $idContext;
     private $sDb;
-    private $sTableName;
     
     private $oContext;
     private $oBehav;
     
-    public function __construct($idContext="",$sDb="",$sTable="") 
+    public function __construct($idContext="",$sDb="") 
     {
         $this->idContext = $idContext;
         $this->sDb = $sDb;
-        $this->sTableName = $sTable;
         
         $this->oContext = new ComponentContext($idContext);
         $oDb = DbFactory::get_dbobject_by_idctx($idContext);
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     
-    public function get_schemas()
+    public function get_all()
     {
         return $this->oBehav->get_schemas();
     }
-    
-    public function get_tables()
-    {      
-        return $this->oBehav->get_tables($this->sDb);
-    }
-    
-    public function get_table($sTableName)
-    {
-        return $this->oBehav->get_table($sTableName,$this->sDb);
-    }
-    
-    public function get_fields($sTableName)
-    {
-        return $this->oBehav->get_table($sTableName,$this->sDb);
-    }
-    
-    public function get_field($sFieldName)
-    {
-        return $this->oBehav->get_fields_info($sTableName,$this->sDb);
-    }    
     
 }//DbsService

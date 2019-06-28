@@ -30,7 +30,11 @@ class SchemaBehaviour extends AppModel
     public function get_schemas()
     {
         $sSQL = "SHOW DATABASES";
-        return $this->query($sSQL);
+        $arRows = $this->query($sSQL);
+        $arTmp = [];
+        foreach($arRows as $arRow)
+            $arTmp[]["database"] = $arRow["Database"];
+        return $arTmp;
     }
     
     public function get_tables($sDb="")
@@ -64,5 +68,15 @@ class SchemaBehaviour extends AppModel
         //bug($arRows);die;
         return $arRows;
     }
+
+    public function get_field_info($sField,$sTable,$sDb="")
+    {
+        if(!$sDb)
+            $sDb = $this->get_config("db","database");
+        $sSQL = $this->oQServ->get_field($sDb,$sTable,$sField);
+        $arRows = $this->query($sSQL);
+        //bug($arRows);die;
+        return $arRows;
+    }    
 
 }//SchemaBehaviour

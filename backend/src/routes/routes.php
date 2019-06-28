@@ -19,11 +19,15 @@ return [
     ["url"=>"/apify/contexts","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
     ["url"=>"/apify/contexts/{id}","controller"=>"App\Controllers\Apify\ContextsController","method"=>"index"],
     ["url"=>"/apify/dbs/{id_context}","controller"=>"App\Controllers\Apify\DbsController","method"=>"index"],//schemas
-    ["url"=>"/apify/tables/{id_context}/{database}","controller"=>"App\Controllers\Apify\TablesController","method"=>"indexs"],
-    ["url"=>"/apify/tables/{id_context}","controller"=>"App\Controllers\Apify\TablesController","method"=>"indexs"],
+    
+    ["url"=>"/apify/tables/{id_context}/{database}","controller"=>"App\Controllers\Apify\TablesController","method"=>"index"],
+    ["url"=>"/apify/tables/{id_context}","controller"=>"App\Controllers\Apify\TablesController","method"=>"index"],
+    
+    ["url"=>"/apify/fields/{id_context}/{database}/{tablename}/{fieldname}","controller"=>"App\Controllers\Apify\FieldsController","method"=>"index"],
     ["url"=>"/apify/fields/{id_context}/{database}/{tablename}","controller"=>"App\Controllers\Apify\FieldsController","method"=>"index"],
+    
     ["url"=>"/apify/read/{id_context}","controller"=>"App\Controllers\Apify\ReaderController","method"=>"index"],
-    ["url"=>"/apify/read/{id_context}","controller"=>"App\Controllers\Apify\WriterController","method"=>"index"],
+    ["url"=>"/apify/write/{id_context}","controller"=>"App\Controllers\Apify\WriterController","method"=>"index"],
 
 //resto de rutas    
     ["url"=>"/404","controller"=>"App\Controllers\NotFoundController","method"=>"error_404"]

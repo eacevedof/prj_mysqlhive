@@ -15,10 +15,11 @@ use TheFramework\Components\Db\Context\ComponentContext;
 class ContextService extends AppService
 {
     private $oContext;
+    private $idContext;
     
-    public function __construct($sPathcontext="") 
+    public function __construct($sPathcontext="",$idContext="") 
     {
-        $this->oContext = new ComponentContext($sPathcontext);
+        $this->oContext = new ComponentContext($sPathcontext,$idContext);
     }
     
     public function get_context_by_id($id){return $this->oContext->get_by("id", $id);}

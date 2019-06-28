@@ -22,7 +22,9 @@ class ContextsController extends AppController
     }
     
     /**
-     * ruta:    <dominio>/apify/{id}
+     * ruta:
+     *  <dominio>/apify/contexts
+     *  <dominio>/apify/contexts/{id}
      */
     public function index()
     {
