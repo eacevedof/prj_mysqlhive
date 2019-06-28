@@ -35,7 +35,7 @@ class FieldsController extends AppController
 
         $oService = new FieldsService($idContext,$sDb,$sTableName,$sFieldName);
         if($sFieldName)
-            $arData = $oService->get_field_info($sTableName,$sFieldName);
+            $arData = $oService->get_field($sTableName,$sFieldName);
         else
             $arData = $oService->get_all($sTableName);
         $this->response_json($arData);
