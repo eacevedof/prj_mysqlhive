@@ -1,5 +1,5 @@
 <?php
-//index.php 3.0.0
+//index.php 3.1.0
 define("DS",DIRECTORY_SEPARATOR);
 define("DOCROOT",$_SERVER["DOCUMENT_ROOT"]);
 $sPath = realpath(DOCROOT.DS."../src");
@@ -61,28 +61,6 @@ $arRoutes = include_once '../src/routes/routes.php';
 use TheFramework\Components\ComponentRouter;
 $oR = new ComponentRouter($arRoutes);
 $arRun = $oR->get_rundata();
-bug($arRun);die;
-
-$sRequestUri = $_SERVER["REQUEST_URI"];
-$arUri = explode("?",$sRequestUri);
-$sUri = $arUri[0];
-
-//aqui se guardará los datos de controlador y método a ejecutar
-$arRun = [];
-//busco la url 
-foreach($arRoutes as $arRoute)
-{
-    if($arRoute["url"]==$sUri)
-    {
-        //se encuntra 
-        $arRun = $arRoute;
-        break;
-    }
-}
-
-//si no se ha encontrado una url en las rutas se asigna la última
-//que está asociada a la ruta 404
-if(!$arRun) $arRun = $arRoute;
 //limpio las rutas
 unset($arRoutes);
 
