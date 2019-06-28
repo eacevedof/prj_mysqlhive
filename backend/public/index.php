@@ -57,6 +57,11 @@ include_once '../vendor/autoload.php';
 include_once '../vendor/theframework/bootstrap.php';
 //rutas, mapeo de url => controlador.metodo()
 $arRoutes = include_once '../src/routes/routes.php';
+
+use TheFramework\Components\ComponentRouter;
+$oR = new ComponentRouter($arRoutes);
+
+
 $sRequestUri = $_SERVER["REQUEST_URI"];
 $arUri = explode("?",$sRequestUri);
 $sUri = $arUri[0];
