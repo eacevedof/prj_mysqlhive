@@ -60,7 +60,8 @@ $arRoutes = include_once '../src/routes/routes.php';
 
 use TheFramework\Components\ComponentRouter;
 $oR = new ComponentRouter($arRoutes);
-
+$arRun = $oR->get_rundata();
+bug($arRun);die;
 
 $sRequestUri = $_SERVER["REQUEST_URI"];
 $arUri = explode("?",$sRequestUri);

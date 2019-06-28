@@ -10,9 +10,7 @@
 namespace TheFramework\Components;
 
 class ComponentRouter 
-{
-    const DS = DIRECTORY_SEPARATOR;
-    
+{   
     private $sRequestUri;
     private $sPathRoutes;
     private $arRoutes;
@@ -23,6 +21,7 @@ class ComponentRouter
         $this->sRequestUri = $_SERVER["REQUEST_URI"];
         $this->sPathRoutes = $sPathRoutes;
         $this->arRoutes = $arRoutes;
+        $this->arPieces = ["urlsep_exploded"=>[],"get_params"=>[]];
         $this->load_routes();
         $this->load_pieces();
         print_r($this->sRequestUri);
@@ -44,9 +43,63 @@ class ComponentRouter
     {
         $arGet = $this->get_get_params($this->sRequestUri);
         $arUrlsep = $this->get_urlsep_params($this->sRequestUri);
-        $this->arPieces["urlsep"] = $arUrlsep;
+        $this->arPieces["urlsep_exploded"] = $arUrlsep;
         $this->arPieces["get_params"] = $arGet;
     }
+    
+    private function search()
+    {
+        $isFound = FALSE;
+        
+        foreach($this->arRoutes as $i=>$arRoute)
+        {
+            $sUrl = $arRoute["url"];
+            $arUrlsep = $this->get_urlsep_params($sUrl);
+            $isFound = $this->compare_pieces($this->arPieces["urlsep_exploded"], $arUrlsep);
+            if($isFound)
+                break;
+        }
+        
+        if($isFound)
+            $this->add_to_get($this->arPieces["urlsep_exploded"],$this->arRoutes[$i]);
+
+        return $this->arRoutes[$i];
+    }
+    
+    public function get_rundata()
+    {
+        return $this->search();
+    }
+    
+    private function compare_pieces($arRequest,$arRoute)
+    {
+        if(count($arRequest)!=count($arRoute))
+            return FALSE;
+        
+        foreach($arRoute as $i=>$sPiece)
+        {
+            if($this->is_tag($sPiece)) continue;
+            $sReqval = $arRequest[$i];
+            if($sReqval != $sPiece)
+                return FALSE;
+        }
+        return TRUE;
+    }
+    
+    private function add_to_get($arRequest,$arRoute)
+    {
+        foreach($arRoute as $i=>$sPiece)
+        {
+            if(!$this->is_tag($sPiece))
+                continue;
+            $sKey = $this->get_tagkey($sPiece);
+            $_GET[$sKey] = $arRequest[$i];
+        }
+    }
+    
+    private function is_tag($sPiece){return strstr($sPiece,"{") && strstr($sPiece,"}");}
+    
+    private function get_tagkey($sPiece){return str_replace(["{","}"],["",""],$sPiece);}
     
     private function explode_and($sAndstring)
     {
@@ -70,9 +123,12 @@ class ComponentRouter
     
     private function unset_empties(&$arPieces)
     {
+        $arNew = [];
         foreach($arPieces as $i=>$sValue)
-            if(!$sValue)
-                unset($arPieces[$i]);
+            if($sValue)
+                $arNew[] = $sValue;
+        
+        $arPieces = $arNew;
     }
     
     private function get_urlsep_params($sUrl)
@@ -84,7 +140,5 @@ class ComponentRouter
         $this->unset_empties($arPieces);
         return $arPieces;
     }    
-    
-    
     
 }//ComponentRouter
