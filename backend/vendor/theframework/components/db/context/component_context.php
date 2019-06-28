@@ -17,12 +17,16 @@ class ComponentContext
     private $arContexts;
     private $arContextNoconf;
     
-    public function __construct($sPathfile="")
+    private $idSelected;
+    private $arSelected;
+    
+    public function __construct($sPathfile="",$id="")
     {
         $this->arContexts = [];
         if(!$sPathfile) $sPathfile = __DIR__.DIRECTORY_SEPARATOR."contexts.json";
         $this->load_contextjs($sPathfile);
         $this->load_context_noconf();
+        $this->load_selected();
     }
     
     private function load_contextjs($sPathfile)
@@ -46,6 +50,12 @@ class ComponentContext
             unset($arContext["config"]);
             $this->arContextNoconf[] = $arContext;
         }
+    }
+    
+    private function load_selected()
+    {
+        $this->arSelected["ctx"] = $this->get_by_id($this->idSelected);
+        $this->arSelected["noconfig"] = $this->get_noconfig_by("id",$this->idSelected);
     }
     
     private function get_filter_level_1($sKey, $sValue, $arArray=[])
@@ -74,6 +84,8 @@ class ComponentContext
         }
         return [];
     }
+    
+    public function get_selected(){return $this->arSelected;}
     
     public function get_noconfig_by($key,$val){return $this->get_filter_level_1($key,$val,$this->arContextNoconf);}
     

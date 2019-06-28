@@ -10,14 +10,16 @@
 namespace App\Services\Dbs;
 
 use App\Behaviours\SchemaBehaviour;
+use App\Factories\DbFactory;
 
 class SchemaService 
 {
     private $oBehav;
     
-    public function __construct() 
+    public function __construct($oDb=NULL) 
     {
-        $this->oBehav = new SchemaBehaviour();
+        //necesitaria un objeto de db
+        $this->oBehav = new SchemaBehaviour($oDb);
     }
     
     public function get_tables()

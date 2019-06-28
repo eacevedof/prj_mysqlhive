@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name App\Models\AppModel 
- * @file AppModel.php 2.0.1
- * @date 01-12-2018 00:00 SPAIN
+ * @file AppModel.php 2.1.0
+ * @date 28-06-2018 00:00 SPAIN
  * @observations
  */
 namespace App\Models;
@@ -27,15 +27,19 @@ class AppModel
     protected $arFields;
     protected $arPks;
     
-    public function __construct() 
+    public function __construct(ComponentMysql $oDb=NULL) 
     {
-        $arConfig = $this->get_config("db");
-        $oDb = new ComponentMysql();
-        $oDb->add_conn("server",$arConfig["server"]);
-        $oDb->add_conn("database",$arConfig["database"]);
-        $oDb->add_conn("user",$arConfig["user"]);
-        $oDb->add_conn("password",$arConfig["password"]);
         $this->oDb = $oDb;
+        if(!$this->oDb)
+        {
+            $arConfig = $this->get_config("db");
+            $oDb = new ComponentMysql();
+            $oDb->add_conn("server",$arConfig["server"]);
+            $oDb->add_conn("database",$arConfig["database"]);
+            $oDb->add_conn("user",$arConfig["user"]);
+            $oDb->add_conn("password",$arConfig["password"]);
+            $this->oDb = $oDb;
+        }
     }
         
     public function query($sSQL,$iCol=NULL,$iRow=NULL)

@@ -16,9 +16,9 @@ class SchemaBehaviour extends AppModel
 {
     private $oQServ;
     
-    public function __construct() 
+    public function __construct($oDb=NULL) 
     {
-        parent::__construct();
+        parent::__construct($oDb);
         $this->oQServ = new CoreQueriesService();
     }
     
@@ -27,9 +27,10 @@ class SchemaBehaviour extends AppModel
         return $this->oDb->query($sSQL,$iCol,$iRow);
     }
     
-    public function get_tables()
+    public function get_tables($sDb="")
     {
-        $sDb = $this->get_config("db","database");
+        if(!$sDb)
+            $sDb = $this->get_config("db","database");
         $sSQL = $this->oQServ->get_tables($sDb);
         //bug($sSQL);
         $arRows = $this->query($sSQL,0);
@@ -37,9 +38,10 @@ class SchemaBehaviour extends AppModel
         return $arRows;
     }
     
-    public function get_table($sTable)
+    public function get_table($sTable,$sDb="")
     {
-        $sDb = $this->get_config("db","database");
+        if(!$sDb)
+            $sDb = $this->get_config("db","database");
         $sSQL = $this->oQServ->get_tables($sDb,$sTable);
         //bug($sSQL);
         $arRows = $this->query($sSQL,0);
@@ -47,9 +49,10 @@ class SchemaBehaviour extends AppModel
         return $arRows;        
     }
    
-    public function get_fields_info($sTable)
+    public function get_fields_info($sTable,$sDb="")
     {
-        $sDb = $this->get_config("db","database");
+        if(!$sDb)
+            $sDb = $this->get_config("db","database");
         $sSQL = $this->oQServ->get_fields($sDb,$sTable);
         $arRows = $this->query($sSQL);
         //bug($arRows);die;
