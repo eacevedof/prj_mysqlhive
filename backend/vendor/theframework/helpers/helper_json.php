@@ -113,7 +113,7 @@ class HelperJson
         return $this;
     }
     
-    public function show()
+    public function show($isExit=0)
     {
         // clear the old headers
         header_remove();
@@ -128,6 +128,7 @@ class HelperJson
 
         $sJson = json_encode($this->arResponse["payload"]);
         echo $sJson;
+        if($isExit) exit();
     }
 
     private function load_codes()
@@ -239,7 +240,7 @@ class HelperJson
 
     public function set_code($iCode)
     {
-        $this->arResponse["payload"]["status"] = ($iCode<300);        
+        $this->arResponse["payload"]["status"] = (boolean)($iCode<300);        
         $this->arResponse["header"]["http"]["code"] = $iCode;
         $this->arResponse["header"]["http"]["message"] = "$iCode {$this->arCodes[$iCode]}";
         return $this;
@@ -247,7 +248,7 @@ class HelperJson
 
     public function set_message($sErrMessage)
     {
-        $this->arResponse["payload"]["status"] = $sErrMessage?$sErrMessage:$this->arResponse["header"]["http"]["message"];
+        $this->arResponse["payload"]["message"] = $sErrMessage?$sErrMessage:$this->arResponse["header"]["http"]["message"];
         return $this;        
     }
 

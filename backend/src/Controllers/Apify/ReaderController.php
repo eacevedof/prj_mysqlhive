@@ -34,16 +34,16 @@ class ReaderController extends AppController
         $sDb = $this->get_get("dbname");
         $arParts = $this->get_post("queryparts");
         
-
         $oServ = new ReaderService($idContext,$sDb);
         $oJson = new HelperJson();
-//print_r($oServ->is_error());die;
-        if($oServ->is_error())
-            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
-                    set_error($oServ->get_errors())->
-                    show();
 
         $arJson = $oServ->get_read($arParts);
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
+
         $oJson->set_payload($arJson)->show();
 
     }//index
@@ -60,12 +60,15 @@ class ReaderController extends AppController
 
         $sSQL = $this->get_post("query");
         $oServ = new ReaderService($idContext,$sDb);
-
         $oJson = new HelperJson();
-        if($oServ->is_error())
-            return $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->set_errors($oServ->get_errors())->show();
 
         $arJson = $oServ->get_read_raw($sSQL);
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
+
         $oJson->set_payload($arJson)->show();
     }//raw
    

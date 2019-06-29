@@ -9,6 +9,7 @@
  */
 namespace App\Controllers\Apify;
 
+use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\FieldsService;
 

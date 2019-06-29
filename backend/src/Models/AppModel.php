@@ -45,12 +45,16 @@ class AppModel
     public function query($sSQL,$iCol=NULL,$iRow=NULL)
     {
         $mxRet = $this->oDb->query($sSQL,$iCol=NULL,$iRow=NULL);
+        if($this->oDb->is_error())
+            $this->add_error($this->oDb->get_errors());
         return $mxRet;
     }
     
     public function execute($sSQL)
     {
         $mxRet = $this->oDb->exec($sSQL);
+        if($this->oDb->is_error())
+            $this->add_error($this->oDb->get_errors());        
         return $mxRet;
     }    
     
