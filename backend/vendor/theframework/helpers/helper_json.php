@@ -14,7 +14,7 @@ class HelperJson
     const CONTINUE = 100;  
     const SWITCHING_PROTOCOLS = 101;  
     const PROCESSING = 102;  
-    
+
     const OK = 200;  
     const CREATED = 201;  
     const ACCEPTED = 202;  
@@ -91,16 +91,20 @@ class HelperJson
     const NETWORK_READ_TIMEOUT_ERROR = 598;  
     const NETWORK_CONNECT_TIMEOUT_ERROR = 599;  
 
-    public $arCodes;
+    private $arCodes;
     private $arResponse;
 
     public function __construct($arPayload=[])
     {
         //https://jsonapi.org/format/
-        $this->arResponse["header"]["HTTP"] = "200 ok"; //CODIGO MENSAJE
+        $this->arResponse["header"]["http"]["code"] = 200; 
+        $this->arResponse["header"]["http"]["message"] = "200 ok"; //CODIGO MENSAJE
         //$this->arResponse["header"]["Allow"] = "GET, HEAD, OPTIONS";
         //$this->arResponse["header"]["Content-Type"] = "application/json";
         //$this->arResponse["header"]["Vary"] = "Accept";
+
+        $this->arResponse["payload"]["status"] = 1;
+        $this->arResponse["payload"]["message"] = "";
         $this->arResponse["payload"]["links"] = [];
         $this->arResponse["payload"]["errors"] = [];
         $this->arResponse["payload"]["data"] = $arPayload;
@@ -111,7 +115,17 @@ class HelperJson
     
     public function show()
     {
-        header("Content-Type: application/json");
+        // clear the old headers
+        header_remove();
+        // set the actual code
+        http_response_code($this->arResponse["header"]["http"]["code"]);
+        // set the header to make sure cache is forced
+        header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+        // treat this as json
+        header('Content-Type: application/json');
+        // ok, validation error, or failure
+        header("Status: {$this->arResponse["header"]["http"]["message"]}");        
+
         $sJson = json_encode($this->arResponse["payload"]);
         echo $sJson;
     }
@@ -211,24 +225,31 @@ class HelperJson
         return $this;
     }
 
-    public function set_code($iCode)
-    {
-        $this->arResponse["header"]["http"] = "$iCode {$this->arCodes[$iCode]}";
-        return $this;
-    }
-
     public function set_links($arLinks)
     {
-        $this->arResponse["header"]["links"] = $arLinks;
+        $this->arResponse["payload"]["links"] = $arLinks;
         return $this;
     }
 
     public function set_error($arErrors)
     {
-        $this->arResponse["header"]["errors"] = $arErrors;
+        $this->arResponse["payload"]["errors"] = $arErrors;
         return $this;
-    }    
+    }        
 
+    public function set_code($iCode)
+    {
+        $this->arResponse["payload"]["status"] = ($iCode<300);        
+        $this->arResponse["header"]["http"]["code"] = $iCode;
+        $this->arResponse["header"]["http"]["message"] = "$iCode {$this->arCodes[$iCode]}";
+        return $this;
+    }
+
+    public function set_message($sErrMessage)
+    {
+        $this->arResponse["payload"]["status"] = $sErrMessage?$sErrMessage:$this->arResponse["header"]["http"]["message"];
+        return $this;        
+    }
 
     //**********************************
     //             GETS

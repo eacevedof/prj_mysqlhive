@@ -30,19 +30,30 @@ class ReaderService extends AppService
         $this->idContext = $idContext;
         $this->sDb = $sDb;
         if(!$this->idContext)
-            return $this->add_error("Error in context: $idContext");
+        {
+            $this->add_error("Error in context: $idContext");
+            return;
+        }
 
-        $this->oContext = new ComponentContext($idContext);
+        $this->oContext = new ComponentContext("",$idContext);
+
         $oDb = DbFactory::get_dbobject_by_idctx($idContext,$sDb);
+        if($oDb->is_error()) 
+        {
+            $this->add_error($oDb->get_errors());
+            return;
+        }
+        
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     
     private function get_parsed_tosql($arParams)
     {
         $oCrud = new ComponentCrud();
-        if(!isset($arParams["table"])) return $this->add_error("get_sql no table");
-        if(!isset($arParams["fields"])) return $this->add_error("get_sql no fields");
-        
+        if(!isset($arParams["table"])) $this->add_error("get_sql no table");
+        if(!isset($arParams["fields"])) $this->add_error("get_sql no fields");
+        if($this->isError) return;
+
         $oCrud->set_table($arParams["table"]);
         $oCrud->set_getfields($arParams["fields"]);
         $oCrud->set_joins($arParams["joins"]);

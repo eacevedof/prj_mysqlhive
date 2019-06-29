@@ -34,10 +34,14 @@ class ReaderController extends AppController
         $sDb = $this->get_get("dbname");
         $arParts = $this->get_post("queryparts");
         
+
         $oServ = new ReaderService($idContext,$sDb);
         $oJson = new HelperJson();
+//print_r($oServ->is_error());die;
         if($oServ->is_error())
-            return $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->set_errors($oServ->get_errors())->show();
+            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    show();
 
         $arJson = $oServ->get_read($arParts);
         $oJson->set_payload($arJson)->show();

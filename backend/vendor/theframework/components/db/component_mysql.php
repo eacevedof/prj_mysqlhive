@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\ComponentMysql 
- * @file component_mysql.php v2.0.0
- * @date 02-12-2018 13:20 SPAIN
+ * @file component_mysql.php v2.1.0
+ * @date 29-06-2019 17:08 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -55,6 +55,7 @@ class ComponentMysql
     
     public function query($sSQL,$iCol=NULL,$iRow=NULL)
     {
+        $arResult = [];        
         try 
         {
             $sConn = $this->get_conn_string();
@@ -70,8 +71,6 @@ class ComponentMysql
             }
             else
             {
-                //var_dump($stmt);
-                $arResult = [];
                 while($arRow = $oCursor->fetch(\PDO::FETCH_ASSOC))
                     $arResult[] = $arRow;
                 
@@ -81,7 +80,7 @@ class ComponentMysql
                     $arResult = $this->get_rowcol($arResult,$iCol,$iRow);
             }
         }
-        catch(PDOException $oE)
+        catch(\PDOException $oE)
         {
             $sMessage = "exception:{$oE->getMessage()}";
             $this->add_error($sMessage);
