@@ -31,7 +31,7 @@ class ReaderService extends AppService
             return $this->add_error("Error in context: $idContext");
 
         $this->oContext = new ComponentContext($idContext);
-        $oDb = DbFactory::get_dbobject_by_idctx($idContext);
+        $oDb = DbFactory::get_dbobject_by_idctx($idContext,$sDb);
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     

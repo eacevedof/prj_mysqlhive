@@ -15,14 +15,14 @@ use TheFramework\Components\Db\Context\ComponentContext;
 class DbFactory 
 {
     
-    public static function get_dbobject_by_idctx($id) 
+    public static function get_dbobject_by_idctx($id,$sDb="") 
     {
         $oCtx = new ComponentContext();
         $arConfig = $oCtx->get_config_by("id",$id);
-        //$arConfig = $this->get_config("db");
+
         $oDb = new ComponentMysql();
         $oDb->add_conn("server",$arConfig["server"]);
-        $oDb->add_conn("database",$arConfig["database"]);
+        $oDb->add_conn("database",($sDb?$sDb:$arConfig["database"]));
         $oDb->add_conn("user",$arConfig["user"]);
         $oDb->add_conn("password",$arConfig["password"]);
         return $oDb;

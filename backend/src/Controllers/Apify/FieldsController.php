@@ -29,7 +29,7 @@ class FieldsController extends AppController
     public function index()
     {
         $idContext = $this->get_get("id_context");
-        $sDb = $this->get_get("database");
+        $sDb = $this->get_get("dbname");
         $sTableName = $this->get_get("tablename");
         $sFieldName = $this->get_get("fieldname");
 

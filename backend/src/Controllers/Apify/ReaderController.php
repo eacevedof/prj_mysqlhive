@@ -30,7 +30,7 @@ class ReaderController extends AppController
         //bugpg();
         print_r("ReaderController.index()");
         $idContext = $this->get_get("id_context");
-        $sDb = $this->get_get("database");
+        $sDb = $this->get_get("dbname");
 
         $sSQL = $this->get_post("query");
         $oServ = new ReaderService($idContext,$sDb);
@@ -39,12 +39,15 @@ class ReaderController extends AppController
 
     }//index
 
+    /**
+     * /apify/read/raw?context=x&database=y
+     */
     public function raw()
     {
         //bugpg();
         print_r("ReaderController.raw()");
-        $idContext = $this->get_get("id_context");
-        $sDb = $this->get_get("database");
+        $idContext = $this->get_get("context");
+        $sDb = $this->get_get("dbname");
 
         $sSQL = $this->get_post("query");
         $oServ = new ReaderService($idContext,$sDb);

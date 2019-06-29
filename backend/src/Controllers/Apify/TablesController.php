@@ -29,7 +29,7 @@ class TablesController extends AppController
     public function index()
     {
         $idContext = $this->get_get("id_context");
-        $sDb = $this->get_get("database");
+        $sDb = $this->get_get("dbname");
 
         $oDbs = new TablesService($idContext,$sDb);
         $arData = $oDbs->get_all();

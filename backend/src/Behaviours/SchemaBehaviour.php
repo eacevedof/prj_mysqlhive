@@ -78,7 +78,7 @@ class SchemaBehaviour extends AppModel
         //bug($arRows);die;
         return $arRows;
     }    
-
+    
     public function get_read_raw($sSQL)
     {
         return $this->query($sSQL);
