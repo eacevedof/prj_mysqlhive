@@ -9,6 +9,7 @@
  */
 namespace App\Controllers\Apify;
 
+use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\ReaderService;
 
@@ -34,10 +35,12 @@ class ReaderController extends AppController
         $arParts = $this->get_post("queryparts");
         
         $oServ = new ReaderService($idContext,$sDb);
+        $oJson = new HelperJson();
         if($oServ->is_error())
-            return print_r($oServ->get_errors());
+            return $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->set_errors($oServ->get_errors())->show();
+
         $arJson = $oServ->get_read($arParts);
-        $this->response_json($arJson);
+        $oJson->set_payload($arJson)->show();
 
     }//index
 
@@ -53,9 +56,13 @@ class ReaderController extends AppController
 
         $sSQL = $this->get_post("query");
         $oServ = new ReaderService($idContext,$sDb);
-        $arJson = $oServ->get_read_raw($sSQL);
-        $this->response_json($arJson);
 
+        $oJson = new HelperJson();
+        if($oServ->is_error())
+            return $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->set_errors($oServ->get_errors())->show();
+
+        $arJson = $oServ->get_read_raw($sSQL);
+        $oJson->set_payload($arJson)->show();
     }//raw
    
 

@@ -37,7 +37,7 @@ class ReaderService extends AppService
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     
-    private function get_sql($arParams)
+    private function get_parsed_tosql($arParams)
     {
         $oCrud = new ComponentCrud();
         if(!isset($arParams["table"])) return $this->add_error("get_sql no table");
@@ -65,6 +65,7 @@ class ReaderService extends AppService
 
     public function get_read_raw($sSQL)
     {
+        $this->sSQL = $sSQL;
         return $this->oBehav->get_read_raw($sSQL);
     }
     
@@ -72,11 +73,13 @@ class ReaderService extends AppService
     {
         if(!$arParams)
             return $this->add_error("get_read No params");
-        $sSQL = $this->get_sql($arParams);
+        $sSQL = $this->get_parsed_tosql($arParams);
         //pr($sSQL);die;
         //pr($this->oBehav,"oBehav");
+        $this->sSQL = $sSQL;
         return $this->oBehav->get_read_raw($sSQL);
     }
     
+    public function get_sql(){return $this->sSQL;}
 
 }//ReaderService
