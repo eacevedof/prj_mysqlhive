@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
- * @file component_crud.php 2.4.0
- * @date 01-12-2018 13:04 SPAIN
+ * @file component_crud.php 2.5.0
+ * @date 29-06-2019 13:04 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -18,6 +18,7 @@ class ComponentCrud
     
     private $arNumeric; //si esta en este array no se escapa con '
     private $arOrderBy;
+    private $arGroupBy;
     private $arAnds;
     private $arJoins;
     
@@ -46,6 +47,7 @@ class ComponentCrud
         $this->arPksFV = array();
         $this->arGetFields = array();
         $this->arOrderBy = array();
+        $this->arGroupBy = array();
         $this->arNumeric = array();
         $this->arAnds = array();
         $this->oDB = $oDB;
@@ -65,6 +67,20 @@ class ComponentCrud
         return $sOrderBy;
     }
     
+    private function get_groupby()
+    {
+        $sGroupBy = "";
+        $arSQL = [];
+        if($this->arGroupBy)
+        {
+            $sGroupBy = " GROUP BY ";
+            foreach($this->arGroupBy as $sField)
+                $arSQL[] = $sField;
+            $sGroupBy = $sGroupBy.implode(",",$arSQL);
+        }
+        return $sGroupBy;
+    }
+
     private function get_joins()
     {
         $sJoin = " ".implode("\n",$this->arJoins);
@@ -361,6 +377,7 @@ class ComponentCrud
                 if($arAux)
                     $sSQL .= " WHERE ".implode(" AND ",$arAux);
                 
+                $sSQL .= $this->get_groupby();
                 $sSQL .= $this->get_orderby();
                 $sSQL .= $this->get_end();
                 $this->sSQL = $sSQL;
@@ -520,6 +537,7 @@ class ComponentCrud
 
     public function set_joins($arJoins=array()){$this->arJoins = array(); if(is_array($arJoins)) $this->arJoins=$arJoins;}
     public function set_orderby($arOrderBy=array()){$this->arOrderBy = array(); if(is_array($arOrderBy)) $this->arOrderBy=$arOrderBy;}
+    public function set_groupby($arGroupBy=array()){$this->arGroupBy = array(); if(is_array($arGroupBy)) $this->arGroupBy=$arGroupBy;}
     public function set_end($arEnd=array()){$this->arEnd = array(); if(is_array($arEnd)) $this->arEnd=$arEnd;}
     
     public function get_sql(){return $this->sSQL;}
@@ -633,7 +651,9 @@ class ComponentCrud
     public function get_result(){$this->arResult;}
     public function is_distinct($isOn=TRUE){$this->isDistinct=$isOn;}
     public function add_orderby($sFieldName,$sOrder="ASC"){$this->arOrderBy[$sFieldName]=$sOrder;}
+    public function add_groupby($sFieldName){$this->arGroupBy[]=$sFieldName;}
     public function add_numeric($sFieldName){$this->arNumeric[]=$sFieldName;}
+    public function set_and($arAnds=array()){$this->arAnds = array(); if(is_array($arAnds)) $this->arAnds=$arAnds;}
     public function add_and($sAnd){$this->arAnds[]=$sAnd;}
     public function add_and1($sFieldName,$sValue,$sOper="="){$this->arAnds[]="$sFieldName $sOper $sValue";}
     public function add_join($sJoin,$sKey=NULL){if($sKey)$this->arJoins[$sKey]=$sJoin;else$this->arJoins[]=$sJoin;}

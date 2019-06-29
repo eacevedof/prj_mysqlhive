@@ -23,24 +23,26 @@ class ReaderController extends AppController
     
     
     /**
-     * /apify/read/
+     * /apify/read?context=c&dbname=d
      */
     public function index()
     {
-        //bugpg();
-        print_r("ReaderController.index()");
-        $idContext = $this->get_get("id_context");
+        //bugp();
+        //print_r("ReaderController.index()");
+        $idContext = $this->get_get("context");
         $sDb = $this->get_get("dbname");
-
-        $sSQL = $this->get_post("query");
+        $arParts = $this->get_post("queryparts");
+        
         $oServ = new ReaderService($idContext,$sDb);
-        $arJson = $oServ->get_read($sSQL);
+        if($oServ->is_error())
+            return print_r($oServ->get_errors());
+        $arJson = $oServ->get_read($arParts);
         $this->response_json($arJson);
 
     }//index
 
     /**
-     * /apify/read/raw?context=x&database=y
+     * /apify/read/raw?context=c&dbname=d
      */
     public function raw()
     {

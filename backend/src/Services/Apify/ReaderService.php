@@ -10,9 +10,11 @@
 namespace App\Services\Apify;
 
 use TheFramework\Components\Db\Context\ComponentContext;
+use TheFramework\Components\Db\ComponentCrud;
 use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
+
 
 class ReaderService extends AppService
 {
@@ -35,6 +37,32 @@ class ReaderService extends AppService
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     
+    private function get_sql($arParams)
+    {
+        $oCrud = new ComponentCrud();
+        if(!isset($arParams["table"])) return $this->add_error("get_sql no table");
+        if(!isset($arParams["fields"])) return $this->add_error("get_sql no fields");
+        
+        $oCrud->set_table($arParams["table"]);
+        $oCrud->set_getfields($arParams["fields"]);
+        $oCrud->set_joins($arParams["joins"]);
+        $oCrud->set_and($arParams["where"]);
+        $oCrud->set_groupby($arParams["groupby"]);
+
+        $arTmp = [];
+        if(isset($arParams["orderby"]))
+        {
+            foreach($arParams["orderby"] as $sField)
+            {
+                $arField = explode(" ",trim($sField));
+                $arTmp[$arField[0]] = isset($arField[1])?$arField[1]:"ASC";
+            }
+        }
+        $oCrud->set_orderby($arTmp);
+        $oCrud->get_selectfrom();
+        return $oCrud->get_sql();
+    }
+
     public function get_read_raw($sSQL)
     {
         return $this->oBehav->get_read_raw($sSQL);
@@ -42,7 +70,12 @@ class ReaderService extends AppService
     
     public function get_read($arParams)
     {
-        return $this->oBehav->get_read($sSQL);
+        if(!$arParams)
+            return $this->add_error("get_read No params");
+        $sSQL = $this->get_sql($arParams);
+        //pr($sSQL);die;
+        //pr($this->oBehav,"oBehav");
+        return $this->oBehav->get_read_raw($sSQL);
     }
     
 
