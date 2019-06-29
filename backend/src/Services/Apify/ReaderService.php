@@ -21,25 +21,29 @@ class ReaderService extends AppService
     
     private $oContext;
     private $oBehav;
+    private $sSQL;
     
     public function __construct($idContext="",$sDb="") 
     {
         $this->idContext = $idContext;
         $this->sDb = $sDb;
-        
+        if(!$this->idContext)
+            return $this->add_error("Error in context: $idContext");
+
         $this->oContext = new ComponentContext($idContext);
         $oDb = DbFactory::get_dbobject_by_idctx($idContext);
         $this->oBehav = new SchemaBehaviour($oDb);
     }
-        
-    public function select($sTableName)
+    
+    public function get_read_raw($sSQL)
     {
-        return $this->oBehav->get_fields_info($sTableName,$this->sDb);
-    }
-
-    public function raw($sSQL)
-    {
-        return $this->oBehav->raw($sSQL);
+        return $this->oBehav->get_read_raw($sSQL);
     }
     
+    public function get_read($arParams)
+    {
+        return $this->oBehav->get_read($sSQL);
+    }
+    
+
 }//ReaderService

@@ -79,4 +79,28 @@ class SchemaBehaviour extends AppModel
         return $arRows;
     }    
 
+    public function get_read_raw($sSQL)
+    {
+        return $this->query($sSQL);
+    }
+
+    public function get_read($oQuery)
+    {
+        $sSQL = $oQServ->get_sql();
+        return $this->query($sSQL);
+    }
+        
+    public function write_raw($sSQL)
+    {
+        return $this->execute($sSQL);
+    }
+
+
+    public function write($oQuery)
+    {
+        $sSQL = $oQServ->get_sql();
+        return $this->execute($sSQL);
+    }
+
+
 }//SchemaBehaviour
