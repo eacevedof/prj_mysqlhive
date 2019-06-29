@@ -29,7 +29,37 @@ class WriterController extends AppController
     {
         $idContext = $this->get_get("id_context");
         $sDb = $this->get_get("dbname");
+        
+        $oServ = new WriterService($idContext,$sDb);
 
+        $oJson = new HelperJson();
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
+
+        $oJson->set_payload($arJson)->show();
     }//index
 
+    /**
+     * /apify/write/raw?context=c&dbname=d
+     */
+    public function raw()
+    {
+        $idContext = $this->get_get("id_context");
+        $sDb = $this->get_get("dbname");
+        
+        $oServ = new WriterService($idContext,$sDb);
+
+        $oJson = new HelperJson();
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
+
+        $oJson->set_payload($arJson)->show();
+    }//raw    
+    
 }//WriterController

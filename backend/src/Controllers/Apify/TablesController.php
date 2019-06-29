@@ -32,9 +32,17 @@ class TablesController extends AppController
         $idContext = $this->get_get("id_context");
         $sDb = $this->get_get("dbname");
 
-        $oDbs = new TablesService($idContext,$sDb);
-        $arData = $oDbs->get_all();
-        $this->response_json($arData);
+        $oServ = new TablesService($idContext,$sDb);
+        $arJson = $oServ->get_all();
+
+        $oJson = new HelperJson();
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
+
+        $oJson->set_payload($arJson)->show();
     }//index
 
 }//TablesController

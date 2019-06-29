@@ -34,12 +34,20 @@ class FieldsController extends AppController
         $sTableName = $this->get_get("tablename");
         $sFieldName = $this->get_get("fieldname");
 
-        $oService = new FieldsService($idContext,$sDb,$sTableName,$sFieldName);
+        $oServ = new FieldsService($idContext,$sDb,$sTableName,$sFieldName);
         if($sFieldName)
-            $arData = $oService->get_field($sTableName,$sFieldName);
+            $arJson = $oServ->get_field($sTableName,$sFieldName);
         else
-            $arData = $oService->get_all($sTableName);
-        $this->response_json($arData);
+            $arJson = $oServ->get_all($sTableName);
+
+        $oJson = new HelperJson();
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
+
+        $oJson->set_payload($arJson)->show();
     }//index
 
 }//FieldsController

@@ -30,8 +30,16 @@ class DbsController extends AppController
     {
         $idContext = $this->get_get("id_context");
         $oDbs = new DbsService($idContext);
-        $arData = $oDbs->get_all();
-        $this->response_json($arData);
+        $arJson = $oDbs->get_all();
+        
+        $oJson = new HelperJson();
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
+
+        $oJson->set_payload($arJson)->show();
     }//index
 
 }//DbsController

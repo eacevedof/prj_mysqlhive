@@ -30,12 +30,19 @@ class ContextsController extends AppController
     public function index()
     {
         $oServ = new ContextService();
-        $arData = $oServ->get_noconfig();
+        $arJson = $oServ->get_noconfig();
 
         if($this->is_get("id"))
-            $arData = $oServ->get_noconfig_by_id($this->get_get("id"));
+            $arJson = $oServ->get_noconfig_by_id($this->get_get("id"));
+        
+        $oJson = new HelperJson();
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
 
-        $this->response_json($arData);
+        $oJson->set_payload($arJson)->show();
 
     }//index
     

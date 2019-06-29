@@ -35,9 +35,9 @@ class ReaderController extends AppController
         $arParts = $this->get_post("queryparts");
         
         $oServ = new ReaderService($idContext,$sDb);
-        $oJson = new HelperJson();
-
         $arJson = $oServ->get_read($arParts);
+        
+        $oJson = new HelperJson();
         if($oServ->is_error()) 
             $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->
