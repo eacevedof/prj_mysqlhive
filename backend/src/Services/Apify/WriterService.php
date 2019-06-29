@@ -49,4 +49,8 @@ class WriterService extends AppService
         return $this->oBehav->get_field_info($sFieldName,$sTableName,$this->sDb);
     }     
     
+    public function raw($sSQL)
+    {
+        return $this->oBehav->raw($sSQL);
+    }
 }//WriterService

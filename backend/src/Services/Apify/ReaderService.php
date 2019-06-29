@@ -35,6 +35,11 @@ class ReaderService extends AppService
     public function select($sTableName)
     {
         return $this->oBehav->get_fields_info($sTableName,$this->sDb);
-    }   
+    }
+
+    public function raw($sSQL)
+    {
+        return $this->oBehav->raw($sSQL);
+    }
     
 }//ReaderService
