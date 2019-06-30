@@ -53,6 +53,7 @@ class AppModel
     public function execute($sSQL)
     {
         $mxRet = $this->oDb->exec($sSQL);
+        //pr($this->oDb->get_errors(),"appmodel.execute");die;
         if($this->oDb->is_error())
             $this->add_error($this->oDb->get_errors());        
         return $mxRet;

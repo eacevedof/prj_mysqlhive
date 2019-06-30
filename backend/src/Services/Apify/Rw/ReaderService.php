@@ -74,10 +74,10 @@ class ReaderService extends AppService
         return $oCrud->get_sql();
     }
 
-    public function get_read_raw($sSQL)
+    public function read_raw($sSQL)
     {
         $this->sSQL = $sSQL;
-        $r = $this->oBehav->get_read_raw($sSQL);   
+        $r = $this->oBehav->read_raw($sSQL);   
         if($this->oBehav->is_error())
             $this->add_error($this->oBehav->get_errors());
         return $r;
@@ -89,7 +89,7 @@ class ReaderService extends AppService
             return $this->add_error("get_read No params");
         $sSQL = $this->get_parsed_tosql($arParams);
         $this->sSQL = $sSQL;
-        $r = $this->get_read_raw($sSQL);
+        $r = $this->read_raw($sSQL);
         return $r;
     }
     

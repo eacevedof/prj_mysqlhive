@@ -30,9 +30,10 @@ class WriterController extends AppController
         $idContext = $this->get_get("context");
         $sDb = $this->get_get("dbname");
         $arParts = $this->get_post("queryparts");
+        $sAction = $this->get_post("action");
         
         $oServ = new WriterService($idContext,$sDb);
-        $arJson = $oServ->write($arParts);
+        $arJson = $oServ->write($arParts,$sAction);
 
         $oJson = new HelperJson();
         if($oServ->is_error()) 
@@ -41,9 +42,9 @@ class WriterController extends AppController
                     set_message("database error")->
                     show(1);
 
-        if($arParts["action"]=="insert") 
+        if($sAction=="insert") 
             $oJson->set_code(HelperJson::CREATED)->set_message("resource created");
-        elseif($arParts["action"]=="update")
+        elseif($sAction=="update")
             $oJson->set_message("resource updated");
         elseif($arParts["delete"])
             $oJson->set_message("resource deleted");
@@ -56,8 +57,9 @@ class WriterController extends AppController
      */
     public function raw()
     {
-        $idContext = $this->get_get("id_context");
+        $idContext = $this->get_get("context");
         $sDb = $this->get_get("dbname");
+        $sAction = $this->get_post("action");
         $sSQL = $this->get_post("query");
         
         $oServ = new WriterService($idContext,$sDb);
@@ -70,7 +72,14 @@ class WriterController extends AppController
                     set_message("database error")->
                     show(1);
 
-        $oJson->set_code(HelperJson::CREATED)->set_payload($arJson)->show();
+        if($sAction=="insert") 
+            $oJson->set_code(HelperJson::CREATED)->set_message("resource created");
+        elseif($sAction=="update")
+            $oJson->set_message("resource updated");
+        elseif($arParts["delete"])
+            $oJson->set_message("resource deleted");
+
+        $oJson->set_payload($arJson)->show();
     }//raw    
     
 }//WriterController

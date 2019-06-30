@@ -62,7 +62,7 @@ class ReaderController extends AppController
         $oServ = new ReaderService($idContext,$sDb);
         $oJson = new HelperJson();
 
-        $arJson = $oServ->get_read_raw($sSQL);
+        $arJson = $oServ->read_raw($sSQL);
         if($oServ->is_error()) 
             $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->

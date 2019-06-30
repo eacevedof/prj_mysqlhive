@@ -29,6 +29,14 @@ class SchemaBehaviour extends AppModel
             $this->add_error($this->oDb->get_errors());
         return $r;
     }
+
+    public function execute($sSQL)
+    {
+        $r = $this->oDb->exec($sSQL);
+        if($this->oDb->is_error())
+            $this->add_error($this->oDb->get_errors());
+        return $r;
+    }    
     
     public function get_schemas()
     {
@@ -82,14 +90,7 @@ class SchemaBehaviour extends AppModel
         return $arRows;
     }    
     
-    public function get_read_raw($sSQL)
-    {
-        return $this->query($sSQL);
-    }
-
-    public function write_raw($sSQL)
-    {
-        return $this->execute($sSQL);
-    }
+    public function read_raw($sSQL){ return $this->query($sSQL);}
+    public function write_raw($sSQL){ return $this->execute($sSQL);}
 
 }//SchemaBehaviour

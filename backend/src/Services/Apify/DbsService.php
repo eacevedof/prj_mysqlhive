@@ -27,8 +27,8 @@ class DbsService extends AppService
         $this->idContext = $idContext;
         $this->sDb = $sDb;
         
-        $this->oContext = new ComponentContext($idContext);
-        $oDb = DbFactory::get_dbobject_by_idctx($idContext);
+        $this->oContext = new ComponentContext("",$idContext);
+        $oDb = DbFactory::get_dbobject_by_idctx($idContext,$sDb);
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     

@@ -84,6 +84,7 @@ class ComponentMysql
         {
             $sMessage = "exception:{$oE->getMessage()}";
             $this->add_error($sMessage);
+            $this->log($sSQL,"ComponentMysql.query error: $sMessage");
         }
         return $arResult;
     }//query
@@ -99,6 +100,7 @@ class ComponentMysql
             $oPdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
             $this->log($sSQL,"ComponentMysql.exec");
             $mxR = $oPdo->exec($sSQL);
+
             $this->iAffected = $mxR;
             if($mxR===FALSE)
             {
@@ -107,9 +109,10 @@ class ComponentMysql
             return $mxR;
         }
         catch(\PDOException $oE)
-        {
+        {           
             $sMessage = "exception:{$oE->getMessage()}";
             $this->add_error($sMessage);
+            $this->log($sSQL,"ComponentMysql.exec error: $sMessage");
         }
     }//exec    
     

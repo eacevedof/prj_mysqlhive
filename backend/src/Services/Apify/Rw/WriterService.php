@@ -32,18 +32,16 @@ class WriterService extends AppService
         $this->idContext = $idContext;
         $this->sDb = $sDb;
         
-        $this->oContext = new ComponentContext($idContext);
-        $oDb = DbFactory::get_dbobject_by_idctx($idContext);
+        $this->oContext = new ComponentContext("",$idContext);
+        $oDb = DbFactory::get_dbobject_by_idctx($idContext,$sDb);
         $this->oBehav = new SchemaBehaviour($oDb);
         $this->arActions = ["insert","update","delete","drop","alter"];
     }
         
-    private function get_parsed_tosql($arParams)
+    private function get_parsed_tosql($arParams,$sAction)
     {
-        if(!isset($arParams["action"])) return $this->add_error("get_parsed_tosql no param action");
-        if(!in_array($arParams["action"],$this->arActions)) return $this->add_error("action: {$arParams["action"]} not found!");
-                
-        $sAction = $arParams["action"];
+        if(!isset($sAction)) return $this->add_error("get_parsed_tosql no param action");
+        if(!in_array($sAction,$this->arActions)) return $this->add_error("action: {$sAction} not found!");
 
         switch ($sAction) {
             case "insert":
@@ -92,7 +90,8 @@ class WriterService extends AppService
             $oCrud->add_and($sWhere);
         }        
         $oCrud->autodelete();
-        return $oCrud->get_sql();        
+        $sSQL = $oCrud->get_sql();
+        return $sSQL;      
     }//get_delete_sql
 
     private function get_update_sql($arParams)
@@ -103,10 +102,10 @@ class WriterService extends AppService
         if($this->isError) return;
 
         $oCrud->set_table($arParams["table"]);
-        foreach($arParams["fields"] as $arField)
+        foreach($arParams["fields"] as $sFieldName=>$sFieldValue)
         {
-            $sFieldName = array_keys($arField)[0];
-            $sFieldValue = $arField[$sFieldName];
+            //$sFieldName = array_keys($arField)[0];
+            //$sFieldValue = $arField[$sFieldName];
             $oCrud->add_update_fv($sFieldName,$sFieldValue);
         }
 
@@ -115,21 +114,27 @@ class WriterService extends AppService
             $oCrud->add_and($sWhere);
         }        
         $oCrud->autoupdate();
-        return $oCrud->get_sql();        
+        $sSQL = $oCrud->get_sql();
+        //pr($sSQL);die;
+        return $sSQL;
     }//get_update_sql    
 
-
-    public function write($arParams)
-    {
-        $sSQL = $this->get_parsed_tosql($arParams);
-        return $this->write_raw($sSQL);        
-    }
-    
     public function write_raw($sSQL)
     {
         if(!$this->isError)
-            return $this->oBehav->write_raw($sSQL);
+        {
+            $r = $this->oBehav->write_raw($sSQL);
+            if($this->oBehav->is_error())
+                $this->add_error($this->oBehav->get_errors());
+            return $r;
+        }
         return -1;
+    }
+    
+    public function write($arParams,$sAction)
+    {
+        $sSQL = $this->get_parsed_tosql($arParams,$sAction);
+        return $this->write_raw($sSQL);        
     }
 
 }//WriterService

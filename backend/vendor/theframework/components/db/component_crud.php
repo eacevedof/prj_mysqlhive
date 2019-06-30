@@ -4,7 +4,7 @@
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
  * @file component_crud.php 2.5.0
- * @date 29-06-2019 13:04 SPAIN
+ * @date 30-06-2019 13:49 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;

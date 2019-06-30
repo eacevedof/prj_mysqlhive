@@ -29,8 +29,8 @@ class TablesService extends AppService
         $this->sDb = $sDb;
         $this->sTableName = $sTable;
         
-        $this->oContext = new ComponentContext($idContext);
-        $oDb = DbFactory::get_dbobject_by_idctx($idContext);
+        $this->oContext = new ComponentContext("",$idContext);
+        $oDb = DbFactory::get_dbobject_by_idctx($idContext,$sDb);
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     
