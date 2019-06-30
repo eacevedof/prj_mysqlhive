@@ -3,7 +3,7 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\ComponentMysql 
- * @file component_mysql.php v2.1.0
+ * @file component_mysql.php v2.1.1
  * @date 29-06-2019 17:08 SPAIN
  * @observations
  */
@@ -106,7 +106,7 @@ class ComponentMysql
             }
             return $mxR;
         }
-        catch(PDOException $oE)
+        catch(\PDOException $oE)
         {
             $sMessage = "exception:{$oE->getMessage()}";
             $this->add_error($sMessage);

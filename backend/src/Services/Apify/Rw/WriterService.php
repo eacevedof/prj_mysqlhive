@@ -1,0 +1,135 @@
+<?php
+/**
+ * @author Eduardo Acevedo Farje.
+ * @link www.eduardoaf.com
+ * @name App\Services\Apify\Mysql
+ * @file WriterService.php 1.0.0
+ * @date 30-06-2019 12:42 SPAIN
+ * @observations
+ */
+namespace App\Services\Apify\Rw;
+
+use TheFramework\Components\Db\Context\ComponentContext;
+use TheFramework\Components\Db\ComponentCrud;
+use App\Services\AppService;
+use App\Behaviours\SchemaBehaviour;
+use App\Factories\DbFactory;
+
+class WriterService extends AppService
+{
+    private $idContext;
+    private $sDb;
+    private $arParams;
+    private $sFieldName;
+    
+    private $oContext;
+    private $oBehav;
+    
+    private $arActions;
+
+    public function __construct($idContext="",$sDb="") 
+    {
+        $this->idContext = $idContext;
+        $this->sDb = $sDb;
+        
+        $this->oContext = new ComponentContext($idContext);
+        $oDb = DbFactory::get_dbobject_by_idctx($idContext);
+        $this->oBehav = new SchemaBehaviour($oDb);
+        $this->arActions = ["insert","update","delete","drop","alter"];
+    }
+        
+    private function get_parsed_tosql($arParams)
+    {
+        if(!isset($arParams["action"])) return $this->add_error("get_parsed_tosql no param action");
+        if(!in_array($arParams["action"],$this->arActions)) return $this->add_error("action: {$arParams["action"]} not found!");
+                
+        $sAction = $arParams["action"];
+
+        switch ($sAction) {
+            case "insert":
+                $sSQL = $this->get_insert_sql($arParams);
+            break;
+            case "update":
+                $sSQL = $this->get_update_sql($arParams);
+            break;   
+            case "delete":
+                $sSQL = $this->get_delete_sql($arParams);
+            break;
+            default:
+                return $this->add_error("get_parsed_tosql","action: $sAction not implemented!");
+        }
+        return $sSQL;
+    }
+
+    private function get_insert_sql($arParams)
+    {
+        $oCrud = new ComponentCrud();
+        if(!isset($arParams["table"])) $this->add_error("get_insert_sql no table");
+        if(!isset($arParams["fields"])) $this->add_error("get_insert_sql no fields");
+        if($this->isError) return;
+
+        $oCrud->set_table($arParams["table"]);
+        foreach($arParams["fields"] as $sFieldName=>$sFieldValue)
+        {
+            //print_r($arField);die;
+            //$sFieldName = array_keys($arField)[0];
+            //$sFieldValue = $arField[$sFieldName];
+            $oCrud->add_insert_fv($sFieldName,$sFieldValue);
+        }
+        $oCrud->autoinsert();
+        
+        return $oCrud->get_sql();
+    }
+
+    private function get_delete_sql($arParams)
+    {
+        $oCrud = new ComponentCrud();
+        if(!isset($arParams["table"])) $this->add_error("get_delete_sql no table");
+        if($this->isError) return;
+
+        foreach($arParams["where"] as $sWhere)
+        {
+            $oCrud->add_and($sWhere);
+        }        
+        $oCrud->autodelete();
+        return $oCrud->get_sql();        
+    }//get_delete_sql
+
+    private function get_update_sql($arParams)
+    {
+        $oCrud = new ComponentCrud();
+        if(!isset($arParams["table"])) $this->add_error("get_update_sql no table");
+        if(!isset($arParams["fields"])) $this->add_error("get_update_sql no fields");
+        if($this->isError) return;
+
+        $oCrud->set_table($arParams["table"]);
+        foreach($arParams["fields"] as $arField)
+        {
+            $sFieldName = array_keys($arField)[0];
+            $sFieldValue = $arField[$sFieldName];
+            $oCrud->add_update_fv($sFieldName,$sFieldValue);
+        }
+
+        foreach($arParams["where"] as $sWhere)
+        {
+            $oCrud->add_and($sWhere);
+        }        
+        $oCrud->autoupdate();
+        return $oCrud->get_sql();        
+    }//get_update_sql    
+
+
+    public function write($arParams)
+    {
+        $sSQL = $this->get_parsed_tosql($arParams);
+        return $this->write_raw($sSQL);        
+    }
+    
+    public function write_raw($sSQL)
+    {
+        if(!$this->isError)
+            return $this->oBehav->write_raw($sSQL);
+        return -1;
+    }
+
+}//WriterService

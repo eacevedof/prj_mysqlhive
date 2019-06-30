@@ -2,16 +2,16 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @name App\Controllers\Apify\WriterController 
+ * @name App\Controllers\Apify\Rw\WriterController 
  * @file WriterController.php 1.0.0
  * @date 27-06-2019 18:17 SPAIN
  * @observations
  */
-namespace App\Controllers\Apify;
+namespace App\Controllers\Apify\Rw;
 
 use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
-use App\Services\Apify\WriterService;
+use App\Services\Apify\Rw\WriterService;
 
 class WriterController extends AppController
 {
@@ -27,10 +27,12 @@ class WriterController extends AppController
      */
     public function index()
     {
-        $idContext = $this->get_get("id_context");
+        $idContext = $this->get_get("context");
         $sDb = $this->get_get("dbname");
+        $arParts = $this->get_post("queryparts");
         
         $oServ = new WriterService($idContext,$sDb);
+        $arJson = $oServ->write($arParts);
 
         $oJson = new HelperJson();
         if($oServ->is_error()) 
@@ -38,6 +40,13 @@ class WriterController extends AppController
                     set_error($oServ->get_errors())->
                     set_message("database error")->
                     show(1);
+
+        if($arParts["action"]=="insert") 
+            $oJson->set_code(HelperJson::CREATED)->set_message("resource created");
+        elseif($arParts["action"]=="update")
+            $oJson->set_message("resource updated");
+        elseif($arParts["delete"])
+            $oJson->set_message("resource deleted");
 
         $oJson->set_payload($arJson)->show();
     }//index
@@ -49,8 +58,10 @@ class WriterController extends AppController
     {
         $idContext = $this->get_get("id_context");
         $sDb = $this->get_get("dbname");
+        $sSQL = $this->get_post("query");
         
         $oServ = new WriterService($idContext,$sDb);
+        $arJson = $oServ->write_raw($sSQL);
 
         $oJson = new HelperJson();
         if($oServ->is_error()) 
@@ -59,7 +70,7 @@ class WriterController extends AppController
                     set_message("database error")->
                     show(1);
 
-        $oJson->set_payload($arJson)->show();
+        $oJson->set_code(HelperJson::CREATED)->set_payload($arJson)->show();
     }//raw    
     
 }//WriterController

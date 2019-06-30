@@ -6,6 +6,7 @@
  * @file AppService.php 1.0.0
  * @date 29-11-2018 19:00 SPAIN
  * @observations
+ * @tags: #apify
  */
 namespace App\Services;
 

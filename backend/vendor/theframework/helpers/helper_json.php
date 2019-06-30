@@ -2,10 +2,12 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @version 1.0.0
+ * @version 1.0.1
  * @name TheFramework\Helpers\HelperJson
  * @date 29-06-2019 15:12 (SPAIN)
  * @file helper_json.php
+ * @observations
+ *  https://restfulapi.net/http-status-codes/
  */
 namespace TheFramework\Helpers;
 
@@ -17,7 +19,7 @@ class HelperJson
 
     const OK = 200;  
     const CREATED = 201;  
-    const ACCEPTED = 202;  
+    const ACCEPTED = 202;  //para procesos en background
     const NON_AUTHORITATIVE_INFORMATION = 203;  
     const NO_CONTENT = 204;  
     const RESET_CONTENT = 205;  
@@ -25,6 +27,7 @@ class HelperJson
     const MULTI_STATUS = 207;  
     const ALREADY_REPORTED = 208;  
     const IM_USED = 226;  
+
     const MULTIPLE_CHOICES = 300;  
     const MOVED_PERMANENTLY = 301;  
     const FOUND = 302;  

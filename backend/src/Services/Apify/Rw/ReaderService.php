@@ -7,7 +7,7 @@
  * @date 27-06-2019 17:55 SPAIN
  * @observations
  */
-namespace App\Services\Apify;
+namespace App\Services\Apify\Rw;
 
 use TheFramework\Components\Db\Context\ComponentContext;
 use TheFramework\Components\Db\ComponentCrud;

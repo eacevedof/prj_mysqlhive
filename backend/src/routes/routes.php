@@ -28,11 +28,11 @@ return [
     ["url"=>"/apify/fields/{id_context}/{dbname}/{tablename}/{fieldname}","controller"=>"App\Controllers\Apify\FieldsController","method"=>"index"],
     ["url"=>"/apify/fields/{id_context}/{dbname}/{tablename}","controller"=>"App\Controllers\Apify\FieldsController","method"=>"index"],
     
-    ["url"=>"/apify/read/raw","controller"=>"App\Controllers\Apify\ReaderController","method"=>"raw"],
-    ["url"=>"/apify/read","controller"=>"App\Controllers\Apify\ReaderController","method"=>"index"],
+    ["url"=>"/apify/read/raw","controller"=>"App\Controllers\Apify\Rw\ReaderController","method"=>"raw"],
+    ["url"=>"/apify/read","controller"=>"App\Controllers\Apify\Rw\ReaderController","method"=>"index"],
 
-    ["url"=>"/apify/write/raw","controller"=>"App\Controllers\Apify\WriterController","method"=>"raw"],
-    ["url"=>"/apify/write","controller"=>"App\Controllers\Apify\WriterController","method"=>"index"],
+    ["url"=>"/apify/write/raw","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"raw"],
+    ["url"=>"/apify/write","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"index"],
 
 //resto de rutas    
     ["url"=>"/404","controller"=>"App\Controllers\NotFoundController","method"=>"error_404"]
