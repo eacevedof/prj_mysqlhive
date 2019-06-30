@@ -62,9 +62,8 @@ class WriterService extends AppService
     private function get_insert_sql($arParams)
     {
         $oCrud = new ComponentCrud();
-        if(!isset($arParams["table"])) $this->add_error("get_insert_sql no table");
-        if(!isset($arParams["fields"])) $this->add_error("get_insert_sql no fields");
-        if($this->isError) return;
+        if(!isset($arParams["table"])) return $this->add_error("get_insert_sql no table");
+        if(!isset($arParams["fields"])) return $this->add_error("get_insert_sql no fields");
 
         $oCrud->set_table($arParams["table"]);
         foreach($arParams["fields"] as $sFieldName=>$sFieldValue)
@@ -82,15 +81,17 @@ class WriterService extends AppService
     private function get_delete_sql($arParams)
     {
         $oCrud = new ComponentCrud();
-        if(!isset($arParams["table"])) $this->add_error("get_delete_sql no table");
-        if($this->isError) return;
+        if(!isset($arParams["table"])) return $this->add_error("get_delete_sql no table");
 
-        foreach($arParams["where"] as $sWhere)
-        {
-            $oCrud->add_and($sWhere);
-        }        
+        $oCrud->set_table($arParams["table"]);
+        if(isset($arParams["where"]))
+            foreach($arParams["where"] as $sWhere)
+            {
+                $oCrud->add_and($sWhere);
+            }        
         $oCrud->autodelete();
         $sSQL = $oCrud->get_sql();
+        
         return $sSQL;      
     }//get_delete_sql
 

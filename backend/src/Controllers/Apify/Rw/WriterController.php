@@ -46,7 +46,7 @@ class WriterController extends AppController
             $oJson->set_code(HelperJson::CODE_CREATED)->set_message("resource created");
         elseif($sAction=="update")
             $oJson->set_message("resource updated");
-        elseif($arParts["delete"])
+        elseif($sAction=="delete")
             $oJson->set_message("resource deleted");
 
         $oJson->set_payload($arJson)->show();

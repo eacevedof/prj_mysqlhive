@@ -29,8 +29,8 @@ class DbsController extends AppController
     public function index()
     {
         $idContext = $this->get_get("id_context");
-        $oDbs = new DbsService($idContext);
-        $arJson = $oDbs->get_all();
+        $oServ = new DbsService($idContext);
+        $arJson = $oServ->get_all();
         
         $oJson = new HelperJson();
         if($oServ->is_error()) 

@@ -146,7 +146,7 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- autoupdate";
         
-        $sSQLComment = $this->sSQLComment;
+        $sSQLComment = "";
         if($this->sSQLComment)
             $sSQLComment = "/*$this->sSQLComment*/";
         
@@ -208,6 +208,7 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- autodelete";
         
+        $sSQLComment = "";
         if($this->sSQLComment)
             $sSQLComment = "/*$this->sSQLComment*/";
         
@@ -219,29 +220,31 @@ class ComponentCrud
             if(!$arPksFV)
                 $arPksFV = $this->arPksFV;
             
-            if($arPksFV)
+            $sSQL = "$sSQLComment DELETE FROM $sTable ";
+
+            //condiciones con las claves
+            $arAux = array();
+            foreach($arPksFV as $sField=>$sValue)
             {    
-                $sSQL = "$sSQLComment DELETE FROM $sTable ";
-                //condiciones con las claves
-                $arAnd = array();
+                if($sValue===NULL)
+                    $arAux[] = "$sField IS NULL";
+                elseif($this->is_numeric($sField))
+                    $arAux[] = "$sField=$sValue";
+                else    
+                    $arAux[] = "$sField='$sValue'";
+            }                
+            
+            $sSQL .= " WHERE 1 ";
+            
+            $arAux = array_merge($arAux,$this->arAnds);
+            if($arAux)
+                $sSQL .= "AND ".implode(" AND ",$arAux);            
+            
+            $sSQL .= $this->get_end();
+            $this->sSQL = $sSQL;
+            //si hay bd intenta ejecutar la consulta
+            $this->query("w");
                 
-                foreach($arPksFV as $sField=>$sValue)
-                {    
-                    if($sValue===NULL)
-                        $arAnd[] = "$sField IS NULL";
-                    elseif($this->is_numeric($sField))
-                        $arAux[] = "$sField=$sValue";
-                    else    
-                        $arAux[] = "$sField='$sValue'";
-                }                
-                
-                $sSQL .= " WHERE ".implode(" AND ",$arAnd);
-                
-                $this->sSQL = $sSQL;
-                //si hay bd intenta ejecutar la consulta
-                $this->query("w");
-                
-            }//si se han proporcionado correctamente las claves
         }//se ha proporcionado una tabla
     }//autodelete     
     
