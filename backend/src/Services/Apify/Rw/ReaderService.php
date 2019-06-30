@@ -35,7 +35,7 @@ class ReaderService extends AppService
             return;
         }
 
-        $this->oContext = new ComponentContext("",$idContext);
+        $this->oContext = new ComponentContext(AppService::PATH_CONTEXTSS_JSON,$idContext);
 
         $oDb = DbFactory::get_dbobject_by_idctx($idContext,$sDb);
         if($oDb->is_error()) 
