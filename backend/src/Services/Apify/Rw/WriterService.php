@@ -97,22 +97,28 @@ class WriterService extends AppService
     private function get_update_sql($arParams)
     {
         $oCrud = new ComponentCrud();
-        if(!isset($arParams["table"])) $this->add_error("get_update_sql no table");
-        if(!isset($arParams["fields"])) $this->add_error("get_update_sql no fields");
-        if($this->isError) return;
+        if(!isset($arParams["table"])) return $this->add_error("get_update_sql no table");
+        if(!isset($arParams["fields"])) return $this->add_error("get_update_sql no fields");
+        //if(!isset($arParams["pks"])) return $this->add_error("get_update_sql no pks");
 
         $oCrud->set_table($arParams["table"]);
         foreach($arParams["fields"] as $sFieldName=>$sFieldValue)
         {
-            //$sFieldName = array_keys($arField)[0];
-            //$sFieldValue = $arField[$sFieldName];
             $oCrud->add_update_fv($sFieldName,$sFieldValue);
         }
+        
+        if(isset($arParams["pks"]))
+            foreach($arParams["pks"] as $sFieldName=>$sFieldValue)
+            {
+                $oCrud->add_pk_fv($sFieldName,$sFieldValue);
+            }        
 
-        foreach($arParams["where"] as $sWhere)
-        {
-            $oCrud->add_and($sWhere);
-        }        
+        if(isset($arParams["where"]))
+            foreach($arParams["where"] as $sWhere)
+            {
+                $oCrud->add_and($sWhere);
+            }        
+
         $oCrud->autoupdate();
         $sSQL = $oCrud->get_sql();
         //pr($sSQL);die;

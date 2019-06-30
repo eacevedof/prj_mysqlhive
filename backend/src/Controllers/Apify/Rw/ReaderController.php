@@ -54,7 +54,7 @@ class ReaderController extends AppController
     public function raw()
     {
         //bugpg();
-        print_r("ReaderController.raw()");
+        //print_r("ReaderController.raw()");
         $idContext = $this->get_get("context");
         $sDb = $this->get_get("dbname");
 

@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
- * @file component_crud.php 2.5.0
- * @date 30-06-2019 13:49 SPAIN
+ * @file component_crud.php 2.5.1
+ * @date 30-06-2019 16:49 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -159,45 +159,47 @@ class ComponentCrud
                 $arFieldVal = $this->arUpdateFV;
             if(!$arPksFV)
                 $arPksFV = $this->arPksFV;
+
+            $sSQL = "$sSQLComment UPDATE $sTable ";
+            $sSQL .= "SET ";
             
-            if($arFieldVal && $arPksFV)
+            //creo las asignaciones de campos set extras
+            $arAux = array();
+            foreach($arFieldVal as $sField=>$sValue)
             {    
-                $sSQL = "$sSQLComment UPDATE $sTable ";
-                $sSQL .= "SET ";
+                if($sValue===NULL)
+                    $arAux[] = "$sField=NULL";
+                elseif($this->is_numeric($sField))
+                    $arAux[] = "$sField=$sValue";
+                else    
+                    $arAux[] = "$sField='$sValue'";
+            }
 
-                //creo las asignaciones de campos set extras
-                $arAux = array();
-                foreach($arFieldVal as $sField=>$sValue)
-                {    
-                    if($sValue===NULL)
-                        $arAux[] = "$sField=NULL";
-                    elseif($this->is_numeric($sField))
-                        $arAux[] = "$sField=$sValue";
-                    else    
-                        $arAux[] = "$sField='$sValue'";
-                }
+            $sSQL .= implode(",",$arAux);
 
-                $sSQL .= implode(",",$arAux);
-                
-                //condiciones con las claves
-                $arAux = array();
-                foreach($arPksFV as $sField=>$sValue)
-                {    
-                    if($sValue===NULL)
-                        $arAux[] = "$sField IS NULL";
-                    elseif($this->is_numeric($sField))
-                        $arAux[] = "$sField=$sValue";
-                    else    
-                        $arAux[] = "$sField='$sValue'";
-                }
-                $arAux = array_merge($arAux,$this->arAnds);
-                $sSQL .= " WHERE ".implode(" AND ",$arAux);
-                
-                $sSQL .= $this->get_end();
-                $this->sSQL = $sSQL;
-                //si hay bd intenta ejecutar la consulta
-                $this->query("w");
-            }//si se han proporcionado correctamente los datos campo=>valor y las claves
+            
+            $sSQL .= " WHERE 1 ";
+
+            //condiciones con las claves
+            $arAux = array();
+            foreach($arPksFV as $sField=>$sValue)
+            {    
+                if($sValue===NULL)
+                    $arAux[] = "$sField IS NULL";
+                elseif($this->is_numeric($sField))
+                    $arAux[] = "$sField=$sValue";
+                else    
+                    $arAux[] = "$sField='$sValue'";
+            }
+            
+            $arAux = array_merge($arAux,$this->arAnds);
+            if($arAux)
+                $sSQL .= "AND ".implode(" AND ",$arAux);            
+            
+            $sSQL .= $this->get_end();
+            $this->sSQL = $sSQL;
+            //si hay bd intenta ejecutar la consulta
+            $this->query("w");               
         }//se ha proporcionado una tabla
     }//autoupdate
     
