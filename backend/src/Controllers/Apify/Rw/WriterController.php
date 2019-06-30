@@ -37,13 +37,13 @@ class WriterController extends AppController
 
         $oJson = new HelperJson();
         if($oServ->is_error()) 
-            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->
                     set_message("database error")->
                     show(1);
 
         if($sAction=="insert") 
-            $oJson->set_code(HelperJson::CREATED)->set_message("resource created");
+            $oJson->set_code(HelperJson::CODE_CREATED)->set_message("resource created");
         elseif($sAction=="update")
             $oJson->set_message("resource updated");
         elseif($arParts["delete"])
@@ -67,13 +67,13 @@ class WriterController extends AppController
 
         $oJson = new HelperJson();
         if($oServ->is_error()) 
-            $oJson->set_code(HelperJson::INTERNAL_SERVER_ERROR)->
+            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
                     set_error($oServ->get_errors())->
                     set_message("database error")->
                     show(1);
 
         if($sAction=="insert") 
-            $oJson->set_code(HelperJson::CREATED)->set_message("resource created");
+            $oJson->set_code(HelperJson::CODE_CREATED)->set_message("resource created");
         elseif($sAction=="update")
             $oJson->set_message("resource updated");
         elseif($arParts["delete"])
