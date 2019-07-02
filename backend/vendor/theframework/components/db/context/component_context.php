@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\Context\ComponentContext 
- * @file component_context.php v2.0.0
- * @date 19-09-2017 04:56 SPAIN
+ * @file component_context.php v2.1.0
+ * @date 02-07-2019 20:37 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db\Context;
@@ -92,6 +92,8 @@ class ComponentContext
     }
     
     public function get_selected(){return $this->arSelected;}
+    public function get_selected_id(){return $this->arSelected["ctx"]["id"];}
+    public function get_selected_db(){return $this->arSelected["ctx"]["config"]["database"];}
     
     public function get_noconfig_by($key,$val){return $this->get_filter_level_1($key,$val,$this->arContextNoconf);}
     
