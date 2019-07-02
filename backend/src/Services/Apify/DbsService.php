@@ -26,7 +26,7 @@ class DbsService extends AppService
     {
         $this->idContext = $idContext;
         $this->sDb = $sDb;
-        
+        pr(AppService::PATH_CONTEXTSS_JSON,is_file(AppService::PATH_CONTEXTSS_JSON));
         $this->oContext = new ComponentContext(AppService::PATH_CONTEXTSS_JSON,$idContext);
         $oDb = DbFactory::get_dbobject_by_idctx($idContext,$sDb);
         $this->oBehav = new SchemaBehaviour($oDb);
