@@ -96,7 +96,15 @@ class ComponentContext
     public function get_selected_id(){return $this->arSelected["ctx"]["id"];}
     public function get_selected_db(){return $this->arSelected["ctx"]["config"]["database"];}
     
-    public function get_noconfig_by($key,$val){return $this->get_filter_level_1($key,$val,$this->arContextNoconf);}
+    public function get_noconfig_by($key,$val)
+    {
+        $arConfig = $this->get_filter_level_1($key,$val,$this->arContextNoconf);
+        if($arConfig)
+        {
+            return $arConfig[array_keys($arConfig)[0]];
+        }
+        return [];
+    }
     
     public function get_noconfig(){return $this->arContextNoconf;}
     public function get_errors(){return isset($this->arErrors)?$this->arErrors:[];}     
