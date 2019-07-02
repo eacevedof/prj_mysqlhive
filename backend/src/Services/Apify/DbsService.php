@@ -35,6 +35,7 @@ class DbsService extends AppService
     public function get_all()
     {
         $arRows = $this->oBehav->get_schemas();
+        bug($this->oBehav);die;
         return $arRows;
     }
     
