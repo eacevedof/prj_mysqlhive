@@ -17,6 +17,7 @@ class DbFactory
 
     public static function get_dbobject_by_ctx(ComponentContext $oCtx,$sDb="") 
     {
+        pr($oCtx,"octx");
         $arConfig = $oCtx->get_selected();
         $arConfig = $arConfig["ctx"]["config"];
         
