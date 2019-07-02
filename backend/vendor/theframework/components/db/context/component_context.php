@@ -3,7 +3,7 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\Context\ComponentContext 
- * @file component_context.php v2.1.0
+ * @file component_context.php v2.1.1
  * @date 02-07-2019 20:37 SPAIN
  * @observations
  */
@@ -60,8 +60,8 @@ class ComponentContext
     
     private function load_selected()
     {
-        $this->arSelected["ctx"] = $this->get_by_id($this->idSelected);
-        $this->arSelected["noconfig"] = $this->get_noconfig_by("id",$this->idSelected);
+        $this->arSelected["ctx"] = $this->get_by_id($this->idSelected)[0];
+        $this->arSelected["noconfig"] = $this->get_noconfig_by("id",$this->idSelected)[0];
     }
     
     private function get_filter_level_1($sKey, $sValue, $arArray=[])
