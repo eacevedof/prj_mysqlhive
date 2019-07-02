@@ -40,12 +40,12 @@ class SchemaBehaviour extends AppModel
     
     public function get_schemas()
     {
-        $sSQL = "SHOW DATABASES";
+        $sSQL = " -- get_schemas
+        SELECT schema_name as dbname
+        FROM information_schema.schemata
+        ORDER BY schema_name;";
         $arRows = $this->query($sSQL);
-        $arTmp = [];
-        foreach($arRows as $arRow)
-            $arTmp[]["database"] = $arRow["Database"];
-        return $arTmp;
+        return $arRows;
     }
     
     public function get_tables($sDb="")
