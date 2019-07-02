@@ -60,11 +60,9 @@ class ComponentContext
     
     private function load_selected()
     {
-        $this->arSelected["ctx"] = $this->get_by_id($this->idSelected)[0];
-        bug($this->idSelected,"id_selected");
-        bug($this->arSelected,"arSelected");
-        bug($this->get_by_id($this->idSelected),"get_byid");die;
-        $this->arSelected["noconfig"] = $this->get_noconfig_by("id",$this->idSelected)[0];
+        $this->arSelected["ctx"] = $this->get_by_id($this->idSelected);
+        $this->arSelected["ctx"] = $this->arSelected["ctx"][array_keys($this->arSelected["ctx"])[0]];
+        $this->arSelected["noconfig"] = $this->get_noconfig_by("id",$this->idSelected);
     }
     
     private function get_filter_level_1($sKey, $sValue, $arArray=[])
