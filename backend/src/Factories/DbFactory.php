@@ -25,6 +25,7 @@ class DbFactory
         $oDb->add_conn("database",($sDb?$sDb:$arConfig["database"]));
         $oDb->add_conn("user",$arConfig["user"]);
         $oDb->add_conn("password",$arConfig["password"]);
+        bug($oDb,"odb");die;
         return $oDb;
     }  
     
