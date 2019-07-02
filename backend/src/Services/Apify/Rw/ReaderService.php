@@ -29,21 +29,13 @@ class ReaderService extends AppService
     {
         $this->idContext = $idContext;
         $this->sDb = $sDb;
-        if(!$this->idContext)
-        {
-            $this->add_error("Error in context: $idContext");
-            return;
-        }
-
-        $this->oContext = new ComponentContext(AppService::PATH_CONTEXTSS_JSON,$idContext);
-
-        $oDb = DbFactory::get_dbobject_by_idctx($idContext,$sDb);
-        if($oDb->is_error()) 
-        {
-            $this->add_error($oDb->get_errors());
-            return;
-        }
         
+        if(!$this->idContext) return $this->add_error("Error in context: $idContext");
+        $this->oContext = new ComponentContext(AppService::PATH_CONTEXTSS_JSON,$idContext);
+        
+        $oDb = DbFactory::get_dbobject_by_ctx($this->oContext,$sDb);
+        if($oDb->is_error()) return $this->add_error($oDb->get_errors());
+
         $this->oBehav = new SchemaBehaviour($oDb);
     }
     

@@ -14,11 +14,24 @@ use TheFramework\Components\Db\Context\ComponentContext;
 
 class DbFactory 
 {
+
+    public static function get_dbobject_by_ctx(ComponentContext $oCtx,$sDb="") 
+    {
+        $arConfig = $oCtx->get_selected();
+        $arConfig = $arConfig["ctx"]["config"];
+        
+        $oDb = new ComponentMysql();
+        $oDb->add_conn("server",$arConfig["server"]);
+        $oDb->add_conn("database",($sDb?$sDb:$arConfig["database"]));
+        $oDb->add_conn("user",$arConfig["user"]);
+        $oDb->add_conn("password",$arConfig["password"]);
+        return $oDb;
+    }  
     
     public static function get_dbobject_by_idctx($id,$sDb="") 
     {
         //pr(\App\Services\AppService::PATH_CONTEXTSS_JSON);die;
-        $oCtx = new ComponentContext(\App\Services\AppService::PATH_CONTEXTSS_JSON,$id);
+        $oCtx = new ComponentContext("",$id);
         $arConfig = $oCtx->get_config_by("id",$id);
         //pr($arConfig,"DbFactory.get_dbobject_by_idctx id:$id ");die;
         $oDb = new ComponentMysql();
@@ -28,17 +41,5 @@ class DbFactory
         $oDb->add_conn("password",$arConfig["password"]);
         return $oDb;
     }
-    
-    public static function get_dbobject_by_ctx(ComponentContext $oCtx,$id) 
-    {
-        $arConfig = $oCtx->get_config_by("id",$id);
-
-        $oDb = new ComponentMysql();
-        $oDb->add_conn("server",$arConfig["server"]);
-        $oDb->add_conn("database",$arConfig["database"]);
-        $oDb->add_conn("user",$arConfig["user"]);
-        $oDb->add_conn("password",$arConfig["password"]);
-        return $oDb;
-    }    
     
 }//DbFactory
