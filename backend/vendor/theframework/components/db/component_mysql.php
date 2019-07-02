@@ -60,7 +60,6 @@ class ComponentMysql
         {
             //devuelve server y bd
             $sConn = $this->get_conn_string();
-bug($this->arConn);die;
             //https://stackoverflow.com/questions/38671330/error-with-php7-and-sql-server-on-windows
             $oPdo = new \PDO($sConn,$this->arConn["user"],$this->arConn["password"]
                     ,[\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"]);
