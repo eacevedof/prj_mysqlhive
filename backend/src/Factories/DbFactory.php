@@ -17,6 +17,7 @@ class DbFactory
     
     public static function get_dbobject_by_idctx($id,$sDb="") 
     {
+        pr(App\Services\AppService::PATH_CONTEXTSS_JSON);die;
         $oCtx = new ComponentContext(App\Services\AppService::PATH_CONTEXTSS_JSON,$id);
         $arConfig = $oCtx->get_config_by("id",$id);
 pr($arConfig,"DbFactory.get_dbobject_by_idctx id:$id ");die;
