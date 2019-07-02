@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name App\Services\Apify\Mysql
- * @file DbsService.php 1.0.0
- * @date 27-06-2019 17:55 SPAIN
+ * @file DbsService.php 1.1.0
+ * @date 02-07-2019 17:55 SPAIN
  * @observations
  */
 namespace App\Services\Apify;
@@ -34,7 +34,8 @@ class DbsService extends AppService
     
     public function get_all()
     {
-        return $this->oBehav->get_schemas();
+        $arRows = $this->oBehav->get_schemas();
+        return $arRows;
     }
     
 }//DbsService
