@@ -60,6 +60,17 @@ class DbTest extends TestCase
         $oDb->exec($sql);
         
 /*
+Esta funciona:
+$sql = " 
+-- reporting_extraccion_viacom_nowl._insert_nowl 2
+LOAD DATA LOCAL INFILE '$this->pathfile'
+REPLACE INTO TABLE pmoviles.$this->tabla
+CHARACTER SET utf8
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+(usm_id,usm_websiteid,usm_valor,usm_login) -- campos donde se insertaran los datos extraidos por orden
+";
+            
 load data local infile 'C:\proyecto\prj_mysqlhive\backend\src\tests\logs\tbl_operation'
 replace into table tbl_operation_bulk
 CHARACTER SET utf8
