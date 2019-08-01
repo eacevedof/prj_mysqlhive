@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\ComponentMysql 
- * @file component_mysql.php v2.0.0
- * @date 02-12-2018 13:20 SPAIN
+ * @file component_mysql.php v2.1.2
+ * @date 29-06-2019 17:08 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -55,8 +55,10 @@ class ComponentMysql
     
     public function query($sSQL,$iCol=NULL,$iRow=NULL)
     {
+        $arResult = [];        
         try 
         {
+            //devuelve server y bd
             $sConn = $this->get_conn_string();
             //https://stackoverflow.com/questions/38671330/error-with-php7-and-sql-server-on-windows
             $oPdo = new \PDO($sConn,$this->arConn["user"],$this->arConn["password"]
@@ -70,8 +72,6 @@ class ComponentMysql
             }
             else
             {
-                //var_dump($stmt);
-                $arResult = [];
                 while($arRow = $oCursor->fetch(\PDO::FETCH_ASSOC))
                     $arResult[] = $arRow;
                 
@@ -81,10 +81,11 @@ class ComponentMysql
                     $arResult = $this->get_rowcol($arResult,$iCol,$iRow);
             }
         }
-        catch(PDOException $oE)
+        catch(\PDOException $oE)
         {
             $sMessage = "exception:{$oE->getMessage()}";
             $this->add_error($sMessage);
+            $this->log($sSQL,"ComponentMysql.query error: $sMessage");
         }
         return $arResult;
     }//query
@@ -100,6 +101,7 @@ class ComponentMysql
             $oPdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION );
             $this->log($sSQL,"ComponentMysql.exec");
             $mxR = $oPdo->exec($sSQL);
+
             $this->iAffected = $mxR;
             if($mxR===FALSE)
             {
@@ -107,10 +109,11 @@ class ComponentMysql
             }
             return $mxR;
         }
-        catch(PDOException $oE)
-        {
+        catch(\PDOException $oE)
+        {           
             $sMessage = "exception:{$oE->getMessage()}";
             $this->add_error($sMessage);
+            $this->log($sSQL,"ComponentMysql.exec error: $sMessage");
         }
     }//exec    
     

@@ -9,6 +9,7 @@
  */
 namespace App\Controllers\Apify;
 
+use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\DbsService;
 
@@ -28,22 +29,17 @@ class DbsController extends AppController
     public function index()
     {
         $idContext = $this->get_get("id_context");
-        $oDbs = new DbsService($idContext);
-        $arData = $oDbs->get_schemas();
-        $this->response_json($arData);
-    }//index
-    
-    /**
-     * ruta:    <dominio>/apify/dbs/{id_context}
-     */    
-    public function get_tables()
-    {
-        $idContext = $this->get_get("id_context");
-        $sDb = $this->get_get("database");
-        $sTablename = $this->get_get("tablename");
-        $this->response_json($arData);
-    }//index
+        $oServ = new DbsService($idContext);
+        $arJson = $oServ->get_all();
         
-    
-    
+        $oJson = new HelperJson();
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
+
+        $oJson->set_payload($arJson)->show();
+    }//index
+
 }//DbsController

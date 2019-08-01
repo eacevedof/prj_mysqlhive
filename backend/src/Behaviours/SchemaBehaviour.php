@@ -24,13 +24,28 @@ class SchemaBehaviour extends AppModel
     
     public function query($sSQL,$iCol=NULL,$iRow=NULL)
     {
-        return $this->oDb->query($sSQL,$iCol,$iRow);
+        $r = $this->oDb->query($sSQL,$iCol,$iRow);
+        if($this->oDb->is_error())
+            $this->add_error($this->oDb->get_errors());
+        return $r;
     }
+
+    public function execute($sSQL)
+    {
+        $r = $this->oDb->exec($sSQL);
+        if($this->oDb->is_error())
+            $this->add_error($this->oDb->get_errors());
+        return $r;
+    }    
     
     public function get_schemas()
     {
-        $sSQL = "SHOW DATABASES";
-        return $this->query($sSQL);
+        $sSQL = " -- get_schemas
+        SELECT schema_name as dbname
+        FROM information_schema.schemata
+        ORDER BY schema_name;";
+        $arRows = $this->query($sSQL);
+        return $arRows;
     }
     
     public function get_tables($sDb="")
@@ -64,5 +79,18 @@ class SchemaBehaviour extends AppModel
         //bug($arRows);die;
         return $arRows;
     }
+
+    public function get_field_info($sField,$sTable,$sDb="")
+    {
+        if(!$sDb)
+            $sDb = $this->get_config("db","database");
+        $sSQL = $this->oQServ->get_field($sDb,$sTable,$sField);
+        $arRows = $this->query($sSQL);
+        //bug($arRows);die;
+        return $arRows;
+    }    
+    
+    public function read_raw($sSQL){ return $this->query($sSQL);}
+    public function write_raw($sSQL){ return $this->execute($sSQL);}
 
 }//SchemaBehaviour

@@ -6,6 +6,7 @@
  * @file AppService.php 1.0.0
  * @date 29-11-2018 19:00 SPAIN
  * @observations
+ * @tags: #apify
  */
 namespace App\Services;
 
@@ -18,6 +19,8 @@ class AppService
     use AppConfigTrait;
     use AppErrorTrait;
     use AppLogTrait;
+    
+    const PATH_CONTEXTSS_JSON = PATH_SRC_CONFIG.DS."contexts.json";
     
     public function __construct(){;}
  

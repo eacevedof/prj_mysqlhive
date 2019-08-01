@@ -26,6 +26,9 @@ spl_autoload_register(function($sNSClassName)
         // (?<=...) and (?<!...) are positive and negative look-behinds (respectively) 
         // because they look to the left of the current position rather than the right 
         $sClassName = preg_replace("/(?<!^)([A-Z])/","_\\1",$sClassName);
+        
+        if(!strstr($sClassName,"Component")) return;
+        
         //print_r("classname:".$sClassName);
         if(strstr($sClassName,"Component"))
         {
@@ -34,22 +37,16 @@ spl_autoload_register(function($sNSClassName)
             //if(strstr($sClassName,"xp"))die($sClassName);
             $sClassName = "component$sClassName.php";
         }
-        elseif(strstr($sClassName,"Behaviour"))
-        {
-            $sClassName = str_replace("Behaviour","",$sClassName);
-            $sClassName = strtolower($sClassName);
-            //if(strstr($sClassName,"xp"))die($sClassName);
-            $sClassName = "behaviour$sClassName.php";
-        }     
         
         //print_r("\n classname include: $sClassName");
         if(stream_resolve_include_path($sClassName))
             include_once $sClassName;
+        
         elseif(function_exists("lg"))
         {
             lg("Class not found: $sClassName");
         }
-        else 
+        elseif($isComp) 
         {
             echo "Class not found: $sClassName";
         }

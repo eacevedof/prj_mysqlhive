@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name App\Services\Apify\Mysql
- * @file DbsService.php 1.1.0
- * @date 02-07-2019 17:55 SPAIN
+ * @file FieldsService.php 1.0.0
+ * @date 27-06-2019 17:55 SPAIN
  * @observations
  */
 namespace App\Services\Apify;
@@ -14,28 +14,36 @@ use App\Services\AppService;
 use App\Behaviours\SchemaBehaviour;
 use App\Factories\DbFactory;
 
-class DbsService extends AppService
+class FieldsService extends AppService
 {
     private $idContext;
     private $sDb;
+    private $sTableName;
+    private $sFieldName;
     
     private $oContext;
     private $oBehav;
     
-    public function __construct($idContext="",$sDb="") 
+    public function __construct($idContext="",$sDb="",$sTable="",$sFieldName="") 
     {
         $this->idContext = $idContext;
         $this->sDb = $sDb;
+        $this->sTableName = $sTable;
+        $this->sFieldName = $sFieldName;
+        
         $this->oContext = new ComponentContext(AppService::PATH_CONTEXTSS_JSON,$idContext);
         $oDb = DbFactory::get_dbobject_by_ctx($this->oContext,$sDb);
         $this->oBehav = new SchemaBehaviour($oDb);
     }
-    
-    public function get_all()
+        
+    public function get_all($sTableName)
     {
-        $arRows = $this->oBehav->get_schemas();
-        //bug($this->oBehav);die;
-        return $arRows;
+        return $this->oBehav->get_fields_info($sTableName,$this->sDb);
     }
     
-}//DbsService
+    public function get_field($sTableName,$sFieldName)
+    {
+        return $this->oBehav->get_field_info($sFieldName,$sTableName,$this->sDb);
+    }    
+    
+}//FieldsService

@@ -9,6 +9,7 @@
  */
 namespace App\Controllers\Apify;
 
+use TheFramework\Helpers\HelperJson;
 use App\Controllers\AppController;
 use App\Services\Apify\ContextService;
 
@@ -22,17 +23,26 @@ class ContextsController extends AppController
     }
     
     /**
-     * ruta:    <dominio>/apify/{id}
+     * ruta:
+     *  <dominio>/apify/contexts
+     *  <dominio>/apify/contexts/{id}
      */
     public function index()
     {
-        $oServ = new ContextService("");
-        $arData = $oServ->get_noconfig();
+        $oServ = new ContextService();
+        $arJson = $oServ->get_noconfig();
 
         if($this->is_get("id"))
-            $arData = $oServ->get_noconfig_by_id($this->get_get("id"));
+            $arJson = $oServ->get_noconfig_by_id($this->get_get("id"));
+        
+        $oJson = new HelperJson();
+        if($oServ->is_error()) 
+            $oJson->set_code(HelperJson::CODE_INTERNAL_SERVER_ERROR)->
+                    set_error($oServ->get_errors())->
+                    set_message("database error")->
+                    show(1);
 
-        $this->response_json($arData);
+        $oJson->set_payload($arJson)->show();
 
     }//index
     

@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\ComponentCrud 
- * @file component_crud.php 2.4.0
- * @date 01-12-2018 13:04 SPAIN
+ * @file component_crud.php 2.5.1
+ * @date 30-06-2019 16:49 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db;
@@ -18,6 +18,7 @@ class ComponentCrud
     
     private $arNumeric; //si esta en este array no se escapa con '
     private $arOrderBy;
+    private $arGroupBy;
     private $arAnds;
     private $arJoins;
     
@@ -46,6 +47,7 @@ class ComponentCrud
         $this->arPksFV = array();
         $this->arGetFields = array();
         $this->arOrderBy = array();
+        $this->arGroupBy = array();
         $this->arNumeric = array();
         $this->arAnds = array();
         $this->oDB = $oDB;
@@ -65,6 +67,20 @@ class ComponentCrud
         return $sOrderBy;
     }
     
+    private function get_groupby()
+    {
+        $sGroupBy = "";
+        $arSQL = [];
+        if($this->arGroupBy)
+        {
+            $sGroupBy = " GROUP BY ";
+            foreach($this->arGroupBy as $sField)
+                $arSQL[] = $sField;
+            $sGroupBy = $sGroupBy.implode(",",$arSQL);
+        }
+        return $sGroupBy;
+    }
+
     private function get_joins()
     {
         $sJoin = " ".implode("\n",$this->arJoins);
@@ -130,7 +146,7 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- autoupdate";
         
-        $sSQLComment = $this->sSQLComment;
+        $sSQLComment = "";
         if($this->sSQLComment)
             $sSQLComment = "/*$this->sSQLComment*/";
         
@@ -143,45 +159,47 @@ class ComponentCrud
                 $arFieldVal = $this->arUpdateFV;
             if(!$arPksFV)
                 $arPksFV = $this->arPksFV;
+
+            $sSQL = "$sSQLComment UPDATE $sTable ";
+            $sSQL .= "SET ";
             
-            if($arFieldVal && $arPksFV)
+            //creo las asignaciones de campos set extras
+            $arAux = array();
+            foreach($arFieldVal as $sField=>$sValue)
             {    
-                $sSQL = "$sSQLComment UPDATE $sTable ";
-                $sSQL .= "SET ";
+                if($sValue===NULL)
+                    $arAux[] = "$sField=NULL";
+                elseif($this->is_numeric($sField))
+                    $arAux[] = "$sField=$sValue";
+                else    
+                    $arAux[] = "$sField='$sValue'";
+            }
 
-                //creo las asignaciones de campos set extras
-                $arAux = array();
-                foreach($arFieldVal as $sField=>$sValue)
-                {    
-                    if($sValue===NULL)
-                        $arAux[] = "$sField=NULL";
-                    elseif($this->is_numeric($sField))
-                        $arAux[] = "$sField=$sValue";
-                    else    
-                        $arAux[] = "$sField='$sValue'";
-                }
+            $sSQL .= implode(",",$arAux);
 
-                $sSQL .= implode(",",$arAux);
-                
-                //condiciones con las claves
-                $arAux = array();
-                foreach($arPksFV as $sField=>$sValue)
-                {    
-                    if($sValue===NULL)
-                        $arAux[] = "$sField IS NULL";
-                    elseif($this->is_numeric($sField))
-                        $arAux[] = "$sField=$sValue";
-                    else    
-                        $arAux[] = "$sField='$sValue'";
-                }
-                $arAux = array_merge($arAux,$this->arAnds);
-                $sSQL .= " WHERE ".implode(" AND ",$arAux);
-                
-                $sSQL .= $this->get_end();
-                $this->sSQL = $sSQL;
-                //si hay bd intenta ejecutar la consulta
-                $this->query("w");
-            }//si se han proporcionado correctamente los datos campo=>valor y las claves
+            
+            $sSQL .= " WHERE 1 ";
+
+            //condiciones con las claves
+            $arAux = array();
+            foreach($arPksFV as $sField=>$sValue)
+            {    
+                if($sValue===NULL)
+                    $arAux[] = "$sField IS NULL";
+                elseif($this->is_numeric($sField))
+                    $arAux[] = "$sField=$sValue";
+                else    
+                    $arAux[] = "$sField='$sValue'";
+            }
+            
+            $arAux = array_merge($arAux,$this->arAnds);
+            if($arAux)
+                $sSQL .= "AND ".implode(" AND ",$arAux);            
+            
+            $sSQL .= $this->get_end();
+            $this->sSQL = $sSQL;
+            //si hay bd intenta ejecutar la consulta
+            $this->query("w");               
         }//se ha proporcionado una tabla
     }//autoupdate
     
@@ -190,6 +208,7 @@ class ComponentCrud
         //Limpio la consulta 
         $this->sSQL = "-- autodelete";
         
+        $sSQLComment = "";
         if($this->sSQLComment)
             $sSQLComment = "/*$this->sSQLComment*/";
         
@@ -201,29 +220,31 @@ class ComponentCrud
             if(!$arPksFV)
                 $arPksFV = $this->arPksFV;
             
-            if($arPksFV)
+            $sSQL = "$sSQLComment DELETE FROM $sTable ";
+
+            //condiciones con las claves
+            $arAux = array();
+            foreach($arPksFV as $sField=>$sValue)
             {    
-                $sSQL = "$sSQLComment DELETE FROM $sTable ";
-                //condiciones con las claves
-                $arAnd = array();
+                if($sValue===NULL)
+                    $arAux[] = "$sField IS NULL";
+                elseif($this->is_numeric($sField))
+                    $arAux[] = "$sField=$sValue";
+                else    
+                    $arAux[] = "$sField='$sValue'";
+            }                
+            
+            $sSQL .= " WHERE 1 ";
+            
+            $arAux = array_merge($arAux,$this->arAnds);
+            if($arAux)
+                $sSQL .= "AND ".implode(" AND ",$arAux);            
+            
+            $sSQL .= $this->get_end();
+            $this->sSQL = $sSQL;
+            //si hay bd intenta ejecutar la consulta
+            $this->query("w");
                 
-                foreach($arPksFV as $sField=>$sValue)
-                {    
-                    if($sValue===NULL)
-                        $arAnd[] = "$sField IS NULL";
-                    elseif($this->is_numeric($sField))
-                        $arAux[] = "$sField=$sValue";
-                    else    
-                        $arAux[] = "$sField='$sValue'";
-                }                
-                
-                $sSQL .= " WHERE ".implode(" AND ",$arAnd);
-                
-                $this->sSQL = $sSQL;
-                //si hay bd intenta ejecutar la consulta
-                $this->query("w");
-                
-            }//si se han proporcionado correctamente las claves
         }//se ha proporcionado una tabla
     }//autodelete     
     
@@ -361,6 +382,7 @@ class ComponentCrud
                 if($arAux)
                     $sSQL .= " WHERE ".implode(" AND ",$arAux);
                 
+                $sSQL .= $this->get_groupby();
                 $sSQL .= $this->get_orderby();
                 $sSQL .= $this->get_end();
                 $this->sSQL = $sSQL;
@@ -520,6 +542,7 @@ class ComponentCrud
 
     public function set_joins($arJoins=array()){$this->arJoins = array(); if(is_array($arJoins)) $this->arJoins=$arJoins;}
     public function set_orderby($arOrderBy=array()){$this->arOrderBy = array(); if(is_array($arOrderBy)) $this->arOrderBy=$arOrderBy;}
+    public function set_groupby($arGroupBy=array()){$this->arGroupBy = array(); if(is_array($arGroupBy)) $this->arGroupBy=$arGroupBy;}
     public function set_end($arEnd=array()){$this->arEnd = array(); if(is_array($arEnd)) $this->arEnd=$arEnd;}
     
     public function get_sql(){return $this->sSQL;}
@@ -633,7 +656,9 @@ class ComponentCrud
     public function get_result(){$this->arResult;}
     public function is_distinct($isOn=TRUE){$this->isDistinct=$isOn;}
     public function add_orderby($sFieldName,$sOrder="ASC"){$this->arOrderBy[$sFieldName]=$sOrder;}
+    public function add_groupby($sFieldName){$this->arGroupBy[]=$sFieldName;}
     public function add_numeric($sFieldName){$this->arNumeric[]=$sFieldName;}
+    public function set_and($arAnds=array()){$this->arAnds = array(); if(is_array($arAnds)) $this->arAnds=$arAnds;}
     public function add_and($sAnd){$this->arAnds[]=$sAnd;}
     public function add_and1($sFieldName,$sValue,$sOper="="){$this->arAnds[]="$sFieldName $sOper $sValue";}
     public function add_join($sJoin,$sKey=NULL){if($sKey)$this->arJoins[$sKey]=$sJoin;else$this->arJoins[]=$sJoin;}

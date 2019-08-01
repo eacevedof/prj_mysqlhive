@@ -3,8 +3,8 @@
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
  * @name TheFramework\Components\Db\Context\ComponentContext 
- * @file component_context.php v2.0.0
- * @date 19-09-2017 04:56 SPAIN
+ * @file component_context.php v2.1.1
+ * @date 02-07-2019 20:37 SPAIN
  * @observations
  */
 namespace TheFramework\Components\Db\Context;
@@ -25,6 +25,11 @@ class ComponentContext
         $this->idSelected = $idSelected;
         $this->arContexts = [];
         if(!$sPathfile) $sPathfile = __DIR__.DIRECTORY_SEPARATOR."contexts.json";
+        if(!is_file($sPathfile))
+        {
+            $this->add_error("No context file found: $sPathfile");
+            return -1;
+        }
         $this->load_contextjs($sPathfile);
         $this->load_context_noconf();
         $this->load_selected();
@@ -56,6 +61,7 @@ class ComponentContext
     private function load_selected()
     {
         $this->arSelected["ctx"] = $this->get_by_id($this->idSelected);
+        $this->arSelected["ctx"] = $this->arSelected["ctx"][array_keys($this->arSelected["ctx"])[0]];
         $this->arSelected["noconfig"] = $this->get_noconfig_by("id",$this->idSelected);
     }
     
@@ -87,8 +93,18 @@ class ComponentContext
     }
     
     public function get_selected(){return $this->arSelected;}
+    public function get_selected_id(){return $this->arSelected["ctx"]["id"];}
+    public function get_selected_db(){return $this->arSelected["ctx"]["config"]["database"];}
     
-    public function get_noconfig_by($key,$val){return $this->get_filter_level_1($key,$val,$this->arContextNoconf);}
+    public function get_noconfig_by($key,$val)
+    {
+        $arConfig = $this->get_filter_level_1($key,$val,$this->arContextNoconf);
+        if($arConfig)
+        {
+            return $arConfig[array_keys($arConfig)[0]];
+        }
+        return [];
+    }
     
     public function get_noconfig(){return $this->arContextNoconf;}
     public function get_errors(){return isset($this->arErrors)?$this->arErrors:[];}     
