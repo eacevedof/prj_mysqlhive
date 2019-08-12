@@ -26,6 +26,7 @@ class replicate_table extends replicadormgr{
 			"hive"					=>	array(
 				"schema_table_dest"	=>	array(
 					"fields"	=>	array(
+						//check update_date=>true
 						%fieldsinfo%
 					),
 					"database"	=>	"dw",

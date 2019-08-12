@@ -1,0 +1,9 @@
+# replicadormgr.build_incremental_table comentar el return de activated para lanzar en desarrollo
+
+php ~/trunk/reporting/bi/crons/cron_replicado_tablas_mysql_to_hive/replicate_config_process/%databasename%/load_cfg_%tablename%.php --cluster=hortonprod
+
+php ~/trunk/reporting/bi/crons/cron_replicado_tablas_mysql_to_hive/replicate_build_process/%databasename%/build_%tablename%.php --cluster=hortonprod --force=1
+
+tail -f /var/log/php/%datetoday%_build_%tablename%.log
+
+php /mnt/webapps/cron/cron_replicado_tablas_mysql_to_hive/replicate_build_process/%databasename%/build_%tablename%.php --cluster=hortonprod

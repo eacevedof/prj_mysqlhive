@@ -11,7 +11,7 @@ CREATE TABLE dw.%tablenameprefix%(
 )
 CLUSTERED BY(%fieldnamepk%) INTO 5 BUCKETS
 STORED AS ORC
-TBLPROPERTIES("orc.compress"="SNAPPY",'transactional'='true');
+TBLPROPERTIES("orc.compress"="SNAPPY",'transactional'='true','auto.purge'='true');
 
 -- las vistas solo se crean para tablas transaccionales (di_<tabla>) para las ft no hacen falta
 INSERT INTO TABLE dw.%tablenameprefix%  VALUES (%fieldsvalue%);
