@@ -7,8 +7,8 @@ ORDER BY rep_id DESC
 
 SELECT * FROM %databasename%.%tablename%;
 
-set tez.queue.name=%%queue%%;
+set tez.queue.name=%queue%;
 SELECT * FROM staging_tables.%tablenameprefix%_incremental_temp;
 
-set tez.queue.name=%%queue%%;
+set tez.queue.name=%queue%;
 SELECT * FROM dw.%tablenameprefix%;

@@ -190,6 +190,16 @@ class DbsService extends AppService
         return implode("_",$arNew);
     }
     
+    private function get_tpl_position($sFileName)
+    {
+        $arPieces = explode("_",$sFileName);
+        if(is_numeric($arPieces[0]))
+        {
+            return $arPieces[0];
+        }
+        return "";
+    }
+    
     public function process_tables($arTables)
     {
         foreach($arTables as $sTable)
@@ -200,7 +210,13 @@ class DbsService extends AppService
             //bug($arFields);die;
             foreach($this->arFilesTpl as $sTpl)
             {
+                $sPosition = $this->get_tpl_position($sTpl);
                 $sPathTpl = $this->sPathTplsDS.$sTpl;
+                if($sPosition) 
+                {
+                    $sPosition.="_";
+                    $sFinalName = str_replace($sPosition,"",$sTpl);
+                }                
                 $sContent = file_get_contents($sPathTpl);
                 
                 $arTags = $this->arTags["all"];
@@ -213,15 +229,14 @@ class DbsService extends AppService
                 foreach($arTags as $sTag => $sValue)
                     $sContent = str_replace("%$sTag%",$sValue,$sContent);
                 
-                $sPathFinal = $sPathDirTable.DS.$sTable."_".$sTpl;
+                $sPathFinal = $sPathDirTable.DS.$sPosition.$sTable."_".$sFinalName;
                 
                 if(strstr($sTpl,"load_cfg.php"))
-                    $sPathFinal = $sPathDirTable.DS."load_cfg_{$sTable}.php";
+                    $sPathFinal = $sPathDirTable.DS.$sPosition."load_cfg_{$sTable}.php";
                 
                 if(strstr($sTpl,"_build.php"))
-                    $sPathFinal = $sPathDirTable.DS."build_{$sTable}.php";
+                    $sPathFinal = $sPathDirTable.DS.$sPosition."build_{$sTable}.php";
    
-                //if(is_file($sPathFinal)) unlink($sPathFinal);
                 file_put_contents($sPathFinal,$sContent);
             }//arFilesTpl
         }//arTables

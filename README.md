@@ -1,5 +1,5 @@
 # prj_mysqlhive
-## Actualizado: 16/01/2019
+## Actualizado: 12/08/2019
 Generador de scripts de importación
 
 ```js
@@ -30,6 +30,15 @@ php run.php --class=App.Services.Dbs.AgregacionService --method=modf_operation
 php run.php --class=App.Services.Dbs.AgregacionService --method=check_modified --iMin=10
 
 ```
+
+#### Crear incrementales
+- En el fichero config se indica en la constante la bd que se va a utilizar
+- En el fichero `Services/Dbs/<dbname>Service.php` se configuran las tablas a importar
+    - `public function generate_exp()`
+- El endpoint suele ser <localhost:3000>/<dbname>
+    - Cuando se llama a este endpoint se generarán las plantillas en la carpeta
+    - `public\temp\<nombre-tabla>`
+    - Cada vez que se ejecuta se borra todo y se vuelve a crear
 
 
 #### Borrar historial
