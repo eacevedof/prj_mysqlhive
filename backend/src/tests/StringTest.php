@@ -13,7 +13,7 @@ class StringTest extends TestCase
         $oLog->save($mxVar,$sTitle);
     }
     
-    public function test_preg_replace_not_in()
+    public function est_preg_replace_not_in()
     {
         $string = "where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and stats.operador_saliente_id not in ('481','482','522','562','567')"
                 //. " and otro_campo not in (a,b,c)";
@@ -42,11 +42,42 @@ Resultado
 where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and stats.operador_saliente_id not in ('481','482','522','562','567') esto es más texto in() fin de linea and otro_campo in (a,b,c)
 where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and coalesce(cdr_numeroc_tarifa_id,0) not in (1,2,3,4,5) esto es más texto in() fin de linea and otro_campo in (a,b,c)
 */        
-        
-        
         $this->assertEquals(TRUE,is_string($changed2));
     }
 
+    private function get_matches($pattern,$string)
+    {
+        $result = [];
+        preg_match($pattern, $string, $result);
+        return $result;
+    }
 
+    public function test_match_operator()
+    {
+        $strfilter = "s_linea_negocio_id[ope:(IN)]('31','18','39')||s_operador_id[ope:(IN)]('21401','28602','20801')||s_pais[ope:(IN)]('ES','TR','FR')";
+        $matches = [];
+        $filters = explode("||",$strfilter);
+        $opes = ["=","IN","NOT_IN","NOT_LIKE"];
+
+        foreach($filters as $filter)
+        {
+            print_r("\n======================\n");
+            print_r($filter."\n");
+            foreach($opes as $ope)
+            {
+                $pattern = "/((.+)\[ope\:\($ope\)\](.+))/";
+                $matches = $this->get_matches($pattern, $filter);
+                //print_r($matches);
+                if($matches)
+                {
+                    print_r("\nmatches_2: ".$matches[2]);
+                    print_r("\nmatches_3: ".$matches[3]);
+                    break;
+                }
+            }//foreach(opes)
+            
+        }//foreach(filters)
+        
+    }//test_match_operator
     
 }//StringTest
