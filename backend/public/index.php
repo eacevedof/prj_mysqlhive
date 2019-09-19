@@ -37,12 +37,12 @@ if(isset($_SERVER["HTTP_ORIGIN"]))
     //should do a check here to match $_SERVER["HTTP_ORIGIN"] to a
     //whitelist of safe domains
     header("Access-Control-Allow-Origin: {$_SERVER["HTTP_ORIGIN"]}");
-    header('Access-Control-Allow-Credentials: true');
-    header('Access-Control-Max-Age: 86400');    // cache for 1 day
+    header("Access-Control-Allow-Credentials: true");
+    header("Access-Control-Max-Age: 86400");    // cache for 1 day
 }
 
 // Access-Control headers are received during OPTIONS requests
-if($_SERVER["REQUEST_METHOD"] == 'OPTIONS')
+if($_SERVER["REQUEST_METHOD"] == "OPTIONS")
 {
     if(isset($_SERVER["HTTP_ACCESS_CONTROL_REQUEST_METHOD"]))
         header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");         
@@ -61,6 +61,7 @@ $arRoutes = include_once '../src/routes/routes.php';
 use TheFramework\Components\ComponentRouter;
 $oR = new ComponentRouter($arRoutes);
 $arRun = $oR->get_rundata();
+//pr($arRun,"arRun");die;
 //limpio las rutas
 unset($arRoutes);
 
