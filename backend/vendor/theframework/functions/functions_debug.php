@@ -2,9 +2,9 @@
 /**
  * @author Eduardo Acevedo Farje.
  * @link www.eduardoaf.com
- * @version 1.6.0
+ * @version 1.7.0
  * @file functions_debug.php 
- * @date 28-04-2017 17:57 (SPAIN)
+ * @date 22-09-2019 18:32 (SPAIN)
  * @observations: Functions to print variables
  * @requires functions_string.php 1.0.2
  *  load:9
@@ -106,6 +106,12 @@ if(!function_exists("lg"))
     }//funtion lg    
 }//if(!func(lg)
 //</editor-fold>
+
+function prd($var="",$sTitle=NULL)
+{
+    pr($var,$sTitle);
+    die;
+}//function pr    
 
 function bug($var, $sVarName="var", $isDie=false)
 {
