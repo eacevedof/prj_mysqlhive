@@ -52,7 +52,7 @@ where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and coale
         return $result;
     }
 
-    public function test_match_operator()
+    public function est_match_operator()
     {
         $strfilter = "s_linea_negocio_id[ope:(IN)]('31','18','39')||s_operador_id[ope:(IN)]('21401','28602','20801')||s_pais[ope:(IN)]('ES','TR','FR')";
         $matches = [];
@@ -79,5 +79,63 @@ where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and coale
         }//foreach(filters)
         
     }//test_match_operator
+    
+    public function test_match_allmetrics()
+    {
+        $strfilter = "
+            {
+ \"preferencias\":{  
+           \"expandir_columnas\":false
+        },
+        \"tipo_informe\":\"informe_linea_negocio\",
+        \"desglose_texto\":\"Business Line\",
+        \"dimensions\":\"s_linea_negocio_id\",
+        \"all_metrics\":[  
+           {  
+              \"type\":\"string\",
+              \"width\":\"290\",
+              \"title\":\"Business Line\",
+              \"field\":\"max(areas_negocio_nombre)\",
+              \"source\":[  
+                 \"di_areas_negocio\"
+              ],
+              \"metric\":\"s_linea_negocio_nombre\",
+              \"legend\":true,
+              \"id\":\"s_linea_negocio_nombre\"
+           },
+           {  
+              \"type\":\"currency\",
+              \"width\":\"90\",
+              \"custom_formatter\":\"\",
+              \"title\":\"Revenues Unsubs IVR\",
+              \"colgroup\":{  
+                 \"parent\":\"s_impresiones_abs\"
+              },
+              \"field\":\"sum(total_ingresos_operador_bajas_ivr)\",
+              \"source\":[  
+                 \"ft_portales_resumido\",
+                 \"ft_portales\",
+                 \"ft_portales_mes\",
+                 \"ft_portales_hive\",
+                 \"ft_portales_mes_hive\"
+              ],
+              \"metric\":\"s_ingresos_operador_bajas_ivr\",
+              \"id\":\"s_ingresos_operador_bajas_ivr\"
+           },
+           {  
+              \"type\":\"currency_decimal\",
+              \"width\":\"80\",
+              \"title\":\"Average Price\",
+              \"colgroup\":{  
+                 \"parent\":\"s_impresiones_abs\"
+              },
+              \"totales\":\"\"            
+        ";
+        $pattern = "/all_metrics(.*)/s";
+        $matches = $this->get_matches($pattern, $strfilter);
+        //print_r($matches);
+        $changed = preg_replace($pattern,"all_metrics\":[]\n}",$strfilter);
+        print_r($changed);
+    }
     
 }//StringTest

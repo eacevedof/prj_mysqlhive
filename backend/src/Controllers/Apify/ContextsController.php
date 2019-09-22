@@ -31,6 +31,7 @@ class ContextsController extends AppController
     {
         $oServ = new ContextService();
         $arJson = $oServ->get_noconfig();
+//pr($arJson,"ContextsController.index.arJson");die;
 
         if($this->is_get("id"))
             $arJson = $oServ->get_noconfig_by_id($this->get_get("id"));

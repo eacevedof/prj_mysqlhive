@@ -20,7 +20,7 @@ class ComponentContext
     private $idSelected;
     private $arSelected;
     
-    public function __construct($sPathfile="",$idSelected="")
+    public function __construct($sPathfile="", $idSelected="")
     {
         $this->idSelected = $idSelected;
         $this->arContexts = [];
@@ -60,9 +60,13 @@ class ComponentContext
     
     private function load_selected()
     {
+        //si no se pasa id se asume que no se ha seleccionado un contexto
         $this->arSelected["ctx"] = $this->get_by_id($this->idSelected);
-        $this->arSelected["ctx"] = $this->arSelected["ctx"][array_keys($this->arSelected["ctx"])[0]];
+        if($this->arSelected["ctx"])
+            $this->arSelected["ctx"] = $this->arSelected["ctx"][array_keys($this->arSelected["ctx"])[0]];
+
         $this->arSelected["noconfig"] = $this->get_noconfig_by("id",$this->idSelected);
+        //pr($this->arSelected,"arSelected");
     }
     
     private function get_filter_level_1($sKey, $sValue, $arArray=[])
