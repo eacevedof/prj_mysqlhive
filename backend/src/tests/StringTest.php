@@ -11,6 +11,8 @@ class StringTest extends TestCase
     {
         $oLog = new ComponentLog("logs",__DIR__);
         $oLog->save($mxVar,$sTitle);
+        if($sTitle) print_r("\n$sTitle\n");
+        print_r("\n$mxVar\n");
     }
     
     public function est_preg_replace_not_in()
@@ -80,7 +82,7 @@ where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and coale
         
     }//test_match_operator
     
-    public function test_match_allmetrics()
+    public function est_match_allmetrics()
     {
         $strfilter = "
             {
@@ -136,6 +138,20 @@ where 1=1  and cdr_fecha>=? and cdr_fecha<? and cdr_numero_publico = ? and coale
         //print_r($matches);
         $changed = preg_replace($pattern,"all_metrics\":[]\n}",$strfilter);
         print_r($changed);
+    }
+    
+    public function test_preg_replace()
+    {
+        //limite filas excel: 1,048,576
+        $pattern = "(limit|LIMIT|Limit|lIMIT)(\s+[\d]+)";
+        
+        $replace = "LIMIT 500";
+        
+        $string  = "ORDER BY s_dia asc ,s_subpublisher_name asc  limit 200";
+        
+        $this->log("pattern: $pattern,\n replace: $replace,\n string: $string","test_preg_replace.vars");
+        $changed = preg_replace("@$pattern@i",$replace,$string);
+        $this->log($changed,"test_preg_replace.replaced");
     }
     
 }//StringTest
