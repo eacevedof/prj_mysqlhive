@@ -1,4 +1,6 @@
+//canvas.js
 function create(id, parent, width, height) {
+
   let divWrapper = document.createElement("div");
   let canvasElem = document.createElement("canvas");
   parent.appendChild(divWrapper);
@@ -9,7 +11,7 @@ function create(id, parent, width, height) {
   canvasElem.height = height;
 
   let ctx = canvasElem.getContext("2d");
-
+  console.log("canvas.create.ctx",ctx);
   return {
     ctx: ctx,
     id: id
