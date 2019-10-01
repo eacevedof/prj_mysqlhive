@@ -33,6 +33,10 @@ return [
 
     ["url"=>"/apify/write/raw","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"raw"],
     ["url"=>"/apify/write","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"index"],
+    
+    ["url"=>"/test/dom.html","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"index"],
+    ["url"=>"/test/highcharts.html","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"index"],
+    ["url"=>"/test/mod_helloworld/index.html","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"index"],
 
 //resto de rutas    
     ["url"=>"/404","controller"=>"App\Controllers\NotFoundController","method"=>"error_404"]
