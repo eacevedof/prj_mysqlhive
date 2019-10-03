@@ -4,10 +4,10 @@ class Helloworld extends HTMLElement{
   constructor(text) {
     console.log("Helloworld.constructor")
     super()
-    this.init()
+    this.init(text)
   }
 
-  init(){
+  init(text){
     // Create a shadow root
     var shadow = this.attachShadow({mode: 'open'});
 
