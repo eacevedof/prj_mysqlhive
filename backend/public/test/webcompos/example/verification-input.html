@@ -1,0 +1,244 @@
+<!-- Defines the web component template -->
+<template id="custom-element-template">
+  <style>
+    :host {
+      --border-radius: 5px;
+      display: inline-block;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    .x-verification-container {
+      all: initial;
+      contain: content;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      max-width: 300px;
+      border-radius: var(--border-radius);
+    }
+    .x-verification-field-wrapper {
+      flex: 1 1;
+      margin-right: -1px;
+      border: 1px solid #cccccc;
+      background-color: #ffffff;
+    }
+    .x-verification-field-wrapper.x-verification-field-wrapper--last {
+      border-top-right-radius: var(--border-radius);
+      border-bottom-right-radius: var(--border-radius);
+      margin-right: 0px;
+    }
+    .x-verification-field-wrapper.x-verification-field-wrapper--first {
+      border-top-left-radius: var(--border-radius);
+      border-bottom-left-radius: var(--border-radius);
+    }
+    .x-verification-spacer {
+      flex: 1 1;
+      font-size: 1.8em;
+      text-align: center;
+      line-height: 2em;
+    }
+    .x-verification-field {
+      width: 100%;
+      font-size: 1.8em;
+      line-height: 2em;
+      text-align: center;
+      border: none;
+      border-bottom: 1px solid #222222;
+      -moz-appearance:textfield;
+      height: 2em;
+      padding: 0 0.25em;
+      border: none;
+      outline: none;
+      border-radius: 5px;
+    }
+    .x-verification-field::-webkit-inner-spin-button,
+    .x-verification-field::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  </style>
+  <div class="x-verification-container">
+    <div class="x-verification-field-wrapper x-verification-field-wrapper--first">
+      <input class="x-verification-field" min="0" max="9" type="number" aria-label="Digit 1" />
+    </div>
+    <div class="x-verification-field-wrapper">
+      <input class="x-verification-field" min="0" max="9" type="number" aria-label="Digit 2" />
+    </div>
+    <div class="x-verification-field-wrapper">
+      <input class="x-verification-field" min="0" max="9" type="number" aria-label="Digit 3" />
+    </div>
+    <div class="x-verification-spacer">
+      -
+    </div>
+    <div class="x-verification-field-wrapper">
+      <input class="x-verification-field" min="0" max="9" type="number" aria-label="Digit 4" />
+    </div>
+    <div class="x-verification-field-wrapper">
+      <input class="x-verification-field" min="0" max="9" type="number" aria-label="Digit 5" />
+    </div>
+    <div class="x-verification-field-wrapper x-verification-field-wrapper--last">
+      <input class="x-verification-field" min="0" max="9" type="number" aria-label="Digit 6" />
+    </div>
+  </div>
+</template>
+
+<script>
+//https://github.com/brettdewoody/my-first-web-component/blob/master/verification-input.html
+(function(window, document) {
+  // Refers to this document, verification-input.html
+  const thisDoc = document.currentScript.ownerDocument;
+  // Gets content from <template>
+  const template = thisDoc.querySelector("#custom-element-template").content;
+  // Creates an object based in the HTML Element prototype
+  class VerificationInput extends HTMLElement {
+    // observedAttributes() - https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
+    // Specify observed attributes so that attributeChangedCallback will work
+    static get observedAttributes() {
+      return ["value"];
+    }
+    // Useful for initializing state, settings up event listeners, or creating shadow dom.
+    constructor() {
+      super();
+      // attachShadow() - https://developer.mozilla.org/en-US/docs/Web/API/Element/attachShadow
+      // Attaches a shadow DOM tree to the specified element and returns a reference to its ShadowRoot
+      this.attachShadow({mode: 'open'});
+      this.shadowRoot.appendChild(template.cloneNode(true));
+      this.inputSelector = ".x-verification-field";
+      this.inputs = Array.from(this.shadowRoot.querySelectorAll(this.inputSelector));
+      //onClick Event Handler
+      this.addEventListener("click", this.handleClick);
+      // onKeyDown Event Handler
+      this.addEventListener("keydown", this.handleKeyDown);
+      // onPaste Event Handler
+      this.shadowRoot.addEventListener("paste", event => this.handlePaste(event));
+    }
+    //==============================================
+    // Lifecycle Methods
+    //==============================================
+    // connectedCallback() - https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
+    // Called every time the element is inserted into the DOM.
+    // Useful for running setup code, such as fetching resources or rendering.
+    connectedCallback() {
+      if (this.hasAttribute("value")) {
+        this.value = this.getAttribute("value");
+      }
+    }
+    // attributeChangedCallback() - https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
+    // Only called for the 'value' attribute due to observedAttributes
+    attributeChangedCallback(name, oldValue, newValue) {
+      this.value = newValue;
+    }
+    //==============================================
+    // Event Handlers
+    //==============================================
+    handleClick() {
+      if (this.shadowRoot.activeElement) {
+        this.shadowRoot.activeElement.select();
+      }
+    }
+    handlePaste(event) {
+      event.stopPropagation();
+      event.preventDefault();
+      event.clipboardData.items[0].getAsString(text => {
+        text.split("").slice(0, this.inputs.length).forEach((char, id) => {
+          if (Number.isInteger(Number(char))) {
+            this.inputs[id].value = Number(char);
+          }
+        });
+      });
+    }
+    handleKeyDown(event) {
+      switch (this.shadowRoot.activeElement.tagName) {
+        case "INPUT":
+          const activeInput = this.shadowRoot.activeElement;
+          const inputVal = activeInput.value;
+          const id = this.inputs.indexOf(activeInput);
+          const nextId = (id + 1) % this.inputs.length;
+          const prevId = (id + this.inputs.length - 1) % this.inputs.length;
+          const key = String.fromCharCode(event.which);
+          // Ignore 'e'
+          if (event.keyCode === 69) {
+            event.preventDefault();
+            return;
+          }
+          // Handle up arrow key, when value is 9
+          if (event.keyCode === 38 && inputVal === "9") {
+            event.preventDefault();
+            activeInput.value = 0;
+            return;
+          }
+          // Handle down arrow key, when value is 0
+          if (event.keyCode === 40 && inputVal === "0") {
+            event.preventDefault();
+            activeInput.value = 9;
+            return;
+          }
+          // Handle left arrow key
+          if (event.keyCode === 37) {
+            event.preventDefault();
+            this.inputs[prevId].select();
+            return;
+          }
+          // Handle right arrow or tab key
+          if (event.keyCode === 39 || event.keyCode === 9) {
+            event.preventDefault();
+            this.inputs[nextId].select();
+            return;
+          }
+          // Handle the delete or backspace key
+          if (event.keyCode === 8 || event.keyCode === 46) {
+            event.preventDefault();
+            // If already empty, focus on previous input
+            if (inputVal === "") {
+              this.inputs[prevId].select();
+              return;
+            }
+            // Otherwise, clear input
+            activeInput.value = "";
+            return;
+          }
+          // If letter, and not with a metakey
+          if (key.match(/[a-z]/i) && !event.metaKey) {
+            event.preventDefault();
+            // If number
+          } else if (Number.isInteger(Number(key))) {
+            event.preventDefault();
+            // Set the input value
+            activeInput.value = key;
+            // Move focus to next input
+            this.inputs[nextId].select();
+            return;
+          } else {
+            return;
+          }
+          break;
+      }
+    }
+    //==============================================
+    // Custom Element Methods
+    //==============================================
+    // Method to return the passcode
+    get value() {
+      const passcode = this.inputs.reduce((passcode, el) => passcode + el.value, "");
+      return passcode;
+    }
+    // Method to set the passcode
+    set value(passcode) {
+      const codeArr = passcode.toString().split("");
+      this.inputs.forEach((input, index) => input.value = codeArr[index]);
+      return passcode;
+    }
+    // Method to clear the passcode
+    clear() {
+      this.inputs.forEach((input, index) => input.value = "");
+      this.inputs[0].focus();
+      return;
+    }
+  }
+  // Define the new custom Element
+  // https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define
+  customElements.define('x-verification-input', VerificationInput);
+})(window, document);
+</script>

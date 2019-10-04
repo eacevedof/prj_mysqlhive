@@ -36,7 +36,8 @@ return [
     
     ["url"=>"/test/dom.html","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"index"],
     ["url"=>"/test/highcharts.html","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"index"],
-    ["url"=>"/test/mod_helloworld/index.html","controller"=>"App\Controllers\Apify\Rw\WriterController","method"=>"index"],
+    ["url"=>"/test/mod_helloworld/index.html","controller"=>"","method"=>"index"],
+    ["url"=>"/test/webcompos/index.html","controller"=>"","method"=>"index"],
 
 //resto de rutas    
     ["url"=>"/404","controller"=>"App\Controllers\NotFoundController","method"=>"error_404"]
