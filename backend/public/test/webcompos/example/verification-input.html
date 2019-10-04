@@ -88,11 +88,15 @@
 //https://github.com/brettdewoody/my-first-web-component/blob/master/verification-input.html
 (function(window, document) {
   // Refers to this document, verification-input.html
-  const thisDoc = document.currentScript.ownerDocument;
+  const oThisHtml = document.currentScript.ownerDocument;
+  console.log("oThisHtml",oThisHtml)
+  
   // Gets content from <template>
-  const template = thisDoc.querySelector("#custom-element-template").content;
+  const oTplcontent = oThisHtml.querySelector("#custom-element-template").content;
+  
   // Creates an object based in the HTML Element prototype
   class VerificationInput extends HTMLElement {
+
     // observedAttributes() - https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
     // Specify observed attributes so that attributeChangedCallback will work
     static get observedAttributes() {
@@ -104,15 +108,22 @@
       // attachShadow() - https://developer.mozilla.org/en-US/docs/Web/API/Element/attachShadow
       // Attaches a shadow DOM tree to the specified element and returns a reference to its ShadowRoot
       this.attachShadow({mode: 'open'});
-      this.shadowRoot.appendChild(template.cloneNode(true));
+      //se configura el shadow del componente
+      this.shadowRoot.appendChild(oTplcontent.cloneNode(true));
       this.inputSelector = ".x-verification-field";
-      this.inputs = Array.from(this.shadowRoot.querySelectorAll(this.inputSelector));
+      //array.from crea una nueva instancia de array. Si se pasas un string hace un explode si se pasa un array
+      let shadowelems = this.shadowRoot.querySelectorAll(this.inputSelector)
+      //console.log("constructor.shadowelems",shadowelems,"typeof",typeof shadowelems,"is_array:",Array.isArray(shadowelems))
+      //shadowelems se convierte en un array
+      this.inputs = Array.from(this.shadowRoot.querySelectorAll(this.inputSelector))
+      //this.inputs = this.shadowRoot.querySelectorAll(this.inputSelector)
+      //console.log("this.inputs",this.inputs,"typeof",typeof this.inputs)
       //onClick Event Handler
-      this.addEventListener("click", this.handleClick);
+      this.addEventListener("click", this.fn_handler_onclick);
       // onKeyDown Event Handler
-      this.addEventListener("keydown", this.handleKeyDown);
+      this.addEventListener("keydown", this.fn_handle_onkeydown);
       // onPaste Event Handler
-      this.shadowRoot.addEventListener("paste", event => this.handlePaste(event));
+      this.shadowRoot.addEventListener("paste", event => this.fn_handle_onpaste(event));
     }
     //==============================================
     // Lifecycle Methods
@@ -128,17 +139,18 @@
     // attributeChangedCallback() - https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements
     // Only called for the 'value' attribute due to observedAttributes
     attributeChangedCallback(name, oldValue, newValue) {
+      console.log("attributeChangedCallback.newvalue",newValue)
       this.value = newValue;
     }
     //==============================================
     // Event Handlers
     //==============================================
-    handleClick() {
+    fn_handler_onclick() {
       if (this.shadowRoot.activeElement) {
         this.shadowRoot.activeElement.select();
       }
     }
-    handlePaste(event) {
+    fn_handle_onpaste(event) {
       event.stopPropagation();
       event.preventDefault();
       event.clipboardData.items[0].getAsString(text => {
@@ -149,7 +161,9 @@
         });
       });
     }
-    handleKeyDown(event) {
+    fn_handle_onkeydown(event) {
+      console.log("fn_handle_onkeydown.event",event)
+      console.log("this.shadowRoot.activeElement.tagName",this.shadowRoot.activeElement.tagName)
       switch (this.shadowRoot.activeElement.tagName) {
         case "INPUT":
           const activeInput = this.shadowRoot.activeElement;
@@ -236,9 +250,10 @@
       this.inputs[0].focus();
       return;
     }
-  }
+  }//class VerificationInput
+
   // Define the new custom Element
   // https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/define
-  customElements.define('x-verification-input', VerificationInput);
+  customElements.define("x-verification-input", VerificationInput);
 })(window, document);
 </script>
