@@ -18,7 +18,10 @@ class ImageTest extends TestCase
     public function test_metadata()
     {
         $url = "https://d3mfch55dy5n4c.cloudfront.net/contenidos-noticias/news_744_el-tackling-mobile-ad-fraud-se-celebra-en-telecoming-_20191007010611.jpg";
+        //$url = "https://d3mfch55dy5n4c.cloudfront.net/empleados/450x450/vferrero@telecoming.com.jpgg";
+        //$url = "https://d3mfch55dy5n4c.cloudfront.net/contenidos-noticias/news_undefined__20191001091432.png";
         $exif = exif_read_data($url,"IFD0");
+        print_r($url);
         print_r($exif);
         $this->assertEquals(TRUE,is_array($exif));
     }  
