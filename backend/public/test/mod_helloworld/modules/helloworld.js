@@ -9,6 +9,7 @@ class Helloworld extends HTMLElement{
 
   init(text){
     // Create a shadow root
+    //alert("init")
     var shadow = this.attachShadow({mode: 'open'});
 
     // Create spans
