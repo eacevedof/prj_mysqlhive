@@ -12,8 +12,9 @@ define("PATH_VENDOR",$sPath);
 $sPath = realpath(PATH_SRC.DS."logs");
 define("PATH_LOGS",$sPath);
 
-//echo(PATH_SRC_CONFIG);
+//echo(PATH_SRC_CONFIG); 
 $arConfig = realpath(PATH_SRC_CONFIG.DS."config.php");
+//print_r($arConfig);die;
 //echo $arConfig; die;
 include($arConfig);
 
